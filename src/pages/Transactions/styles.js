@@ -11,5 +11,9 @@ export const cardHeaderStyles = {
   },
   newTransactionButton: {
     fontSize: ["0.8rem", "1.05rem"],
+    position: ["fixed", "static"],
+    top: ["7%"],
+    left: ["70%"],
+    zIndex: "1",
   },
 };

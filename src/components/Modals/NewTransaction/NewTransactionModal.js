@@ -1,24 +1,18 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
 import BasicModal from "../../../components/common/BasicModal/BasicModal";
 
-const ControlledSwitches = () => {
-  const [checked, setChecked] = React.useState(true);
-
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  };
-
-  return (
-    <Switch
-      checked={checked}
-      onChange={handleChange}
-      inputProps={{ "aria-label": "controlled" }}
-    />
-  );
+const test = {
+  title: "Deneme8",
+  description: "Dugun",
+  user: "Yusuf",
+  transactionType: "alis",
+  weight: 100,
+  goldSetting: 22,
+  goldType: "bileklik",
+  amount: 3,
+  currency: "TL",
 };
 
 const NewTransactionModal = ({ open, onClose, addNewTransaction }) => {
@@ -27,15 +21,11 @@ const NewTransactionModal = ({ open, onClose, addNewTransaction }) => {
   const descriptionRef = useRef(null);
 
   const handleSubmit = () => {
-    addNewTransaction(itemRef.current.value);
+    addNewTransaction(test);
   };
 
   const getFormContent = () => (
     <Box>
-      <FormControlLabel
-        control={<ControlledSwitches sx={{ m: 1 }} defaultChecked />}
-        label="MUI switch"
-      />
       <TextField
         placeholder="Satici"
         name="seller"

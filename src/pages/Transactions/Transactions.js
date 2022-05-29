@@ -10,9 +10,27 @@ import BoxWrapper from "../../components/common/BoxWrapper/BoxWrapper";
 import { cardHeaderStyles } from "./styles";
 import NewTransactionModal from "../../components/Modals/NewTransaction/NewTransactionModal.js";
 
+import { createTransaction } from "../../api/index";
+
 const Transactions = () => {
   const [open, setOpen] = useState(false);
 
+  //Functions
+  const onCloseModal = () => {
+    setOpen(false);
+  };
+
+  const addNewTransaction = async (newTransaction) => {
+    try {
+      const { data } = await createTransaction(newTransaction);
+      console.log(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+    setOpen(false);
+  };
+
+  //Header
   const getHeader = () => {
     const handleChange = (value) => {
       console.log(value);
@@ -45,6 +63,7 @@ const Transactions = () => {
     );
   };
 
+  //Content
   const getContent = () => (
     <Typography
       align="center"
@@ -58,15 +77,7 @@ const Transactions = () => {
     </Typography>
   );
 
-  const onCloseModal = () => {
-    setOpen(false);
-  };
-
-  const addNewTransaction = (data) => {
-    console.log(data);
-    setOpen(false);
-  };
-
+  //Render
   return (
     <BoxWrapper>
       <BasicCard header={getHeader()} content={getContent()} />
