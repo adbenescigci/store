@@ -4,3 +4,5 @@ const API = axios.create({ baseURL: "http://localhost:5000/" });
 
 export const createTransaction = (newTransaction) =>
   API.post("transactions", newTransaction);
+
+export const getTransactions = () => API.get("transactions");

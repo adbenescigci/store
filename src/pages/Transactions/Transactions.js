@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -10,10 +10,14 @@ import BoxWrapper from "../../components/common/BoxWrapper/BoxWrapper";
 import { cardHeaderStyles } from "./styles";
 import NewTransactionModal from "../../components/Modals/NewTransaction/NewTransactionModal.js";
 
+import { ShopContext } from "../../contextProvider/ContextProvider";
 import { createTransaction } from "../../api/index";
 
 const Transactions = () => {
   const [open, setOpen] = useState(false);
+  const { state } = useContext(ShopContext);
+
+  console.log(state.transactions);
 
   //Functions
   const onCloseModal = () => {
@@ -73,7 +77,9 @@ const Transactions = () => {
         fontSize: "1.3rem",
       }}
     >
-      No users for this project yet
+      {state.transactions.map((el, index) => (
+        <li key={index}>{el.title}</li>
+      ))}
     </Typography>
   );
 
