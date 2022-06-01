@@ -7,7 +7,7 @@ const BasicCard = ({ header, content }) => {
   return (
     <Card sx={cardStyles}>
       {header}
-      <CardContent>{content}</CardContent>
+      <CardContent sx={{ height: "max-content" }}>{content}</CardContent>
     </Card>
   );
 };

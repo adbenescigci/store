@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import BasicModal from "../../../components/common/BasicModal/BasicModal";
 
 const test = {
-  title: "Deneme8",
+  title: "el",
   description: "Dugun",
   user: "Yusuf",
   transactionType: "alis",

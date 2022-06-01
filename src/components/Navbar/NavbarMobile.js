@@ -16,6 +16,9 @@ const NavbarMobile = () => {
       sx={{
         width: "100%",
         display: { md: "none", sm: "none" },
+        position: "sticky",
+        top: "0",
+        zIndex: "1",
       }}
     >
       <BottomNavigation

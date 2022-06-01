@@ -6,7 +6,6 @@ import NavbarMobile from "./components/Navbar/NavbarMobile.js";
 import { useNavigate, useLocation } from "react-router-dom";
 import Header from "./components/Header/Header";
 import { getTransactions } from "./api/index";
-
 import { ShopContext } from "./contextProvider/ContextProvider";
 
 const App = () => {
@@ -17,7 +16,10 @@ const App = () => {
 
   const fetchTransactions = async () => {
     const { data } = await getTransactions();
-    dispatch({ type: "FETCH_TRANSACTIONS", data });
+    dispatch({
+      type: "FETCH_TRANSACTIONS",
+      data,
+    });
   };
 
   //REDIRECT
@@ -41,6 +43,8 @@ const App = () => {
     },
     row: {
       width: "100%",
+      height: "100%",
+      backgroundColor: "#eaeff1",
     },
   };
 

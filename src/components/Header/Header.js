@@ -7,6 +7,7 @@ const Header = ({ title }) => {
   const headerStyles = {
     width: "100%",
     display: "flex",
+    zIndex: "3",
     flexDirection: "row",
     backgroundColor: "#009be5",
     justifyContent: "end",
