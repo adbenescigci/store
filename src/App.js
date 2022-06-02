@@ -5,7 +5,7 @@ import NavbarDesktop from "./components/Navbar/NavbarDesktop.js";
 import NavbarMobile from "./components/Navbar/NavbarMobile.js";
 import { useNavigate, useLocation } from "react-router-dom";
 import Header from "./components/Header/Header";
-import { getTransactions } from "./api/index";
+import { getDailyTransactions } from "./api/index";
 import { ShopContext } from "./contextProvider/ContextProvider";
 
 const App = () => {
@@ -15,7 +15,7 @@ const App = () => {
   let location = useLocation();
 
   const fetchTransactions = async () => {
-    const { data } = await getTransactions();
+    const { data } = await getDailyTransactions();
     dispatch({
       type: "FETCH_TRANSACTIONS",
       data,
