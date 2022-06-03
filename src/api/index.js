@@ -7,8 +7,10 @@ export const doTransaction = (newTransaction) =>
 export const updateTransaction = (id, updatedTransaction) =>
   API.patch(`transactions/${id}`, updatedTransaction);
 export const deleteTransaction = (id) => API.delete(`transactions/${id}`);
+
+//UPDATE TRANSACTION LISTS
 export const refreshTransactions = (referenceTime) =>
-  API.get(`transactions/refresh/${referenceTime}`);
+  API.get(`transactions?processTime[gt]=${referenceTime}`);
 
 //INIT APP
 export const getDailyTransactions = () =>

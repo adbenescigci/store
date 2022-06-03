@@ -6,7 +6,10 @@ const ContextProvider = ({ children }) => {
   const shopReducer = (state, action) => {
     switch (action.type) {
       case "FETCH_TRANSACTIONS":
-        return { transactions: action.data, lastUpdated: Date.now() };
+        return {
+          transactions: action.data.transactions,
+          lastUpdated: action.data.time,
+        };
       case "REMOVE_TRANSACTION":
         const transactions = state.transactions.filter(
           (el) => el._id !== action.id
@@ -14,8 +17,8 @@ const ContextProvider = ({ children }) => {
         return { ...state, transactions };
       case "REFRESH":
         const newState = {
-          transactions: [...state.transactions, ...action.data],
-          lastUpdated: Date.now(),
+          transactions: [...state.transactions, ...action.data.transactions],
+          lastUpdated: action.data.time,
         };
         return newState;
       default:
