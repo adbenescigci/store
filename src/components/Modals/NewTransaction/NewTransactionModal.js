@@ -4,15 +4,27 @@ import TextField from "@mui/material/TextField";
 import BasicModal from "../../../components/common/BasicModal/BasicModal";
 
 const test = {
-  title: "el",
-  description: "Dugun",
-  user: "Yusuf",
-  transactionType: "alis",
-  weight: 100,
-  goldSetting: 22,
-  goldType: "bileklik",
-  amount: 3,
-  currency: "TL",
+  title: "moc",
+  description: "Ahmet Dugun",
+  user: "Ahmet",
+  subTransactions: [
+    {
+      transactionType: "alis",
+      goldType: "bileklik",
+      amount: "200",
+      workmanship: "50",
+      goldSetting: 22,
+    },
+    {
+      transactionType: "alis",
+      goldType: "kunye",
+      amount: "2500",
+      workmanship: "90",
+      goldSetting: 14,
+    },
+  ],
+  payment: ["100USD", "2500TL"],
+  paymentType: "cash",
 };
 
 const NewTransactionModal = ({ open, onClose, addNewTransaction }) => {

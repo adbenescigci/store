@@ -17,7 +17,7 @@ const ContextProvider = ({ children }) => {
         return { ...state, transactions };
       case "REFRESH":
         const newState = {
-          transactions: [...state.transactions, ...action.data.transactions],
+          transactions: [...action.data.transactions, ...state.transactions],
           lastUpdated: action.data.time,
         };
         return newState;
