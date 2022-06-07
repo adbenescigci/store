@@ -14,7 +14,7 @@ import SearchBar from "../../components/common/SearchBar/SearchBar";
 import CommonButton from "../../components/common/CommonButton/CommonButton";
 import BoxWrapper from "../../components/common/BoxWrapper/BoxWrapper";
 import { cardHeaderStyles } from "./styles";
-import NewTransactionModal from "../../components/Modals/NewTransaction/NewTransactionModal.js";
+import AddTransactionModal from "../../components/Modals/AddTransactionModal/AddTransactionModal.js";
 
 import { ShopContext } from "../../contextProvider/ContextProvider";
 import {
@@ -123,7 +123,7 @@ const Transactions = () => {
   return (
     <BoxWrapper>
       <BasicCard header={getHeader()} content={getContent()} />
-      <NewTransactionModal
+      <AddTransactionModal
         open={open}
         onClose={onCloseModal}
         addNewTransaction={addNewTransaction}
