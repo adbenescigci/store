@@ -7,6 +7,30 @@ import Typography from "@mui/material/Typography";
 import BasicModal from "../../common/BasicModal/BasicModal";
 import ItemsGroup from "./ItemsGroup";
 
+const test = {
+  title: "moc",
+  description: "Ahmet Dugun",
+  user: "Ahmet",
+  subTransactions: [
+    {
+      transactionType: "alis",
+      goldType: "bileklik",
+      amount: "200",
+      workmanship: "50",
+      goldSetting: 22,
+    },
+    {
+      transactionType: "alis",
+      goldType: "kunye",
+      amount: "2500",
+      workmanship: "90",
+      goldSetting: 14,
+    },
+  ],
+  payment: ["100USD", "2500TL"],
+  paymentType: "cash",
+};
+
 const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
   const [checked, setChecked] = React.useState(true);
   const descriptionRef = useRef(null);
@@ -52,27 +76,3 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
 };
 
 export default AddTransactionModal;
-
-const test = {
-  title: "moc",
-  description: "Ahmet Dugun",
-  user: "Ahmet",
-  subTransactions: [
-    {
-      transactionType: "alis",
-      goldType: "bileklik",
-      amount: "200",
-      workmanship: "50",
-      goldSetting: 22,
-    },
-    {
-      transactionType: "alis",
-      goldType: "kunye",
-      amount: "2500",
-      workmanship: "90",
-      goldSetting: 14,
-    },
-  ],
-  payment: ["100USD", "2500TL"],
-  paymentType: "cash",
-};

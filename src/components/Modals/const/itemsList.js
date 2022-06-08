@@ -1,3 +1,5 @@
+import WatchIcon from "@mui/icons-material/Watch";
+
 export const items = [
   {
     id: 0,
@@ -5,64 +7,69 @@ export const items = [
     label: "Ceyrek",
     type: "piece",
     view: "button",
-    history: true,
+    history: "Yeni",
   },
   {
     id: 1,
     icon: "",
     label: "Yarim",
     type: "piece",
-    view: "button",
-    history: true,
+    history: "Yeni",
   },
   {
     id: 2,
     icon: "",
     label: "Tam",
     type: "piece",
-    view: "button",
-    history: true,
+    history: "Yeni",
   },
   {
     id: 3,
     icon: "",
-    label: "Bilezik",
     view: "button",
+    label: "Bilezik",
     type: "weight",
   },
   {
     id: 4,
     icon: "",
     label: "Yuzuk",
-    view: "button",
     type: "weight",
   },
   {
     id: 5,
-    icon: "",
+    icon: <WatchIcon />,
     label: "Saat",
-    view: "button",
     type: "piece",
   },
   {
     id: 6,
     icon: "",
     label: "Kunye",
-    view: "select",
     type: "weight",
   },
   {
     id: 7,
     icon: "",
     label: "Gerdanlik",
-    view: "select",
     type: "weight",
   },
   {
     id: 8,
     icon: "",
     label: "Set",
-    view: "select",
+    type: "weight",
+  },
+  {
+    id: 9,
+    icon: "",
+    label: "Kremse",
+    type: "weight",
+  },
+  {
+    id: 10,
+    icon: "",
+    label: "5i 1",
     type: "weight",
   },
 ];

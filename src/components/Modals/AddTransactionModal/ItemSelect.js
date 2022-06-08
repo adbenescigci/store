@@ -26,7 +26,7 @@ const ItemSelect = ({ onChange }) => {
           onChange={handleChange}
         >
           {items
-            .filter((el) => el.view === "select")
+            .filter((el) => el.view !== "button")
             .map((item, index) => (
               <MenuItem key={index} value={item.id}>
                 {item.label}
