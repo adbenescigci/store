@@ -1,16 +1,16 @@
 import { useState } from "react";
 import Box from "@mui/material/Box";
-import ItemSelect from "./ItemSelect";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import { items } from "../const/itemsList.js";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import Grid from "@mui/material/Grid";
+import ItemSelect from "./ItemSelect";
+import { items } from "../const/itemsList.js";
 
 const ItemsGroup = () => {
   const [list, setList] = useState([]);
@@ -60,31 +60,30 @@ const ItemsGroup = () => {
         },
       }}
     >
-      <Stack direction="column" spacing={1} alignItems="center">
-        <Stack direction="row" spacing={1} alignItems="center">
-          <FormGroup>
-            <Select
-              variant="standard"
-              size="small"
-              value={history}
-              onChange={handleHistory}
-              label="Tarih"
-            >
-              <MenuItem value="Yeni">Yeni</MenuItem>
-              <MenuItem value="Eski">Eski</MenuItem>
-            </Select>
-            <Select
-              variant="standard"
-              size="small"
-              value={type}
-              onChange={handleType}
-              label="Tarih"
-            >
-              <MenuItem value="Cum">Cum</MenuItem>
-              <MenuItem value="Ata">Ata</MenuItem>
-            </Select>
-          </FormGroup>
-          <Divider orientation="vertical" flexItem />
+      <Grid container spacing={2} justifyContent="center" alignItems="center">
+        <Grid item xs={3}>
+          <Select
+            variant="standard"
+            size="small"
+            value={history}
+            onChange={handleHistory}
+            label="Tarih"
+          >
+            <MenuItem value="Yeni">Yeni</MenuItem>
+            <MenuItem value="Eski">Eski</MenuItem>
+          </Select>
+          <Select
+            variant="standard"
+            size="small"
+            value={type}
+            onChange={handleType}
+            label="Tarih"
+          >
+            <MenuItem value="Cum">Cum</MenuItem>
+            <MenuItem value="Ata">Ata</MenuItem>
+          </Select>
+        </Grid>
+        <Grid item xs={9}>
           <ButtonGroup
             size="small"
             variant="contained"
@@ -92,9 +91,10 @@ const ItemsGroup = () => {
           >
             {itemsButtons}
           </ButtonGroup>
-        </Stack>
-        <ItemSelect onChange={handleSubTransactions} />
-      </Stack>
+        </Grid>
+      </Grid>
+      <ItemSelect onChange={handleSubTransactions} />
+
       <Divider />
       <Stack direction="column" alignItems="center" spacing={1}>
         {list.map((el, index) => (
