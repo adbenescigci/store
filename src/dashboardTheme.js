@@ -14,6 +14,18 @@ export const dashboardTheme = createTheme({
         },
       },
     },
+    // MuiGrid: {
+    //   styleOverrides: {
+    //     "& .MuiGrid-item": {
+    //       backgroundColor: "#006db3",
+    //     },
+    //   },
+    // },
+    // MuiBox: {
+    //   styleOverrides: {
+    //     padding: "0 !important",
+    //   },
+    // },
   },
 
   //   palette: {

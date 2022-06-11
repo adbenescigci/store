@@ -1,11 +1,11 @@
-import React, { useRef } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Switch from "@mui/material/Switch";
-import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import BasicModal from "../../common/BasicModal/BasicModal";
-import ItemsGroup from "./ItemsGroup";
+import AddContent from "./AddContent";
+import Grid from "@mui/material/Grid";
 
 const test = {
   title: "moc",
@@ -33,7 +33,6 @@ const test = {
 
 const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
   const [checked, setChecked] = React.useState(true);
-  const descriptionRef = useRef(null);
 
   const handleChangeType = (event) => {
     setChecked(event.target.checked);
@@ -43,9 +42,17 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
     addNewTransaction(test);
   };
 
-  const getFormContent = () => (
-    <Box>
-      <Stack direction="row" spacing={1} alignItems="center">
+  const getTitle = () => (
+    <Grid
+      container
+      spacing={2}
+      justifyContent="space-between"
+      alignItems="center"
+    >
+      <Grid item xs="auto">
+        <Typography>Yeni islem</Typography>
+      </Grid>
+      <Grid item container alignItems="center" xs={5}>
         <Typography>Alis</Typography>
         <Switch
           checked={checked}
@@ -53,14 +60,14 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
           inputProps={{ "aria-label": "controlled" }}
         />
         <Typography>Satis</Typography>
-      </Stack>
-      <ItemsGroup />
-      <TextField
-        placeholder="Aciklama"
-        name="description"
-        label="Aciklama"
-        inputRef={descriptionRef}
-      />
+      </Grid>
+    </Grid>
+  );
+
+  const getFormContent = () => (
+    <Box spacing={2} alignItems="center">
+      <AddContent />
+      <TextField placeholder="Aciklama" name="description" label="Aciklama" />
     </Box>
   );
 
@@ -68,7 +75,7 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
     <BasicModal
       open={open}
       onClose={onClose}
-      title="Yeni Islem"
+      title={getTitle()}
       content={getFormContent()}
       onSubmit={handleSubmit}
     />
@@ -76,3 +83,22 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
 };
 
 export default AddTransactionModal;
+
+// <Box>
+//   <Stack direction="row" spacing={1} alignItems="center">
+//     <Typography>Alis</Typography>
+//     <Switch
+//       checked={checked}
+//       onChange={handleChangeType}
+//       inputProps={{ "aria-label": "controlled" }}
+//     />
+//     <Typography>Satis</Typography>
+//   </Stack>
+//   <ItemsGroup />
+//   <TextField
+//     placeholder="Aciklama"
+//     name="description"
+//     label="Aciklama"
+//     inputRef={descriptionRef}
+//   />
+// </Box>

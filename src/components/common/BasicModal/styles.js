@@ -8,6 +8,8 @@ export const modalStyles = {
     bgcolor: "background.paper",
     boxShadow: 24,
     p: 4,
+    display: "flex",
+    flexDirection: "column",
   },
   inputFields: {
     display: "flex",
@@ -20,6 +22,7 @@ export const modalStyles = {
   },
   buttons: {
     display: "flex",
-    justifyContent: "end",
+    justifyContent: "space-around",
+    marginTop: "10px",
   },
 };

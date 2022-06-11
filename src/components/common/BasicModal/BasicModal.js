@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import CommonButton from "../CommonButton/CommonButton";
+import Divider from "@mui/material/Divider";
 import { modalStyles } from "./styles";
 
 const BasicModal = ({ open, onClose, title, content, onSubmit }) => {
@@ -14,9 +15,10 @@ const BasicModal = ({ open, onClose, title, content, onSubmit }) => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={modalStyles.wrapper}>
-        <Typography variant="h6" component="h2">
+        <Typography variant="h6" component="h5">
           {title}
         </Typography>
+        <Divider />
         {content}
         <Box sx={modalStyles.buttons}>
           <CommonButton variant="contained" onClick={onSubmit}>
