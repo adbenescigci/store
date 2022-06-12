@@ -6,20 +6,20 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import WatchIcon from "@mui/icons-material/Watch";
 import { items } from "../const/itemsList.js";
 
 const AddContent = () => {
   const [list, setList] = useState([]);
-  const [setting, setSetting] = useState("24");
+  const [type, setType] = useState("Ziynet");
   const [value, setValue] = useState(0);
 
   const handleSubTransactions = (id) => {
     if (!list.includes(items[id])) setList([...list, items[id]]);
   };
 
-  const handleDelete = (index) => {
-    let newList = [...list];
-    newList.splice(index, 1);
+  const handleDelete = (id) => {
+    const newList = list.filter((el) => el.id !== id);
     setList(newList);
   };
 
@@ -37,7 +37,7 @@ const AddContent = () => {
         <Grid item justifyContent="center">
           <BottomNavigation
             sx={{
-              height: "25px",
+              height: "40px",
               backgroundColor: "primary.main",
             }}
             showLabels
@@ -46,17 +46,18 @@ const AddContent = () => {
               setValue(newValue);
             }}
           >
-            {["24", "22", "18", "14"].map((el, index) => (
+            {["Ziy", "Ata", "22", "18", "14", "24", "Saat"].map((el, index) => (
               <BottomNavigationAction
                 key={index}
                 sx={{
+                  minWidth: "45px",
                   color: "#c6d8e7",
                   "&.Mui-selected": {
                     color: "white",
                   },
                 }}
-                onClick={() => setSetting(el)}
-                label={`${el} Ayar`}
+                onClick={() => setType(el)}
+                label={el === "Saat" ? <WatchIcon fontSize="small" /> : el}
               />
             ))}
           </BottomNavigation>
@@ -68,7 +69,7 @@ const AddContent = () => {
 
         <Grid item container xs={12} justifyContent="center">
           {items
-            .filter((el) => el.setting === setting)
+            .filter((el) => el.type.includes(type))
             .map((el, index) => (
               <Grid item container key={index} xs={3}>
                 <Chip
@@ -76,10 +77,16 @@ const AddContent = () => {
                     fontSize: "0.7rem",
                   }}
                   avatar={
-                    <Avatar>
-                      {el.history ? el.history.charAt(0) : el.setting}
+                    <Avatar
+                      sx={{
+                        bgcolor: "#5393ff !important",
+                        display: `${!el.history ? "none" : ""}`,
+                      }}
+                    >
+                      {el.history?.charAt(0)}
                     </Avatar>
                   }
+                  color="primary"
                   onClick={() => handleSubTransactions(el.id)}
                   key={el.id}
                   size="small"
@@ -100,11 +107,19 @@ const AddContent = () => {
               <Grid item xs>
                 <Chip
                   color="primary"
-                  label={`${
-                    el.history ? el.label : `${el.label} ${el.setting}`
-                  }`}
+                  label={` ${el.type} ${el.label} `}
                   variant="outlined"
-                  onDelete={() => handleDelete(index)}
+                  onDelete={() => handleDelete(el.id)}
+                  avatar={
+                    <Avatar
+                      sx={{
+                        bgcolor: "#5393ff !important",
+                        display: `${!el.history ? "none" : ""}`,
+                      }}
+                    >
+                      {el.history?.charAt(0)}
+                    </Avatar>
+                  }
                 />
               </Grid>
               <Grid item xs>

@@ -83,22 +83,3 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
 };
 
 export default AddTransactionModal;
-
-// <Box>
-//   <Stack direction="row" spacing={1} alignItems="center">
-//     <Typography>Alis</Typography>
-//     <Switch
-//       checked={checked}
-//       onChange={handleChangeType}
-//       inputProps={{ "aria-label": "controlled" }}
-//     />
-//     <Typography>Satis</Typography>
-//   </Stack>
-//   <ItemsGroup />
-//   <TextField
-//     placeholder="Aciklama"
-//     name="description"
-//     label="Aciklama"
-//     inputRef={descriptionRef}
-//   />
-// </Box>
