@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Switch from "@mui/material/Switch";
@@ -32,10 +32,10 @@ const test = {
 };
 
 const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
-  const [checked, setChecked] = React.useState(true);
+  const [transactionType, setType] = useState(true);
 
   const handleChangeType = (event) => {
-    setChecked(event.target.checked);
+    setType(event.target.checked);
   };
 
   const handleSubmit = () => {
@@ -55,7 +55,7 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
       <Grid item container alignItems="center" xs={5}>
         <Typography>Alis</Typography>
         <Switch
-          checked={checked}
+          checked={transactionType}
           onChange={handleChangeType}
           inputProps={{ "aria-label": "controlled" }}
         />

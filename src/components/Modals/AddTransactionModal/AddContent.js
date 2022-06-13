@@ -8,6 +8,7 @@ import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import WatchIcon from "@mui/icons-material/Watch";
 import { items } from "../const/itemsList.js";
+import NumberFormat from "react-number-format";
 
 const AddContent = () => {
   const [list, setList] = useState([]);
@@ -75,6 +76,8 @@ const AddContent = () => {
                 <Chip
                   sx={{
                     fontSize: "0.7rem",
+                    width: "100%",
+                    justifyContent: `${el.history ? "start" : "center"}`,
                   }}
                   avatar={
                     <Avatar
@@ -106,9 +109,15 @@ const AddContent = () => {
             <Grid container item key={index} alignItems="center">
               <Grid item xs>
                 <Chip
+                  sx={{
+                    fontSize: "0.7rem",
+                    width: "105px",
+                    justifyContent: "space-between",
+                  }}
                   color="primary"
                   label={` ${el.type} ${el.label} `}
                   variant="outlined"
+                  size="small"
                   onDelete={() => handleDelete(el.id)}
                   avatar={
                     <Avatar
