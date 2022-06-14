@@ -283,10 +283,12 @@ export const items = [
     id: 38,
     type: "Saat",
     label: "Erkek",
+    unit: "piece",
   },
   {
     id: 39,
     type: "Saat",
     label: "Bayan",
+    unit: "piece",
   },
 ];

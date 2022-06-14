@@ -4,19 +4,24 @@ import Chip from "@mui/material/Chip";
 import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import WatchIcon from "@mui/icons-material/Watch";
 import { items } from "../const/itemsList.js";
-import NumberFormat from "react-number-format";
+import NumberFormatCustom from "../../common/NumberInput/NumberFormatCustom";
+
+import InputAdornment from "@mui/material/InputAdornment";
 
 const AddContent = () => {
   const [list, setList] = useState([]);
   const [type, setType] = useState("Ziynet");
   const [value, setValue] = useState(0);
+  const [values, setValues] = useState();
 
   const handleSubTransactions = (id) => {
     if (!list.includes(items[id])) setList([...list, items[id]]);
+    setValues({ ...values, [id]: "" });
   };
 
   const handleDelete = (id) => {
@@ -24,6 +29,12 @@ const AddContent = () => {
     setList(newList);
   };
 
+  const handleChange = (event) => {
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value,
+    });
+  };
   return (
     <Box
       sx={{
@@ -106,16 +117,16 @@ const AddContent = () => {
 
         <Grid item xs={12}>
           {list.map((el, index) => (
-            <Grid container item key={index} alignItems="center">
-              <Grid item xs>
+            <Grid container item key={index} spacing={1} alignItems="center">
+              <Grid item xs={4}>
                 <Chip
                   sx={{
                     fontSize: "0.7rem",
-                    width: "105px",
+                    width: "100%",
                     justifyContent: "space-between",
                   }}
                   color="primary"
-                  label={` ${el.type} ${el.label} `}
+                  label={` ${el.type.substring(0, 3)} ${el.label} `}
                   variant="outlined"
                   size="small"
                   onDelete={() => handleDelete(el.id)}
@@ -131,8 +142,24 @@ const AddContent = () => {
                   }
                 />
               </Grid>
-              <Grid item xs>
-                test
+              <Grid item xs={3}>
+                <TextField
+                  value={values[el.id]}
+                  onChange={handleChange}
+                  sx={{ width: "100%" }}
+                  name={el.id.toString()}
+                  id={`${el.unit === "gr" ? 2 : 0}`}
+                  InputProps={{
+                    inputComponent: NumberFormatCustom,
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        {el.unit.charAt(0)}
+                      </InputAdornment>
+                    ),
+                  }}
+                  variant="standard"
+                  size="small"
+                />
               </Grid>
             </Grid>
           ))}
