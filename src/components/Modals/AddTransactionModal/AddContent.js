@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Avatar from "@mui/material/Avatar";
@@ -20,21 +20,41 @@ const AddContent = () => {
   const [values, setValues] = useState();
 
   const handleSubTransactions = (id) => {
-    if (!list.includes(items[id])) setList([...list, items[id]]);
-    setValues({ ...values, [id]: "" });
+    setList([...list, items[id]]);
+    const init = items[id].unit === "gr" ? ["", ""] : [1];
+    setValues({ ...values, [id]: init });
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
+    let newValues = values;
     const newList = list.filter((el) => el.id !== id);
-    setList(newList);
+    await setList(newList);
+
+    delete newValues[`${id}`];
+    setValues(newValues);
   };
 
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value,
-    });
+  const handleChange = (type, id) => (event) => {
+    const target = event.target;
+
+    if (type === "type") {
+      let second = values[target.name][1];
+      setValues({
+        ...values,
+        [target.name]:
+          second === undefined ? [target.value] : [target.value, second],
+      });
+    }
+
+    if (type === "working") {
+      let first = values[id][0];
+      setValues({
+        ...values,
+        [id]: [first, Number(target.value)],
+      });
+    }
   };
+
   return (
     <Box
       sx={{
@@ -81,7 +101,9 @@ const AddContent = () => {
 
         <Grid item container xs={12} justifyContent="center">
           {items
-            .filter((el) => el.type.includes(type))
+            .filter(
+              (el) => el.type.includes(type) && !list.includes(items[el.id])
+            )
             .map((el, index) => (
               <Grid item container key={index} xs={3}>
                 <Chip
@@ -118,17 +140,15 @@ const AddContent = () => {
         <Grid item xs={12}>
           {list.map((el, index) => (
             <Grid container item key={index} spacing={1} alignItems="center">
-              <Grid item xs={4}>
+              <Grid item xs={5}>
                 <Chip
                   sx={{
-                    fontSize: "0.7rem",
                     width: "100%",
                     justifyContent: "space-between",
                   }}
                   color="primary"
                   label={` ${el.type.substring(0, 3)} ${el.label} `}
                   variant="outlined"
-                  size="small"
                   onDelete={() => handleDelete(el.id)}
                   avatar={
                     <Avatar
@@ -142,15 +162,16 @@ const AddContent = () => {
                   }
                 />
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={4}>
                 <TextField
-                  value={values[el.id]}
-                  onChange={handleChange}
+                  value={values[el.id][0]}
+                  onChange={handleChange("type")}
                   sx={{ width: "100%" }}
                   name={el.id.toString()}
-                  id={`${el.unit === "gr" ? 2 : 0}`}
+                  id="formatted-numberformat-input"
                   InputProps={{
                     inputComponent: NumberFormatCustom,
+                    type: el.unit,
                     endAdornment: (
                       <InputAdornment position="end">
                         {el.unit.charAt(0)}
@@ -161,6 +182,23 @@ const AddContent = () => {
                   size="small"
                 />
               </Grid>
+              {el.unit === "gr" && (
+                <Grid item xs={3}>
+                  <TextField
+                    value={values[el.id][1]}
+                    onChange={handleChange("working", el.id)}
+                    type="number"
+                    variant="standard"
+                    size="small"
+                    sx={{ width: "100%" }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">m</InputAdornment>
+                      ),
+                    }}
+                  />
+                </Grid>
+              )}
             </Grid>
           ))}
         </Grid>
