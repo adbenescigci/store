@@ -11,8 +11,8 @@ const NumberFormatCustom = React.forwardRef((props, ref) => {
         onValueChange={(values) => {
           onChange({
             target: {
-              name: props.name,
-              value: values.floatValue,
+              name: Number(props.name),
+              value: values.value,
             },
           });
         }}

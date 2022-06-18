@@ -6,6 +6,8 @@ export const items = [
     history: "Yeni",
     unit: "piece",
     setting: "22",
+    amount: 1,
+    workship: 0,
   },
   {
     id: 1,
@@ -14,6 +16,8 @@ export const items = [
     history: "Eski",
     unit: "piece",
     setting: "22",
+    amount: 1,
+    workship: 0,
   },
   {
     id: 2,
@@ -22,6 +26,8 @@ export const items = [
     history: "Yeni",
     unit: "piece",
     setting: "22",
+    amount: 1,
+    workship: 0,
   },
   {
     id: 3,
@@ -30,6 +36,8 @@ export const items = [
     history: "Eski",
     unit: "piece",
     setting: "22",
+    amount: 1,
+    workship: 0,
   },
   {
     id: 4,
@@ -38,6 +46,8 @@ export const items = [
     history: "Yeni",
     unit: "piece",
     setting: "22",
+    amount: 1,
+    workship: 0,
   },
   {
     id: 5,
@@ -46,6 +56,8 @@ export const items = [
     history: "Eski",
     unit: "piece",
     setting: "22",
+    amount: 1,
+    workship: 0,
   },
   {
     id: 6,
@@ -54,6 +66,8 @@ export const items = [
     history: "Yeni",
     unit: "piece",
     setting: "22",
+    amount: 1,
+    workship: 0,
   },
   {
     id: 7,
@@ -62,6 +76,8 @@ export const items = [
     history: "Eski",
     unit: "piece",
     setting: "22",
+    amount: 1,
+    workship: 0,
   },
   {
     id: 8,
@@ -70,6 +86,8 @@ export const items = [
     history: "Yeni",
     unit: "piece",
     setting: "22",
+    amount: 1,
+    workship: 0,
   },
   {
     id: 9,
@@ -78,6 +96,8 @@ export const items = [
     history: "Eski",
     unit: "piece",
     setting: "22",
+    amount: 1,
+    workship: 0,
   },
   {
     id: 10,
@@ -86,6 +106,8 @@ export const items = [
     history: "Yeni",
     unit: "piece",
     setting: "22",
+    amount: 1,
+    workship: 0,
   },
   {
     id: 11,
@@ -94,6 +116,8 @@ export const items = [
     history: "Eski",
     unit: "piece",
     setting: "22",
+    amount: 1,
+    workship: 0,
   },
   {
     id: 12,
@@ -101,6 +125,8 @@ export const items = [
     label: "Bilezik",
     setting: "22",
     unit: "gr",
+    amount: 0,
+    workship: 0,
   },
   {
     id: 13,
@@ -108,6 +134,8 @@ export const items = [
     label: "Bilezik",
     setting: "18",
     unit: "gr",
+    amount: 0,
+    workship: 0,
   },
   {
     id: 14,
@@ -115,6 +143,8 @@ export const items = [
     label: "Bilezik",
     setting: "14",
     unit: "gr",
+    amount: 0,
+    workship: 0,
   },
   {
     id: 15,
@@ -122,6 +152,8 @@ export const items = [
     label: "Yuzuk",
     setting: "14",
     unit: "gr",
+    amount: 0,
+    workship: 0,
   },
   {
     id: 16,
@@ -129,6 +161,8 @@ export const items = [
     label: "Yuzuk",
     setting: "18",
     unit: "gr",
+    amount: 0,
+    workship: 0,
   },
   {
     id: 17,
@@ -136,6 +170,8 @@ export const items = [
     label: "Yuzuk",
     setting: "22",
     unit: "gr",
+    amount: 0,
+    workship: 0,
   },
   {
     id: 18,
@@ -143,6 +179,8 @@ export const items = [
     label: "Kunye",
     setting: "14",
     unit: "gr",
+    amount: 0,
+    workship: 0,
   },
   {
     id: 19,
@@ -150,6 +188,8 @@ export const items = [
     label: "Kunye",
     setting: "18",
     unit: "gr",
+    amount: 0,
+    workship: 0,
   },
   {
     id: 20,
@@ -157,6 +197,8 @@ export const items = [
     label: "Kunye",
     setting: "22",
     unit: "gr",
+    amount: 0,
+    workship: 0,
   },
   {
     id: 21,
@@ -164,6 +206,8 @@ export const items = [
     label: "Gerdanlik",
     setting: "14",
     unit: "gr",
+    amount: 0,
+    workship: 0,
   },
   {
     id: 22,
@@ -171,6 +215,8 @@ export const items = [
     label: "Gerdanlik",
     setting: "18",
     unit: "gr",
+    amount: 0,
+    workship: 0,
   },
   {
     id: 23,
@@ -178,6 +224,8 @@ export const items = [
     label: "Gerdanlik",
     setting: "22",
     unit: "gr",
+    amount: 0,
+    workship: 0,
   },
   {
     id: 24,
@@ -185,6 +233,8 @@ export const items = [
     label: "Set",
     setting: "14",
     unit: "gr",
+    amount: 0,
+    workship: 0,
   },
 
   {
@@ -193,6 +243,8 @@ export const items = [
     label: "Set",
     setting: "18",
     unit: "gr",
+    amount: 0,
+    workship: 0,
   },
   {
     id: 26,
@@ -200,34 +252,44 @@ export const items = [
     label: "Set",
     setting: "22",
     unit: "gr",
+    amount: 0,
+    workship: 0,
   },
   {
     id: 27,
     type: "Ziynet",
     label: "Gremse",
     unit: "piece",
+    amount: 1,
     setting: "22",
+    workship: 0,
   },
   {
     id: 28,
     type: "Ata",
     label: "Gremse",
     unit: "piece",
+    amount: 1,
     setting: "22",
+    workship: 0,
   },
   {
     id: 29,
     type: "Ziynet",
     label: "5'li",
     unit: "piece",
+    amount: 1,
     setting: "22",
+    workship: 0,
   },
   {
     id: 30,
     type: "Ata",
     label: "5'li",
     unit: "piece",
+    amount: 1,
     setting: "22",
+    workship: 0,
   },
 
   {
@@ -236,6 +298,8 @@ export const items = [
     label: "Gram A",
     unit: "piece",
     setting: "24",
+    amount: 1,
+    workship: 0,
   },
   {
     id: 32,
@@ -243,6 +307,8 @@ export const items = [
     label: "Gram A",
     unit: "piece",
     setting: "22",
+    amount: 1,
+    workship: 0,
   },
   {
     id: 33,
@@ -250,6 +316,8 @@ export const items = [
     label: "Gram A",
     unit: "piece",
     setting: "22",
+    amount: 1,
+    workship: 0,
   },
   {
     id: 34,
@@ -257,6 +325,8 @@ export const items = [
     label: "Diger",
     unit: "gr",
     setting: "22",
+    amount: 0,
+    workship: 0,
   },
   {
     id: 35,
@@ -264,6 +334,8 @@ export const items = [
     label: "Diger",
     unit: "gr",
     setting: "18",
+    amount: 0,
+    workship: 0,
   },
   {
     id: 36,
@@ -271,6 +343,8 @@ export const items = [
     label: "Diger",
     unit: "gr",
     setting: "14",
+    amount: 0,
+    workship: 0,
   },
   {
     id: 37,
@@ -278,17 +352,21 @@ export const items = [
     label: "Diger",
     unit: "gr",
     setting: "24",
+    amount: 0,
+    workship: 0,
   },
   {
     id: 38,
     type: "Saat",
     label: "Erkek",
     unit: "piece",
+    amount: 1,
   },
   {
     id: 39,
     type: "Saat",
     label: "Bayan",
     unit: "piece",
+    amount: 1,
   },
 ];
