@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import RefreshIcon from "@mui/icons-material/Refresh";
@@ -28,8 +28,8 @@ const Transactions = () => {
   const { state, dispatch } = useContext(ShopContext);
 
   //Functions
-  const onCloseModal = () => {
-    setOpen(false);
+  const onCloseModal = (e, reason) => {
+    if (reason !== "backdropClick") setOpen(false);
   };
 
   const addNewTransaction = async (newTransaction) => {

@@ -19,7 +19,7 @@ const style = (el) => ({
 
 const SelectedList = ({ list, handleDelete, handleChange }) => {
   return (
-    <Grid item xs={12}>
+    <Grid item container direction="column-reverse" xs={12}>
       {list.map((el, index) => (
         <Grid container item key={index} spacing={1} alignItems="center">
           <Grid item xs={5}>
@@ -59,7 +59,7 @@ const SelectedList = ({ list, handleDelete, handleChange }) => {
               <TextField
                 value={el.workship}
                 onChange={handleChange("workship", index)}
-                type="number"
+                type="tel"
                 variant="standard"
                 size="small"
                 sx={style().textField}

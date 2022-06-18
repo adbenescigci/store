@@ -52,7 +52,7 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
       <Grid item xs="auto">
         <Typography>Yeni islem</Typography>
       </Grid>
-      <Grid item container alignItems="center" xs={5}>
+      <Grid item container alignItems="center" xs={6}>
         <Typography>Alis</Typography>
         <Switch
           checked={transactionType}

@@ -10,6 +10,9 @@ export const modalStyles = {
     p: 4,
     display: "flex",
     flexDirection: "column",
+    overflow: "scroll",
+    height: "90%",
+    maxHeight: 600,
   },
   inputFields: {
     display: "flex",
