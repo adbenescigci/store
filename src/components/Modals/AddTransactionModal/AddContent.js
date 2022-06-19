@@ -6,6 +6,16 @@ import SelectedList from "./SelectedList";
 import AddTransactionNav from "./AddTransactionNav";
 import { items } from "../const/itemsList.js";
 
+const style = {
+  box: {
+    display: "flex",
+    flexDirection: "column",
+    "& > *": {
+      m: 1,
+    },
+  },
+};
+
 const AddContent = () => {
   const [list, setList] = useState([]);
   const [navType, setType] = useState("Ziynet");
@@ -30,15 +40,7 @@ const AddContent = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        "& > *": {
-          m: 1,
-        },
-      }}
-    >
+    <Box sx={style.box}>
       <Grid container spacing={2} justifyContent="center" alignItems="center">
         <AddTransactionNav setType={setType} />
         <ItemList

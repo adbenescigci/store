@@ -14,7 +14,11 @@ const style = (el) => ({
     bgcolor: "#5393ff !important",
     display: `${!el?.history ? "none" : ""}`,
   },
-  textField: { width: "100%" },
+  textField: { width: "100%", textAlign: "end" },
+  grid: {
+    border: "1px solid #2196f3",
+    p: 0,
+  },
 });
 
 const SelectedList = ({ list, handleDelete, handleChange }) => {
@@ -22,9 +26,10 @@ const SelectedList = ({ list, handleDelete, handleChange }) => {
     <Grid item container direction="column-reverse" xs={12}>
       {list.map((el, index) => (
         <Grid container item key={index} spacing={1} alignItems="center">
-          <Grid item xs={5}>
+          <Grid item xs={4}>
             <Chip
               sx={style().chip}
+              size="small"
               color="primary"
               label={` ${el.type.substring(0, 3)} ${el.label} `}
               variant="outlined"
@@ -34,7 +39,7 @@ const SelectedList = ({ list, handleDelete, handleChange }) => {
               }
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <TextField
               value={el.amount}
               onChange={handleChange("amount", index)}
@@ -54,8 +59,9 @@ const SelectedList = ({ list, handleDelete, handleChange }) => {
               size="small"
             />
           </Grid>
-          {el.unit === "gr" && (
-            <Grid item xs={3}>
+
+          <Grid item xs={2}>
+            {el.unit === "gr" && (
               <TextField
                 value={el.workship}
                 onChange={handleChange("workship", index)}
@@ -69,8 +75,25 @@ const SelectedList = ({ list, handleDelete, handleChange }) => {
                   ),
                 }}
               />
-            </Grid>
-          )}
+            )}
+          </Grid>
+
+          <Grid item xs={3}>
+            <TextField
+              align="center"
+              value={(
+                (el.setting / 24 + el.workship / 1000) *
+                el.amount
+              ).toFixed(2)}
+              type="tel"
+              variant="standard"
+              size="small"
+              InputProps={{
+                endAdornment: <InputAdornment position="end">h</InputAdornment>,
+              }}
+              sx={style().textField}
+            />
+          </Grid>
         </Grid>
       ))}
     </Grid>

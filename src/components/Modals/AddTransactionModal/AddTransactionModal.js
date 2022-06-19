@@ -52,7 +52,7 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
       <Grid item xs="auto">
         <Typography>Yeni islem</Typography>
       </Grid>
-      <Grid item container alignItems="center" xs={6}>
+      <Grid item container justifyContent="end" alignItems="center" xs={6}>
         <Typography>Alis</Typography>
         <Switch
           checked={transactionType}
@@ -67,7 +67,12 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
   const getFormContent = () => (
     <Box spacing={2} alignItems="center">
       <AddContent />
-      <TextField placeholder="Aciklama" name="description" label="Aciklama" />
+      <TextField
+        fullWidth
+        placeholder="Aciklama"
+        name="description"
+        label="Aciklama"
+      />
     </Box>
   );
 

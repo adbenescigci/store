@@ -19,11 +19,17 @@ const style = (el) => ({
 const ItemList = ({ handleSubTransactions, type }) => {
   return (
     <>
-      <Grid item container xs={12} justifyContent="center">
+      <Grid
+        item
+        container
+        justifyContent="center"
+        spacing={{ xs: 1, md: 2 }}
+        columns={{ xs: 1, sm: 2, md: 4 }}
+      >
         {items
           .filter((el) => el.type.includes(type))
           .map((el, index) => (
-            <Grid item container key={index} xs={3}>
+            <Grid item container key={index} xs={3} md={2}>
               <Chip
                 sx={style(el).chip}
                 avatar={
@@ -34,7 +40,6 @@ const ItemList = ({ handleSubTransactions, type }) => {
                 key={el.id}
                 size="small"
                 label={el.label}
-                variant="outlined"
               />
             </Grid>
           ))}

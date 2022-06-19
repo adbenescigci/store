@@ -7,24 +7,33 @@ import Divider from "@mui/material/Divider";
 import { mainNavbarItems } from "./consts/navbarItems";
 import { useNavigate } from "react-router-dom";
 
+const style = {
+  box: {
+    width: "100%",
+    display: { md: "none", sm: "none" },
+    position: "sticky",
+    top: "0",
+    zIndex: "1",
+  },
+  bottomNavigation: {
+    backgroundColor: "primary.main",
+  },
+  bottomNavigationAction: {
+    color: "#c6d8e7",
+    "&.Mui-selected": {
+      color: "white",
+    },
+  },
+};
+
 const NavbarMobile = () => {
   let navigate = useNavigate();
   const [value, setValue] = React.useState(0);
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        display: { md: "none", sm: "none" },
-        position: "sticky",
-        top: "0",
-        zIndex: "1",
-      }}
-    >
+    <Box sx={style.box}>
       <BottomNavigation
-        sx={{
-          backgroundColor: "primary.main",
-        }}
+        sx={style.bottomNavigation}
         showLabels
         value={value}
         onChange={(event, newValue) => {
@@ -33,12 +42,7 @@ const NavbarMobile = () => {
       >
         {mainNavbarItems.map((item) => (
           <BottomNavigationAction
-            sx={{
-              color: "#c6d8e7",
-              "&.Mui-selected": {
-                color: "white",
-              },
-            }}
+            sx={style.bottomNavigationAction}
             key={item.id}
             label={item.label}
             icon={item.icon}

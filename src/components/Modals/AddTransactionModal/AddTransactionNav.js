@@ -23,7 +23,7 @@ const AddTransactionNav = ({ setType }) => {
   const [value, setValue] = useState(0);
   return (
     <>
-      <Grid item justifyContent="center">
+      <Grid item xs={12} justifyContent="center">
         <BottomNavigation
           sx={style().bottomNavigation}
           showLabels
