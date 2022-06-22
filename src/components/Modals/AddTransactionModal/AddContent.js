@@ -26,7 +26,7 @@ const AddContent = () => {
     }
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id) => () => {
     const newList = list.filter((el) => el.id !== id);
     setList(newList);
   };

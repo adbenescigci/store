@@ -4,7 +4,6 @@ import Modal from "@mui/material/Modal";
 import CommonButton from "../CommonButton/CommonButton";
 import Divider from "@mui/material/Divider";
 import { modalStyles } from "./styles";
-
 const BasicModal = ({ open, onClose, title, content, onSubmit }) => {
   return (
     <Modal

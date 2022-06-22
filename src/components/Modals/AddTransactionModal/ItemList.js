@@ -9,6 +9,7 @@ const style = (el) => ({
     fontSize: "0.7rem",
     width: "100%",
     justifyContent: `${el.history ? "start" : "center"}`,
+    bgcolor: "#607d8b !important",
   },
   avatar: {
     bgcolor: "#5393ff !important",
@@ -35,11 +36,11 @@ const ItemList = ({ handleSubTransactions, type }) => {
                 avatar={
                   <Avatar sx={style(el).avatar}>{el.history?.charAt(0)}</Avatar>
                 }
-                color="primary"
                 onClick={handleSubTransactions(el.id)}
                 key={el.id}
                 size="small"
                 label={el.label}
+                color="primary"
               />
             </Grid>
           ))}
