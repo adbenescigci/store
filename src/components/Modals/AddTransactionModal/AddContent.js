@@ -17,12 +17,13 @@ const style = {
 };
 
 const AddContent = () => {
-  const [list, setList] = useState([]);
   const [navType, setType] = useState("Ziynet");
+  const [list, setList] = useState([]);
 
   const handleSubTransactions = (id) => () => {
     if (!list.find((el) => el.id === id)) {
-      setList([...list, items[id]]);
+      const item = { ...items[id] };
+      setList([...list, item]);
     }
   };
 

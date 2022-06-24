@@ -28,11 +28,11 @@ export const dashboardTheme = createTheme({
     // },
   },
 
-  //   palette: {
-  //     primary: {
-  //       main: "#167ac6",
-  //     },
-  //   },
+  palette: {
+    primary: {
+      main: "#b28900",
+    },
+  },
 
   typography: {
     fontFamily: [

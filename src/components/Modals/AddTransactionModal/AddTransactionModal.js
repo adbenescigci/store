@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Switch from "@mui/material/Switch";
-import Typography from "@mui/material/Typography";
 import BasicModal from "../../common/BasicModal/BasicModal";
 import AddContent from "./AddContent";
 import Grid from "@mui/material/Grid";
+import Chip from "@mui/material/Chip";
 
 const test = {
   title: "moc",
@@ -32,7 +32,7 @@ const test = {
 };
 
 const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
-  const [transactionType, setType] = useState(true);
+  const [transactionType, setType] = useState(false);
 
   const handleChangeType = (event) => {
     setType(event.target.checked);
@@ -42,25 +42,44 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
     addNewTransaction(test);
   };
 
+  const style = (el) => ({
+    chip: {
+      width: "70px",
+      fontWeight: "700",
+      color:
+        (el === "alis" && transactionType) ||
+        (el === "satis" && !transactionType)
+          ? "#b28900"
+          : "#cfd8dc",
+      borderColor:
+        (el === "alis" && transactionType) ||
+        (el === "satis" && !transactionType)
+          ? "#b28900"
+          : "#cfd8dc",
+    },
+    switch: {},
+  });
+
   const getTitle = () => (
-    <Grid
-      container
-      spacing={2}
-      justifyContent="space-between"
-      alignItems="center"
-    >
-      <Grid item xs="auto">
-        <Typography>Yeni islem</Typography>
-      </Grid>
-      <Grid item container justifyContent="end" alignItems="center" xs={6}>
-        <Typography>Alis</Typography>
-        <Switch
-          checked={transactionType}
-          onChange={handleChangeType}
-          inputProps={{ "aria-label": "controlled" }}
-        />
-        <Typography>Satis</Typography>
-      </Grid>
+    <Grid container justifyContent="center" alignItems="center">
+      <Chip
+        sx={style("satis").chip}
+        variant="outlined"
+        size="small"
+        label="Satiş"
+      />
+      <Switch
+        sx={style().switch}
+        checked={transactionType}
+        onChange={handleChangeType}
+        inputProps={{ "aria-label": "controlled" }}
+      />
+      <Chip
+        sx={style("alis").chip}
+        variant="outlined"
+        size="small"
+        label="Alis"
+      />
     </Grid>
   );
 

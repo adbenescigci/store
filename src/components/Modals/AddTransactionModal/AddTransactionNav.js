@@ -8,13 +8,15 @@ import Divider from "@mui/material/Divider";
 const style = (el) => ({
   bottomNavigation: {
     height: "40px",
-    backgroundColor: "primary.main",
+    borderRadius: 1,
+    bgcolor: "black",
+    opacity: "0.78",
   },
   bottomNavigationAction: {
     minWidth: "45px",
     color: "#c6d8e7",
     "&.Mui-selected": {
-      color: "white",
+      color: "#b28900",
     },
   },
 });

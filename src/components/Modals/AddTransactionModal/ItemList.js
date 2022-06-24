@@ -9,10 +9,13 @@ const style = (el) => ({
     fontSize: "0.7rem",
     width: "100%",
     justifyContent: `${el.history ? "start" : "center"}`,
-    bgcolor: "#607d8b !important",
+    borderRadius: 1,
+    color: "#b28900",
+    borderColor: "#b28900",
   },
   avatar: {
-    bgcolor: "#5393ff !important",
+    bgcolor: "#b28900",
+    color: "white !important",
     display: `${!el.history ? "none" : ""}`,
   },
 });
@@ -40,7 +43,7 @@ const ItemList = ({ handleSubTransactions, type }) => {
                 key={el.id}
                 size="small"
                 label={el.label}
-                color="primary"
+                variant="outlined"
               />
             </Grid>
           ))}

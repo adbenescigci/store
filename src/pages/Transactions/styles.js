@@ -11,5 +11,7 @@ export const cardHeaderStyles = {
   },
   newTransactionButton: {
     fontSize: ["0.8rem", "1.05rem"],
+    backgroundColor: "#212121 ! important",
+    color: "#b28900",
   },
 };

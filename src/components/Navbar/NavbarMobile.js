@@ -16,12 +16,13 @@ const style = {
     zIndex: "1",
   },
   bottomNavigation: {
-    backgroundColor: "primary.main",
+    backgroundColor: "black",
+    opacity: "0.88",
   },
   bottomNavigationAction: {
     color: "#c6d8e7",
     "&.Mui-selected": {
-      color: "white",
+      color: "#b28900",
     },
   },
 };

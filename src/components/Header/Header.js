@@ -9,7 +9,7 @@ const Header = ({ title }) => {
     display: "flex",
     zIndex: "3",
     flexDirection: "row",
-    backgroundColor: "#009be5",
+    backgroundColor: "#757575",
     justifyContent: "end",
     alignItems: "center",
     padding: "0",

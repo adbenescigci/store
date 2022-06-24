@@ -23,8 +23,8 @@ const NavbarDesktop = () => {
         "& .MuiDrawer-paper": {
           width: drawerWidth,
           boxSizing: "border-box",
-          backgroundColor: "primary.main",
-          color: "white",
+          backgroundColor: "#212121",
+          color: "#b28900",
         },
       }}
       variant="permanent"

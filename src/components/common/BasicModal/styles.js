@@ -15,6 +15,9 @@ export const modalStyles = {
     flexDirection: "column",
     overflow: "auto",
     maxHeight: "80%",
+    "& > * ": {
+      fontFamily: "Roboto",
+    },
   },
   inputFields: {
     display: "flex",
@@ -26,16 +29,18 @@ export const modalStyles = {
     },
   },
   buttons: {
-    position: "sticky",
     bottom: "1px",
     display: "flex",
     justifyContent: "space-evenly",
     marginTop: "10px",
-    background: "white",
     zIndex: 10,
     padding: 1,
-    "&:hover": {
-      background: "black",
+    ".MuiButton-text": {
+      color: "#212121",
+    },
+    ".MuiButton-text:hover": {
+      fontWeight: 700,
+      color: "#b28900",
     },
   },
 };
