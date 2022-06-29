@@ -2,18 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
-import { dashboardTheme } from "./dashboardTheme";
 import CssBaseline from "@mui/material/CssBaseline";
-import "./index.css";
 import App from "./App";
+import { theme } from "./theme";
 import { mainNavbarItems } from "./components/Navbar/consts/navbarItems";
 import ContextProvider from "./contextProvider/ContextProvider";
 
+import "./index.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <ContextProvider>
-    <ThemeProvider theme={dashboardTheme}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
         <Routes>

@@ -50,7 +50,6 @@ const Transactions = () => {
   };
 
   const refresh = async () => {
-    console.log(state);
     const { data } = await refreshTransactions(state.lastUpdated);
     dispatch({ type: "REFRESH", data });
   };

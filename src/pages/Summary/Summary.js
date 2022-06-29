@@ -1,12 +1,8 @@
 import React from "react";
-import Grid from "@mui/material/Grid";
+import BoxWrapper from "../../components/common/BoxWrapper/BoxWrapper";
 
 const Summary = () => {
-  return (
-    <Grid item xs={8}>
-      Summary page
-    </Grid>
-  );
+  return <BoxWrapper>Summary page</BoxWrapper>;
 };
 
 export default Summary;

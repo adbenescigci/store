@@ -1,7 +1,8 @@
 import React from "react";
+import BoxWrapper from "../../components/common/BoxWrapper/BoxWrapper";
 
 const Items = () => {
-  return <div>Items</div>;
+  return <BoxWrapper>Urun Lis</BoxWrapper>;
 };
 
 export default Items;

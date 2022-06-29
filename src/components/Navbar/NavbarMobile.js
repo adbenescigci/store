@@ -12,12 +12,12 @@ const style = {
     width: "100%",
     display: { md: "none", sm: "none" },
     position: "sticky",
-    top: "0",
+    top: "6%",
     zIndex: "1",
   },
   bottomNavigation: {
     backgroundColor: "black",
-    opacity: "0.88",
+    opacity: "0.78",
   },
   bottomNavigationAction: {
     color: "#c6d8e7",

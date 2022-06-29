@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 
-export const dashboardTheme = createTheme({
+export const theme = createTheme({
   components: {
     // Name of the component
     MuiButton: {
@@ -31,6 +31,13 @@ export const dashboardTheme = createTheme({
   palette: {
     primary: {
       main: "#b28900",
+    },
+
+    info: {
+      main: "#b2ff59",
+    },
+    info2: {
+      main: "#e53935",
     },
   },
 

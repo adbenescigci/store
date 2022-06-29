@@ -1,12 +1,8 @@
 import React from "react";
-import Grid from "@mui/material/Grid";
+import BoxWrapper from "../../components/common/BoxWrapper/BoxWrapper";
 
 const Case = () => {
-  return (
-    <Grid item xs={8}>
-      Case page
-    </Grid>
-  );
+  return <BoxWrapper>Case page</BoxWrapper>;
 };
 
 export default Case;

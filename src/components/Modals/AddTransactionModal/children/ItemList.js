@@ -2,7 +2,7 @@ import Chip from "@mui/material/Chip";
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
-import { items } from "../const/itemsList.js";
+import { items } from "../../const/itemsList.js";
 
 const style = (el) => ({
   chip: {

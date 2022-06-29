@@ -44,7 +44,7 @@ const App = () => {
     row: {
       width: "100%",
       height: "100%",
-      backgroundColor: "#eaeff1",
+      backgroundColor: "#f5f5f5",
     },
   };
 

@@ -1,33 +1,20 @@
 import React from "react";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import ExitToAppRoundedIcon from "@mui/icons-material/ExitToAppRounded";
+import { styles } from "./styles";
+import Grid from "@mui/material/Grid";
 
 const Header = ({ title }) => {
-  const headerStyles = {
-    width: "100%",
-    display: "flex",
-    zIndex: "3",
-    flexDirection: "row",
-    backgroundColor: "#757575",
-    justifyContent: "end",
-    alignItems: "center",
-    padding: "0",
-    height: ["50px", "65px"],
-    margin: "0",
-    "*": {
-      padding: ["1px", "5px"],
-      "&:hover": {
-        color: "#fff",
-        cursor: "pointer",
-      },
-    },
-  };
-
   return (
-    <Box sx={headerStyles}>
-      <Avatar>RC</Avatar>
-      <ExitToAppRoundedIcon sx={{ color: "white" }} />
+    <Box sx={styles.box}>
+      <Grid sx={styles.grid} alignItems="center" spacing={1} container>
+        <Grid item xs={10}>
+          <label>BURÇ</label> KUYUMCULUK
+        </Grid>
+        <Grid item xs={2}>
+          <Avatar>RC</Avatar>
+        </Grid>
+      </Grid>
     </Box>
   );
 };

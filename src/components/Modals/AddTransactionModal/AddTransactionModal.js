@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Switch from "@mui/material/Switch";
 import BasicModal from "../../common/BasicModal/BasicModal";
-import AddContent from "./AddContent";
+import AddContent from "./children/AddContent";
 import Grid from "@mui/material/Grid";
 import Chip from "@mui/material/Chip";
 
@@ -85,7 +85,7 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
 
   const getFormContent = () => (
     <Box spacing={2} alignItems="center">
-      <AddContent />
+      <AddContent type={transactionType} />
       <TextField
         fullWidth
         placeholder="Aciklama"
