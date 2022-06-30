@@ -9,8 +9,7 @@ const style = (el) => ({
   bottomNavigation: {
     height: "40px",
     borderRadius: 1,
-    bgcolor: "black",
-    opacity: "0.78",
+    bgcolor: "#212121",
   },
   bottomNavigationAction: {
     minWidth: "45px",

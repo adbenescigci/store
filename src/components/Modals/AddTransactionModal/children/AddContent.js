@@ -19,7 +19,7 @@ const style = {
 const AddContent = ({ type }) => {
   const [navType, setType] = useState("Ziynet");
   const [list, setList] = useState([]);
-  const transactionType = type ? "alis" : "satis";
+  const transactionType = type ? "Aliş" : "Satiş";
 
   const handleSubTransactions = (id) => () => {
     if (!list.find((el) => el.id === id)) {
@@ -27,24 +27,6 @@ const AddContent = ({ type }) => {
       setList([...list, item]);
     }
   };
-
-  const handleDelete = useCallback(
-    (id) => () => {
-      const newList = list.filter((el) => el.id !== id);
-      setList(newList);
-    },
-    [list]
-  );
-
-  const handleChange = useCallback(
-    (type, index) => (event) => {
-      const { value } = event.target;
-      let newList = [...list];
-      newList[index][type] = Number(value);
-      setList(newList);
-    },
-    [list]
-  );
 
   return (
     <Box sx={style.box}>
@@ -55,11 +37,7 @@ const AddContent = ({ type }) => {
           type={navType}
           list={list}
         />
-        <SelectedList
-          list={list}
-          handleDelete={handleDelete}
-          handleChange={handleChange}
-        />
+        <SelectedList list={list} setList={setList} />
       </Grid>
     </Box>
   );
