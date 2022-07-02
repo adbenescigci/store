@@ -35,8 +35,6 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
   const refDescription = useRef();
   const ref = useRef({ refPayment, refEarn, refDescription });
 
-  console.log(refPayment?.current?.value, refDescription?.current?.value);
-
   const onCloseModal = () => {
     onClose();
     setType(false);

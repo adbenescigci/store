@@ -29,7 +29,6 @@ const AddContent = React.forwardRef(({ type }, ref) => {
   const transactionType = type ? "Aliş" : "Satiş";
 
   const { refPayment, refEarn, refDescription } = ref.current;
-
   const handleSubTransactions = (id) => () => {
     if (!list.find((el) => el.id === id)) {
       const item = { ...items[id], transactionType };
