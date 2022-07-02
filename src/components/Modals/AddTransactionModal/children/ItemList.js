@@ -1,3 +1,4 @@
+import React from "react";
 import Chip from "@mui/material/Chip";
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
@@ -26,7 +27,7 @@ const style = (el, list) => ({
 
 const ItemList = ({ handleSubTransactions, type, list }) => {
   return (
-    <>
+    <React.Fragment>
       <Grid
         item
         container
@@ -55,7 +56,7 @@ const ItemList = ({ handleSubTransactions, type, list }) => {
       <Grid item xs={12}>
         <Divider />
       </Grid>
-    </>
+    </React.Fragment>
   );
 };
 

@@ -1,11 +1,7 @@
-import React, { useState } from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Switch from "@mui/material/Switch";
+import { useState, useRef } from "react";
 import BasicModal from "../../common/BasicModal/BasicModal";
 import AddContent from "./children/AddContent";
-import Grid from "@mui/material/Grid";
-import Chip from "@mui/material/Chip";
+import SwitchType from "./children/SwitchType";
 
 const test = {
   title: "moc",
@@ -34,73 +30,29 @@ const test = {
 const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
   const [transactionType, setType] = useState(false);
 
-  const handleChangeType = (event) => {
-    setType(event.target.checked);
+  const refPayment = useRef();
+  const refEarn = useRef();
+  const refDescription = useRef();
+  const ref = useRef({ refPayment, refEarn, refDescription });
+
+  console.log(refPayment?.current?.value, refDescription?.current?.value);
+
+  const onCloseModal = () => {
+    onClose();
+    setType(false);
   };
 
   const handleSubmit = () => {
     addNewTransaction(test);
+    setType(false);
   };
-
-  const style = (el) => ({
-    chip: {
-      width: "70px",
-      fontWeight: "700",
-      color:
-        (el === "alis" && transactionType) ||
-        (el === "satis" && !transactionType)
-          ? "#b28900"
-          : "#cfd8dc",
-      borderColor:
-        (el === "alis" && transactionType) ||
-        (el === "satis" && !transactionType)
-          ? "#b28900"
-          : "#cfd8dc",
-    },
-    switch: {},
-  });
-
-  const getTitle = () => (
-    <Grid container justifyContent="center" alignItems="center">
-      <Chip
-        sx={style("satis").chip}
-        variant="outlined"
-        size="small"
-        label="Satiş"
-      />
-      <Switch
-        sx={style().switch}
-        checked={transactionType}
-        onChange={handleChangeType}
-        inputProps={{ "aria-label": "controlled" }}
-      />
-      <Chip
-        sx={style("alis").chip}
-        variant="outlined"
-        size="small"
-        label="Alis"
-      />
-    </Grid>
-  );
-
-  const getFormContent = () => (
-    <Box spacing={2} alignItems="center">
-      <AddContent type={transactionType} />
-      <TextField
-        fullWidth
-        placeholder="Aciklama"
-        name="description"
-        label="Aciklama"
-      />
-    </Box>
-  );
 
   return (
     <BasicModal
       open={open}
-      onClose={onClose}
-      title={getTitle()}
-      content={getFormContent()}
+      onClose={onCloseModal}
+      title={<SwitchType type={transactionType} setType={setType} />}
+      content={<AddContent ref={ref} type={transactionType} />}
       onSubmit={handleSubmit}
     />
   );

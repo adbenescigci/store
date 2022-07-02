@@ -14,7 +14,7 @@ const style = (el) => ({
     color: "#424242",
   },
   chipType: {
-    width: "70%",
+    width: ["90", "70%"],
     justifyContent: "center",
     bgcolor: el.transactionType === "Aliş" && "#b28900",
     color: el.transactionType !== "Aliş" ? "#424242" : "white",
