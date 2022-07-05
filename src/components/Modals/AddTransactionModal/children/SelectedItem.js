@@ -1,9 +1,10 @@
+import { memo } from "react";
 import Chip from "@mui/material/Chip";
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import NumberFormatCustom from "../../../common/NumberInput/NumberFormatCustom";
-import { memo } from "react";
+import { useSelectedList } from "../../../../hooks/useSelectedList";
 
 const style = (el) => ({
   chip: {
@@ -33,7 +34,9 @@ const style = (el) => ({
   },
 });
 
-const SelectedItem = ({ el, index, handleDelete, handleChange }) => {
+const SelectedItem = ({ el, index }) => {
+  const { handleDelete, handleChange } = useSelectedList();
+
   return (
     <Grid container item spacing={1} alignItems="center">
       <Grid item align="center" xs={2}>

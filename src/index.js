@@ -6,13 +6,13 @@ import CssBaseline from "@mui/material/CssBaseline";
 import App from "./App";
 import { theme } from "./theme";
 import { mainNavbarItems } from "./components/Navbar/consts/navbarItems";
-import ContextProvider from "./contextProvider/ContextProvider";
+import TransactionsProvider from "./providers/TransactionsProvider";
 
 import "./index.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <ContextProvider>
+  <TransactionsProvider>
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
@@ -25,5 +25,5 @@ root.render(
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
-  </ContextProvider>
+  </TransactionsProvider>
 );

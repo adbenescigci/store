@@ -15,8 +15,8 @@ import CommonButton from "../../components/common/CommonButton/CommonButton";
 import BoxWrapper from "../../components/common/BoxWrapper/BoxWrapper";
 import { cardHeaderStyles } from "./styles";
 import AddTransactionModal from "../../components/Modals/AddTransactionModal/AddTransactionModal.js";
-
-import { ShopContext } from "../../contextProvider/ContextProvider";
+import { ShopContext } from "../../providers/TransactionsProvider";
+import SelectedItemsProvider from "../../providers/SelectedItemsProvider";
 import {
   doTransaction,
   updateTransaction,
@@ -33,25 +33,20 @@ const Transactions = () => {
   };
 
   const addNewTransaction = async (newTransaction) => {
-    try {
-      await doTransaction(newTransaction);
-    } catch (error) {
-      console.log(error.message);
-    }
-    setOpen(false);
+    await doTransaction(newTransaction);
     refresh();
   };
 
   const removeTransaction = async (index) => {
     const id = state.transactions[index]._id;
     await updateTransaction(id, { isDeleted: true });
-    dispatch({ type: "REMOVE_TRANSACTION", id });
     refresh();
   };
 
   const refresh = async () => {
-    const { data } = await refreshTransactions(state.lastUpdated);
+    const { data } = await refreshTransactions(state?.lastUpdated);
     dispatch({ type: "REFRESH", data });
+    setOpen(false);
   };
 
   //Header
@@ -60,7 +55,7 @@ const Transactions = () => {
       console.log(value);
     };
 
-    const addTransaction = () => {
+    const openTransactionModal = () => {
       setOpen(true);
     };
 
@@ -73,7 +68,7 @@ const Transactions = () => {
         <Box sx={{ display: "flex", flexDirection: "row" }}>
           <CommonButton
             variant="contained"
-            onClick={addTransaction}
+            onClick={openTransactionModal}
             size="medium"
             sx={cardHeaderStyles.newTransactionButton}
           >
@@ -123,11 +118,13 @@ const Transactions = () => {
   return (
     <BoxWrapper>
       <BasicCard header={getHeader()} content={getContent()} />
-      <AddTransactionModal
-        open={open}
-        onClose={onCloseModal}
-        addNewTransaction={addNewTransaction}
-      />
+      <SelectedItemsProvider>
+        <AddTransactionModal
+          open={open}
+          onClose={onCloseModal}
+          addNewTransaction={addNewTransaction}
+        />
+      </SelectedItemsProvider>
     </BoxWrapper>
   );
 };

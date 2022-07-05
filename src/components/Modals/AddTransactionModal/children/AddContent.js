@@ -7,6 +7,7 @@ import AddTransactionNav from "./AddTransactionNav";
 import TextField from "@mui/material/TextField";
 import NumberFormatCustom from "../../../common/NumberInput/NumberFormatCustom";
 import { items } from "../../const/itemsList.js";
+import { useSelectedList } from "../../../../hooks/useSelectedList";
 
 const style = (e) => ({
   box: {
@@ -25,12 +26,13 @@ const style = (e) => ({
 
 const AddContent = React.forwardRef(({ type }, ref) => {
   const [navType, setType] = useState("Ziynet");
-  const [list, setList] = useState([]);
+
+  const { list, setList } = useSelectedList();
+  const { refPayment, refEarn, refDescription } = ref.current;
   const transactionType = type ? "Aliş" : "Satiş";
 
-  const { refPayment, refEarn, refDescription } = ref.current;
   const handleSubTransactions = (id) => () => {
-    if (!list.find((el) => el.id === id)) {
+    if (!list?.find((el) => el.id === id)) {
       const item = { ...items[id], transactionType };
       setList([...list, item]);
     }
@@ -45,7 +47,7 @@ const AddContent = React.forwardRef(({ type }, ref) => {
           type={navType}
           list={list}
         />
-        <SelectedList list={list} setList={setList} />
+        <SelectedList />
 
         <Grid
           item

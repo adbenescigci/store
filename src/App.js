@@ -1,12 +1,12 @@
 import React, { useEffect, useContext } from "react";
 import { Outlet } from "react-router";
-import Box from "@mui/material/Box";
-import NavbarDesktop from "./components/Navbar/NavbarDesktop.js";
-import NavbarMobile from "./components/Navbar/NavbarMobile.js";
 import { useNavigate, useLocation } from "react-router-dom";
+import Box from "@mui/material/Box";
+import NavbarMobile from "./components/Navbar/NavbarMobile.js";
+import NavbarDesktop from "./components/Navbar/NavbarDesktop.js";
 import Header from "./components/Header/Header";
 import { getDailyTransactions } from "./api/index";
-import { ShopContext } from "./contextProvider/ContextProvider";
+import { ShopContext } from "./providers/TransactionsProvider";
 
 const App = () => {
   const { dispatch } = useContext(ShopContext);
@@ -16,6 +16,7 @@ const App = () => {
 
   const fetchTransactions = async () => {
     const { data } = await getDailyTransactions();
+    console.log(data);
     dispatch({
       type: "FETCH_TRANSACTIONS",
       data,

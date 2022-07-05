@@ -2,7 +2,7 @@ import React, { useReducer } from "react";
 
 export const ShopContext = React.createContext();
 
-const ContextProvider = ({ children }) => {
+const TransactionsProvider = ({ children }) => {
   const shopReducer = (state, action) => {
     switch (action.type) {
       case "FETCH_TRANSACTIONS":
@@ -14,10 +14,28 @@ const ContextProvider = ({ children }) => {
         const transactions = state.transactions.filter(
           (el) => el._id !== action.id
         );
-        return { ...state, transactions };
+        const removedState = {
+          transactions,
+          lastUpdated: Date.now() + 1000,
+        };
+        return removedState;
+      case "ADD_TRANSACTION":
+        const updatedState = {
+          transactions: [action.newTransaction, ...state.transactions],
+          lastUpdated: Date.now() + 1000,
+        };
+        return updatedState;
       case "REFRESH":
+        let rTransactions = [...state.transactions];
+
+        if (action.data.deletedItemsIds.length > 0) {
+          action.data.deletedItemsIds.forEach((itemId) => {
+            rTransactions = rTransactions.filter((el) => itemId !== el._id);
+          });
+        }
+
         const newState = {
-          transactions: [...action.data.transactions, ...state.transactions],
+          transactions: [...action.data.transactions, ...rTransactions],
           lastUpdated: action.data.time,
         };
         return newState;
@@ -34,4 +52,4 @@ const ContextProvider = ({ children }) => {
   );
 };
 
-export default ContextProvider;
+export default TransactionsProvider;

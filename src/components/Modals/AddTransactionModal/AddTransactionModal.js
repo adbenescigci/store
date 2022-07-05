@@ -2,30 +2,7 @@ import { useState, useRef } from "react";
 import BasicModal from "../../common/BasicModal/BasicModal";
 import AddContent from "./children/AddContent";
 import SwitchType from "./children/SwitchType";
-
-const test = {
-  title: "moc",
-  description: "Ahmet Dugun",
-  user: "Ahmet",
-  subTransactions: [
-    {
-      transactionType: "alis",
-      goldType: "bileklik",
-      amount: "200",
-      workmanship: "50",
-      goldSetting: 22,
-    },
-    {
-      transactionType: "alis",
-      goldType: "kunye",
-      amount: "2500",
-      workmanship: "90",
-      goldSetting: 14,
-    },
-  ],
-  payment: ["100USD", "2500TL"],
-  paymentType: "cash",
-};
+import { useSelectedList } from "../../../hooks/useSelectedList";
 
 const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
   const [transactionType, setType] = useState(false);
@@ -35,14 +12,26 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
   const refDescription = useRef();
   const ref = useRef({ refPayment, refEarn, refDescription });
 
-  const onCloseModal = () => {
-    onClose();
+  const { list, setList } = useSelectedList();
+
+  const onCloseModal = (el, reason) => {
+    onClose(el, reason);
     setType(false);
   };
 
-  const handleSubmit = () => {
-    addNewTransaction(test);
+  const handleSubmit = async () => {
+    const transaction = {
+      title: refDescription?.current?.value ?? "deneme",
+      description: refDescription?.current?.value,
+      user: "Ahmet",
+      subTransactions: list,
+      payment: refPayment?.current?.value,
+      aproxProfit: refEarn?.current?.value,
+    };
+    await addNewTransaction(transaction);
+
     setType(false);
+    setList([]);
   };
 
   return (

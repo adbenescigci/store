@@ -1,7 +1,8 @@
-import { memo, useCallback } from "react";
+import { memo } from "react";
 import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
 import SelectedItem from "./SelectedItem";
+import { useSelectedList } from "../../../../hooks/useSelectedList";
 
 const style = () => ({
   chip: {
@@ -21,27 +22,11 @@ const label = [
   { name: "milem", gSize: 3 },
 ];
 
-const SelectedList = ({ list, setList }) => {
-  const handleDelete = useCallback(
-    (id) => () => {
-      const newList = list.filter((el) => el.id !== id);
-      setList(newList);
-    },
-    [list, setList]
-  );
-
-  const handleChange = useCallback(
-    (type, index) => (event) => {
-      const { value } = event.target;
-      let newList = [...list];
-      newList[index][type] = Number(value);
-      setList(newList);
-    },
-    [list, setList]
-  );
+const SelectedList = () => {
+  const { list } = useSelectedList();
   return (
     <>
-      {list.length > 0 && (
+      {list?.length > 0 && (
         <Grid item container xs={12}>
           {label.map((el, index) => (
             <Grid key={index} item xs={el.gSize}>
@@ -56,14 +41,8 @@ const SelectedList = ({ list, setList }) => {
         </Grid>
       )}
       <Grid item container spacing={1} direction="column-reverse" xs={12}>
-        {list.map((el, index) => (
-          <SelectedItem
-            key={index}
-            el={el}
-            index={index}
-            handleDelete={handleDelete}
-            handleChange={handleChange}
-          />
+        {list?.map((el, index) => (
+          <SelectedItem key={index} el={el} index={index} />
         ))}
       </Grid>
     </>

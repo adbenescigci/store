@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import CommonButton from "../CommonButton/CommonButton";
 import { modalStyles } from "./styles";
+
 const BasicModal = ({ open, onClose, title, content, onSubmit }) => {
   return (
     <Modal
