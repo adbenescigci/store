@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import CommonButton from "../CommonButton/CommonButton";
 import { modalStyles } from "./styles";
 
-const BasicModal = ({ open, onClose, title, content, onSubmit }) => {
+const BasicModal = ({
+  open,
+  onClose,
+  title,
+  content,
+  onSubmit,
+  isSubmitButtonDisabled,
+}) => {
+  const [isDisabled, setDisable] = React.useState(isSubmitButtonDisabled);
+
+  const onClick = (data) => {
+    setDisable(true);
+    onSubmit(data);
+  };
+
+  useEffect(() => {
+    setDisable(isSubmitButtonDisabled);
+  }, [isSubmitButtonDisabled]);
+
   return (
     <Modal
       open={open}
@@ -16,7 +34,9 @@ const BasicModal = ({ open, onClose, title, content, onSubmit }) => {
         {title}
         {content}
         <Box sx={modalStyles.buttons}>
-          <CommonButton onClick={onSubmit}>Onayla</CommonButton>
+          <CommonButton disabled={isDisabled} onClick={onClick}>
+            Onayla
+          </CommonButton>
           <CommonButton onClick={onClose}>Iptal</CommonButton>
         </Box>
       </Box>

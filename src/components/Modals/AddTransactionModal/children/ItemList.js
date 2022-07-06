@@ -53,9 +53,6 @@ const ItemList = ({ handleSubTransactions, type, list }) => {
             </Grid>
           ))}
       </Grid>
-      <Grid item xs={12}>
-        <Divider />
-      </Grid>
     </React.Fragment>
   );
 };
