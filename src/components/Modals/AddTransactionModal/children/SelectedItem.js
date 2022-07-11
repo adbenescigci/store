@@ -87,6 +87,9 @@ const SelectedItem = ({ el, index }) => {
           />
         )}
       </Grid>
+      <Grid item xs>
+        <Chip sx={style(el).chip} size="small" label={el.total} />
+      </Grid>
     </Grid>
   );
 };

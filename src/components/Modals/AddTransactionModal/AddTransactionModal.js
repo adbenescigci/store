@@ -6,6 +6,7 @@ import { useSelectedList } from "../../../hooks/useSelectedList";
 
 const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
   const [transactionType, setType] = useState(false);
+
   const refPayment = useRef();
   const refEarn = useRef();
   const refDescription = useRef();

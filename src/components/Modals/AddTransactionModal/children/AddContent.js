@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
+import Avatar from "@mui/material/Avatar";
 import ItemList from "./ItemList";
 import SelectedList from "./SelectedList";
 import AddTransactionNav from "./AddTransactionNav";
 import TextField from "@mui/material/TextField";
+import Chip from "@mui/material/Chip";
 import NumberFormatCustom from "../../../common/NumberInput/NumberFormatCustom";
 import { items } from "../../const/itemsList.js";
 import { useSelectedList } from "../../../../hooks/useSelectedList";
 
-const style = (e) => ({
+const style = (el) => ({
   box: {
     display: "flex",
     flexDirection: "column",
@@ -23,12 +25,22 @@ const style = (e) => ({
     textAlign: "center",
     fontSize: "1rem",
   },
+
+  chip: {
+    borderColor: "#b28900",
+    justifyContent: "start",
+  },
+
+  avatar: {
+    bgcolor: "#b28900 !important",
+    color: "white !important",
+  },
 });
 
 const AddContent = React.forwardRef(({ type }, ref) => {
   const [navType, setType] = useState("Ziynet");
+  const { list, sumAlis, sumSatis, setList } = useSelectedList();
 
-  const { list, setList } = useSelectedList();
   const { refPayment, refEarn, refDescription } = ref.current;
   const transactionType = type ? "Aliş" : "Satiş";
 
@@ -55,58 +67,20 @@ const AddContent = React.forwardRef(({ type }, ref) => {
             <Grid item xs={12}>
               <Divider />
             </Grid>
-            <Grid item container spacing={3}>
-              <Grid item xs={4}>
-                <TextField
-                  name="Toplam"
-                  label="Toplam"
-                  focused
-                  id="formatted-numberformat-input"
-                  variant="standard"
-                  InputProps={{
-                    inputComponent: NumberFormatCustom,
-                    inputProps: {
-                      style: style().textField,
-                    },
-                    endAdornment: "gr",
-                  }}
-                  size="small"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  name="Toplam"
-                  label="Toplam"
-                  focused
-                  id="formatted-numberformat-input"
-                  variant="standard"
-                  InputProps={{
-                    inputComponent: NumberFormatCustom,
-                    inputProps: {
-                      style: style().textField,
-                    },
-                    endAdornment: "gr",
-                  }}
-                  size="small"
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  name="Toplam"
-                  label="Toplam"
-                  focused
-                  id="formatted-numberformat-input"
-                  variant="standard"
-                  InputProps={{
-                    inputComponent: NumberFormatCustom,
-                    inputProps: {
-                      style: style().textField,
-                    },
-                    endAdornment: "gr",
-                  }}
-                  size="small"
-                />
-              </Grid>
+
+            <Grid item container spacing={1}>
+              {[sumAlis, sumSatis, Number((sumSatis - sumAlis).toFixed(3))].map(
+                (el, index) => (
+                  <Grid key={index} item xs={4}>
+                    <Chip
+                      avatar={<Avatar sx={style(el).avatar}> {el} </Avatar>}
+                      sx={style().chip}
+                      size="small"
+                      label={el}
+                    />
+                  </Grid>
+                )
+              )}
             </Grid>
             <Grid
               item
@@ -124,6 +98,8 @@ const AddContent = React.forwardRef(({ type }, ref) => {
                   inputRef={refDescription}
                   placeholder="Aciklama"
                   name="description"
+                  multiline
+                  rows={3}
                   label="Aciklama"
                   variant="filled"
                   InputProps={{

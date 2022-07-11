@@ -2,19 +2,18 @@ import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
 import Chip from "@mui/material/Chip";
 
-const SwitchType = ({ transactionType, setType }) => {
+const SwitchType = ({ type, setType }) => {
+  console.log(type);
   const style = (el) => ({
     chip: {
       width: "70px",
       fontWeight: "700",
       color:
-        (el === "alis" && transactionType) ||
-        (el === "satis" && !transactionType)
+        (el === "alis" && type) || (el === "satis" && !type)
           ? "#b28900"
           : "#cfd8dc",
       borderColor:
-        (el === "alis" && transactionType) ||
-        (el === "satis" && !transactionType)
+        (el === "alis" && type) || (el === "satis" && !type)
           ? "#b28900"
           : "#cfd8dc",
     },
@@ -34,7 +33,7 @@ const SwitchType = ({ transactionType, setType }) => {
       />
       <Switch
         sx={style().switch}
-        checked={transactionType}
+        checked={type}
         onChange={handleChangeType}
         inputProps={{ "aria-label": "controlled" }}
       />

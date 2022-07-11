@@ -18,8 +18,9 @@ const style = () => ({
 const label = [
   { name: "islem", gSize: 2 },
   { name: "ürünler", gSize: 4 },
-  { name: "gr/ad", gSize: 3 },
-  { name: "milem", gSize: 3 },
+  { name: "gr/ad", gSize: 2 },
+  { name: "milem", gSize: 2 },
+  { name: "has", gSize: 2 },
 ];
 
 const SelectedList = () => {
