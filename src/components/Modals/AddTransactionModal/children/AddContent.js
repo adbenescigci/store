@@ -28,12 +28,18 @@ const style = (el) => ({
 
   chip: {
     borderColor: "#b28900",
-    justifyContent: "start",
+    width: ["100%", "80%"],
+    justifyContent: "space-between",
+    borderRadius: 1,
   },
 
   avatar: {
     bgcolor: "#b28900 !important",
     color: "white !important",
+    justifyContent: "center",
+    borderRadius: 1,
+    minWidth: "fit-content",
+    padding: "5px",
   },
 });
 
@@ -51,6 +57,11 @@ const AddContent = React.forwardRef(({ type }, ref) => {
     }
   };
 
+  const infoArray = [
+    { name: "Alis", value: sumAlis },
+    { name: "Satis", value: sumSatis },
+    { name: "Total", value: Number((sumSatis - sumAlis).toFixed(3)) },
+  ];
   return (
     <Box sx={style().box}>
       <Grid container spacing={2} alignItems="center">
@@ -68,19 +79,16 @@ const AddContent = React.forwardRef(({ type }, ref) => {
               <Divider />
             </Grid>
 
-            <Grid item container spacing={1}>
-              {[sumAlis, sumSatis, Number((sumSatis - sumAlis).toFixed(3))].map(
-                (el, index) => (
-                  <Grid key={index} item xs={4}>
-                    <Chip
-                      avatar={<Avatar sx={style(el).avatar}> {el} </Avatar>}
-                      sx={style().chip}
-                      size="small"
-                      label={el}
-                    />
-                  </Grid>
-                )
-              )}
+            <Grid item container spacing={1} align="center">
+              {infoArray.map((el, index) => (
+                <Grid key={index} item xs={4}>
+                  <Chip
+                    avatar={<Avatar sx={style().avatar}> {el.name} </Avatar>}
+                    sx={style().chip}
+                    label={el.value}
+                  />
+                </Grid>
+              ))}
             </Grid>
             <Grid
               item

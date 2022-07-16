@@ -14,9 +14,17 @@ const style = (el) => ({
     borderColor: "#b28900",
     color: "#424242",
   },
+  chipTotal: {
+    width: "100%",
+    justifyContent: "center",
+    borderRadius: 1,
+    borderColor: "#b28900",
+    color: "#424242",
+  },
   chipType: {
     width: ["90", "70%"],
     justifyContent: "center",
+    borderRadius: 1,
     bgcolor: el.transactionType === "Aliş" && "#b28900",
     color: el.transactionType !== "Aliş" ? "#424242" : "white",
   },
@@ -88,7 +96,7 @@ const SelectedItem = ({ el, index }) => {
         )}
       </Grid>
       <Grid item xs>
-        <Chip sx={style(el).chip} size="small" label={el.total} />
+        <Chip sx={style(el).chipTotal} size="small" label={el.total} />
       </Grid>
     </Grid>
   );
