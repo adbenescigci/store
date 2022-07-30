@@ -1,46 +1,76 @@
 import { useState, useRef, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 import BasicModal from "../../common/BasicModal/BasicModal";
 import AddContent from "./children/AddContent";
 import SwitchType from "./children/SwitchType";
 import { useSelectedList } from "../../../hooks/useSelectedList";
 
+// Validation
+const validationSchema = Yup.object().shape({
+  description: Yup.string().required("Aciklama giriniz"),
+  payment: Yup.string()
+    .required("Kontrol ediniz")
+    .transform((value) => value.split(",").join("")),
+  earn: Yup.string()
+    .required("Kontrol ediniz")
+    .transform((value) => value.split(",").join("")),
+});
+
 const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
   const [transactionType, setType] = useState(false);
+  const { list, setList } = useSelectedList();
 
+  // Ref List
   const refPayment = useRef();
   const refEarn = useRef();
   const refDescription = useRef();
   const ref = useRef({ refPayment, refEarn, refDescription });
 
-  const { list, setList } = useSelectedList();
+  //Form Validation
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState,
+    formState: { errors },
+  } = useForm({
+    defaultValues: { description: "", payment: "", earn: "" },
+    resolver: yupResolver(validationSchema),
+  });
+
+  //Functions
+  const addNew = async () => {
+    const transaction = {
+      title: refDescription.current.value || "deneme",
+      description: refDescription.current.value,
+      payment: parseInt(refPayment.current.value.split(",").join("")),
+      aproxProfit: parseInt(refEarn.current.value.split(",").join("")),
+      user: "Ahmet",
+      subTransactions: list,
+    };
+    addNewTransaction(transaction);
+
+    //Clear
+    refPayment.current.value = "";
+    refEarn.current.value = "";
+    refDescription.current.value = "";
+    setList([]);
+  };
+
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset({});
+    }
+  }, [formState, reset]);
 
   const onCloseModal = (el, reason) => {
     onClose(el, reason);
     setType(false);
+    reset({});
+    setList([]);
   };
-
-  const handleSubmit = async () => {
-    const payment = Number(refPayment.current.value.split(",").join(""));
-    const aproxProfit = Number(refEarn.current.value.split(",").join(""));
-
-    const transaction = {
-      title: refDescription.current.value || "deneme",
-      description: refDescription.current.value,
-      user: "Ahmet",
-      subTransactions: list,
-      payment,
-      aproxProfit,
-    };
-    addNewTransaction(transaction);
-  };
-
-  useEffect(() => {
-    return () => {
-      setType(false);
-      setList([]);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
 
   return (
     <BasicModal
@@ -48,8 +78,15 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
       open={open}
       onClose={onCloseModal}
       title={<SwitchType type={transactionType} setType={setType} />}
-      content={<AddContent ref={ref} type={transactionType} />}
-      onSubmit={handleSubmit}
+      content={
+        <AddContent
+          register={register}
+          errors={errors}
+          ref={ref}
+          type={transactionType}
+        />
+      }
+      onSubmit={handleSubmit(addNew)}
     />
   );
 };

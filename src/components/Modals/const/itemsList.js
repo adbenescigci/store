@@ -9,7 +9,7 @@ export const items = [
     total: 1.754,
     setting: 22,
     amount: 1,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 1,
@@ -21,7 +21,7 @@ export const items = [
     total: 1.754,
     setting: 22,
     amount: 1,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 2,
@@ -33,7 +33,7 @@ export const items = [
     total: 1.804,
     setting: 22,
     amount: 1,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 3,
@@ -45,7 +45,7 @@ export const items = [
     total: 1.804,
     setting: 22,
     amount: 1,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 4,
@@ -57,7 +57,7 @@ export const items = [
     total: 3.508,
     setting: 22,
     amount: 1,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 5,
@@ -69,7 +69,7 @@ export const items = [
     total: 3.508,
     setting: 22,
     amount: 1,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 6,
@@ -81,7 +81,7 @@ export const items = [
     total: 3.608,
     setting: 22,
     amount: 1,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 7,
@@ -93,7 +93,7 @@ export const items = [
     total: 3.608,
     setting: 22,
     amount: 1,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 8,
@@ -105,7 +105,7 @@ export const items = [
     total: 7.016,
     setting: 22,
     amount: 1,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 9,
@@ -117,7 +117,7 @@ export const items = [
     total: 7.016,
     setting: 22,
     amount: 1,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 10,
@@ -129,7 +129,7 @@ export const items = [
     total: 7.216,
     setting: 22,
     amount: 1,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 11,
@@ -141,7 +141,7 @@ export const items = [
     total: 7.216,
     setting: 22,
     amount: 1,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 12,
@@ -151,7 +151,7 @@ export const items = [
     unit: "gr",
     total: 0,
     amount: 0,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 13,
@@ -161,7 +161,7 @@ export const items = [
     unit: "gr",
     total: 0,
     amount: 0,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 14,
@@ -171,7 +171,7 @@ export const items = [
     unit: "gr",
     total: 0,
     amount: 0,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 15,
@@ -181,7 +181,7 @@ export const items = [
     unit: "gr",
     total: 0,
     amount: 0,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 16,
@@ -191,7 +191,7 @@ export const items = [
     unit: "gr",
     total: 0,
     amount: 0,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 17,
@@ -201,7 +201,7 @@ export const items = [
     unit: "gr",
     total: 0,
     amount: 0,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 18,
@@ -211,7 +211,7 @@ export const items = [
     unit: "gr",
     total: 0,
     amount: 0,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 19,
@@ -221,7 +221,7 @@ export const items = [
     unit: "gr",
     total: 0,
     amount: 0,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 20,
@@ -231,7 +231,7 @@ export const items = [
     unit: "gr",
     total: 0,
     amount: 0,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 21,
@@ -241,7 +241,7 @@ export const items = [
     unit: "gr",
     total: 0,
     amount: 0,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 22,
@@ -251,7 +251,7 @@ export const items = [
     unit: "gr",
     total: 0,
     amount: 0,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 23,
@@ -261,7 +261,7 @@ export const items = [
     unit: "gr",
     total: 0,
     amount: 0,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 24,
@@ -271,7 +271,7 @@ export const items = [
     unit: "gr",
     total: 0,
     amount: 0,
-    workship: 0,
+    workship: 100,
   },
 
   {
@@ -282,7 +282,7 @@ export const items = [
     unit: "gr",
     total: 0,
     amount: 0,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 26,
@@ -292,7 +292,7 @@ export const items = [
     unit: "gr",
     total: 0,
     amount: 0,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 27,
@@ -303,7 +303,7 @@ export const items = [
     total: 17.54,
     amount: 1,
     setting: 22,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 28,
@@ -314,7 +314,7 @@ export const items = [
     total: 18.04,
     amount: 1,
     setting: 22,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 29,
@@ -325,7 +325,7 @@ export const items = [
     total: 35.08,
     amount: 1,
     setting: 22,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 30,
@@ -336,7 +336,7 @@ export const items = [
     total: 36.08,
     amount: 1,
     setting: 22,
-    workship: 0,
+    workship: 100,
   },
 
   {
@@ -344,30 +344,33 @@ export const items = [
     type: "24",
     label: "Gram A",
     unit: "adet",
-    weight: "",
+    weight: 1,
+    total: 1,
     setting: 24,
     amount: 1,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 32,
     type: "Ata",
     label: "Gram A",
     unit: "adet",
-    weight: "",
+    weight: 1,
+    total: 0.917,
     setting: 22,
     amount: 1,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 33,
     type: "Ziynet",
     label: "Gram A",
     unit: "adet",
-    weight: "",
+    weight: 1,
+    total: 0.917,
     setting: 22,
     amount: 1,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 34,
@@ -377,7 +380,7 @@ export const items = [
     total: 0,
     setting: 22,
     amount: 0,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 35,
@@ -387,7 +390,7 @@ export const items = [
     total: 0,
     setting: 18,
     amount: 0,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 36,
@@ -397,7 +400,7 @@ export const items = [
     total: 0,
     setting: 14,
     amount: 0,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 37,
@@ -407,14 +410,15 @@ export const items = [
     total: 0,
     setting: 24,
     amount: 0,
-    workship: 0,
+    workship: 100,
   },
   {
     id: 38,
     type: "Saat",
     label: "Erkek",
     unit: "adet",
-    weight: "",
+    total: 1,
+    weight: 1,
     amount: 1,
   },
   {
@@ -422,7 +426,8 @@ export const items = [
     type: "Saat",
     label: "Bayan",
     unit: "adet",
-    weight: "",
+    total: 1,
+    weight: 1,
     amount: 1,
   },
 ];

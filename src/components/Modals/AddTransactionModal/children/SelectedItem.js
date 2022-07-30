@@ -54,7 +54,9 @@ const SelectedItem = ({ el, index }) => {
         <Chip
           sx={style(el).chip}
           size="small"
-          label={` ${el.type.substring(0, 3)} ${el.label}  `}
+          label={` ${el.type === "Saat" ? "Saat" : el.type.substring(0, 3)} ${
+            el.label
+          }  `}
           onDelete={handleDelete(el.id)}
           avatar={
             <Avatar sx={style(el).avatar}>{el.history?.charAt(0)}</Avatar>

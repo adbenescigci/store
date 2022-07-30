@@ -3,7 +3,6 @@ import Grid from "@mui/material/Grid";
 import Chip from "@mui/material/Chip";
 
 const SwitchType = ({ type, setType }) => {
-  console.log(type);
   const style = (el) => ({
     chip: {
       width: "70px",

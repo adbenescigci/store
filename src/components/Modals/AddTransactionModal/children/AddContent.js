@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Divider from "@mui/material/Divider";
-import Avatar from "@mui/material/Avatar";
 import ItemList from "./ItemList";
 import SelectedList from "./SelectedList";
 import AddTransactionNav from "./AddTransactionNav";
-import TextField from "@mui/material/TextField";
-import Chip from "@mui/material/Chip";
-import NumberFormatCustom from "../../../common/NumberInput/NumberFormatCustom";
+import RecordsAboutTransaction from "./RecordsAboutTransaction";
 import { items } from "../../const/itemsList.js";
 import { useSelectedList } from "../../../../hooks/useSelectedList";
 
-const style = (el) => ({
+const style = () => ({
   box: {
     display: "flex",
     flexDirection: "column",
@@ -20,34 +16,11 @@ const style = (el) => ({
       m: 1,
     },
   },
-
-  textField: {
-    textAlign: "center",
-    fontSize: "1rem",
-  },
-
-  chip: {
-    borderColor: "#b28900",
-    width: ["100%", "80%"],
-    justifyContent: "space-between",
-    borderRadius: 1,
-  },
-
-  avatar: {
-    bgcolor: "#b28900 !important",
-    color: "white !important",
-    justifyContent: "center",
-    borderRadius: 1,
-    minWidth: "fit-content",
-    padding: "5px",
-  },
 });
 
-const AddContent = React.forwardRef(({ type }, ref) => {
+const AddContent = React.forwardRef(({ type, register, errors }, ref) => {
   const [navType, setType] = useState("Ziynet");
-  const { list, sumAlis, sumSatis, setList } = useSelectedList();
-
-  const { refPayment, refEarn, refDescription } = ref.current;
+  const { list, setList } = useSelectedList();
   const transactionType = type ? "Aliş" : "Satiş";
 
   const handleSubTransactions = (id) => () => {
@@ -57,11 +30,6 @@ const AddContent = React.forwardRef(({ type }, ref) => {
     }
   };
 
-  const infoArray = [
-    { name: "Alis", value: sumAlis },
-    { name: "Satis", value: sumSatis },
-    { name: "Total", value: Number((sumSatis - sumAlis).toFixed(3)) },
-  ];
   return (
     <Box sx={style().box}>
       <Grid container spacing={2} alignItems="center">
@@ -72,92 +40,12 @@ const AddContent = React.forwardRef(({ type }, ref) => {
           list={list}
         />
         <SelectedList />
-
         {list.length > 0 && (
-          <>
-            <Grid item xs={12}>
-              <Divider />
-            </Grid>
-
-            <Grid item container spacing={1} align="center">
-              {infoArray.map((el, index) => (
-                <Grid key={index} item xs={4}>
-                  <Chip
-                    avatar={<Avatar sx={style().avatar}> {el.name} </Avatar>}
-                    sx={style().chip}
-                    label={el.value}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-            <Grid
-              item
-              container
-              spacing={3}
-              alignItems="stretch"
-              justifyContent="center"
-            >
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
-              <Grid item xs={8}>
-                <TextField
-                  fullWidth
-                  inputRef={refDescription}
-                  placeholder="Aciklama"
-                  name="description"
-                  multiline
-                  rows={3}
-                  label="Aciklama"
-                  variant="filled"
-                  InputProps={{
-                    inputProps: {
-                      style: { height: "60px" },
-                    },
-                  }}
-                />
-              </Grid>
-              <Grid item container xs={4}>
-                <Grid item xs={12}>
-                  <TextField
-                    name="Odeme"
-                    inputRef={refPayment}
-                    id="formatted-numberformat-input"
-                    variant="standard"
-                    label="Odeme"
-                    focused
-                    InputProps={{
-                      inputComponent: NumberFormatCustom,
-                      inputProps: {
-                        style: style().textField,
-                      },
-                      endAdornment: "TL",
-                    }}
-                    size="small"
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <TextField
-                    name="Kazanc"
-                    inputRef={refEarn}
-                    id="formatted-numberformat-input"
-                    variant="standard"
-                    label="Kazanc"
-                    focused
-                    InputProps={{
-                      inputComponent: NumberFormatCustom,
-                      inputProps: {
-                        style: style().textField,
-                      },
-                      endAdornment: "TL",
-                    }}
-                    size="small"
-                  />
-                </Grid>
-              </Grid>
-            </Grid>
-          </>
+          <RecordsAboutTransaction
+            register={register}
+            errors={errors}
+            ref={ref}
+          />
         )}
       </Grid>
     </Box>

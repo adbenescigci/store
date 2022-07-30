@@ -15,7 +15,6 @@ const BasicModal = ({
   const [isDisabled, setDisable] = React.useState(isSubmitButtonDisabled);
 
   const onClick = (data) => {
-    setDisable(true);
     onSubmit(data);
   };
 

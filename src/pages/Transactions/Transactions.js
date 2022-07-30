@@ -17,6 +17,7 @@ import { cardHeaderStyles } from "./styles";
 import AddTransactionModal from "../../components/Modals/AddTransactionModal/AddTransactionModal.js";
 import { ShopContext } from "../../providers/TransactionsProvider";
 import SelectedItemsProvider from "../../providers/SelectedItemsProvider";
+import BasicSnackbar from "../../components/common/BasicSnackbar/BasicSnackbar";
 import {
   doTransaction,
   updateTransaction,
@@ -25,21 +26,41 @@ import {
 
 const Transactions = () => {
   const [open, setOpen] = useState(false);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [alert, setAlert] = useState({
+    severity: "",
+    message: "",
+  });
   const { state, dispatch } = useContext(ShopContext);
 
   //Functions
+  const handleCloseSnackBar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackBar(false);
+  };
+
   const onCloseModal = (e, reason) => {
-    if (reason !== "backdropClick") setOpen(false);
+    if (reason === "backdropClick") {
+      return;
+    }
+    setOpen(false);
   };
 
   const addNewTransaction = async (newTransaction) => {
-    await doTransaction(newTransaction);
+    console.log(newTransaction);
+    const result = await doTransaction(newTransaction);
+    setAlert(result);
+    setOpenSnackBar(true);
     refresh();
   };
 
   const removeTransaction = async (index) => {
     const id = state.transactions[index]._id;
-    await updateTransaction(id, { isDeleted: true });
+    const result = await updateTransaction(id, { isDeleted: true });
+    setAlert(result);
+    setOpenSnackBar(true);
     refresh();
   };
 
@@ -95,7 +116,13 @@ const Transactions = () => {
                 edge="end"
                 aria-label="delete"
               >
-                <DeleteIcon />
+                <DeleteIcon
+                  sx={{
+                    "&:hover": {
+                      color: "secondary.light",
+                    },
+                  }}
+                />
               </IconButton>
             }
           >
@@ -105,8 +132,18 @@ const Transactions = () => {
               </Avatar>
             </ListItemAvatar>
             <ListItemText
-              primary={el.title}
-              secondary={true ? el.description : null}
+              sx={{
+                whiteSpace: "pre",
+              }}
+              primary={[el.user, el.title].join(" | ")}
+              secondary={el.subTransactions
+                .map(
+                  (item) =>
+                    `${item.label}${
+                      item.history?.charAt(0) ? "" : ` (${item.setting})`
+                    } ${item.amount} ${item.history ? "adet" : "gr"} `
+                )
+                .join("\r\n")}
             />
           </ListItem>
         ))}
@@ -121,10 +158,17 @@ const Transactions = () => {
       <SelectedItemsProvider>
         <AddTransactionModal
           open={open}
+          setOpen={setOpen}
           onClose={onCloseModal}
           addNewTransaction={addNewTransaction}
         />
       </SelectedItemsProvider>
+      <BasicSnackbar
+        open={openSnackBar}
+        onClose={handleCloseSnackBar}
+        severity={alert.severity}
+        message={alert.message}
+      />
     </BoxWrapper>
   );
 };
