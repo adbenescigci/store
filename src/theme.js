@@ -14,6 +14,16 @@ export const theme = createTheme({
         },
       },
     },
+
+    MuiIcon: {
+      styleOverrides: {
+        // Name of the slot
+        root: {
+          // Some CSS
+          "&>*": { flexDirection: "row" },
+        },
+      },
+    },
     // MuiGrid: {
     //   styleOverrides: {
     //     "& .MuiGrid-item": {

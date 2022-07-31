@@ -18,6 +18,13 @@ import AddTransactionModal from "../../components/Modals/AddTransactionModal/Add
 import { ShopContext } from "../../providers/TransactionsProvider";
 import SelectedItemsProvider from "../../providers/SelectedItemsProvider";
 import BasicSnackbar from "../../components/common/BasicSnackbar/BasicSnackbar";
+import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import {
   doTransaction,
   updateTransaction,
@@ -104,6 +111,23 @@ const Transactions = () => {
   };
 
   //Content
+
+  const getIcons = (el) => {
+    const array = el.subTransactions.map((item) => item.transactionType);
+    return [...new Set(array)];
+  };
+
+  const getSecondaryText = (el) => {
+    return el.subTransactions
+      .map(
+        (item) =>
+          `${item.transactionType.charAt(0)} ${item.amount} ${item.unit} ${
+            item.label
+          } ${item.type}`
+      )
+      .join("\r\n");
+  };
+
   const getContent = () => (
     <Box>
       <List dense={true}>
@@ -126,24 +150,17 @@ const Transactions = () => {
               </IconButton>
             }
           >
-            <ListItemAvatar>
-              <Avatar>
-                <FolderIcon />
-              </Avatar>
+            <ListItemAvatar sx={{ display: "flex", flexDirection: "column" }}>
+              {getIcons(el).map((el) =>
+                el === "Satiş" ? <ChevronRightIcon /> : <ChevronLeftIcon />
+              )}
             </ListItemAvatar>
             <ListItemText
               sx={{
-                whiteSpace: "pre",
+                whiteSpace: "pre-line",
               }}
               primary={[el.user, el.title].join(" | ")}
-              secondary={el.subTransactions
-                .map(
-                  (item) =>
-                    `${item.label}${
-                      item.history?.charAt(0) ? "" : ` (${item.setting})`
-                    } ${item.amount} ${item.history ? "adet" : "gr"} `
-                )
-                .join("\r\n")}
+              secondary={getSecondaryText(el)}
             />
           </ListItem>
         ))}
