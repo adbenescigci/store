@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import RefreshIcon from "@mui/icons-material/Refresh";
@@ -6,7 +6,6 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Avatar from "@mui/material/Avatar";
-import FolderIcon from "@mui/icons-material/Folder";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import BasicCard from "../../components/common/BasicCard/BasicCard";
@@ -18,13 +17,8 @@ import AddTransactionModal from "../../components/Modals/AddTransactionModal/Add
 import { ShopContext } from "../../providers/TransactionsProvider";
 import SelectedItemsProvider from "../../providers/SelectedItemsProvider";
 import BasicSnackbar from "../../components/common/BasicSnackbar/BasicSnackbar";
-import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import {
   doTransaction,
   updateTransaction,
@@ -39,6 +33,11 @@ const Transactions = () => {
     message: "",
   });
   const { state, dispatch } = useContext(ShopContext);
+  const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(() => {
+    setSearchResults(state?.transactions);
+  }, [state]);
 
   //Functions
   const handleCloseSnackBar = (event, reason) => {
@@ -80,7 +79,41 @@ const Transactions = () => {
   //Header
   const getHeader = () => {
     const handleChange = (value) => {
-      console.log(value);
+      filterData(value);
+    };
+
+    const filterData = (value) => {
+      const lowercasedValue = value.toLowerCase().trim();
+      if (lowercasedValue === "") setSearchResults(state?.transactions);
+      else {
+        const filteredData = searchResults.filter((item) => {
+          return Object.keys(item).some((key) => {
+            let flag1, flag2;
+            if (key !== "subTransactions") {
+              flag1 = item[key]
+                .toString()
+                .toLowerCase()
+                .includes(lowercasedValue);
+            }
+
+            if (key === "subTransactions") {
+              item[key].every((el) => {
+                flag2 = Object.keys(el).some((key) =>
+                  el[key].toString().toLowerCase().includes(lowercasedValue)
+                );
+                if (flag2) {
+                  return false;
+                }
+                return true;
+              });
+            }
+
+            return flag1 || flag2;
+          });
+        });
+
+        setSearchResults(filteredData);
+      }
     };
 
     const openTransactionModal = () => {
@@ -121,9 +154,9 @@ const Transactions = () => {
     return el.subTransactions
       .map(
         (item) =>
-          `${item.transactionType.charAt(0)} ${item.amount} ${item.unit} ${
+          ` ${item.amount} ${item.unit} ${item.history?.charAt(0) ?? ""} ${
             item.label
-          } ${item.type}`
+          } ${item.type} ${item.transactionType === "Aliş" ? "Aliş" : ""}`
       )
       .join("\r\n");
   };
@@ -131,7 +164,7 @@ const Transactions = () => {
   const getContent = () => (
     <Box>
       <List dense={true}>
-        {state.transactions?.map((el, index) => (
+        {searchResults?.map((el, index) => (
           <ListItem
             key={index}
             secondaryAction={
@@ -151,15 +184,22 @@ const Transactions = () => {
             }
           >
             <ListItemAvatar sx={{ display: "flex", flexDirection: "column" }}>
-              {getIcons(el).map((el) =>
-                el === "Satiş" ? <ChevronRightIcon /> : <ChevronLeftIcon />
+              <Avatar>{el.user.charAt(0)}</Avatar>
+            </ListItemAvatar>
+            <ListItemAvatar sx={{ display: "flex", flexDirection: "column" }}>
+              {getIcons(el).map((el, index) =>
+                el === "Satiş" ? (
+                  <ChevronLeftIcon key={index} sx={{ color: "green" }} />
+                ) : (
+                  <ChevronRightIcon key={index} sx={{ color: "red" }} />
+                )
               )}
             </ListItemAvatar>
             <ListItemText
               sx={{
                 whiteSpace: "pre-line",
               }}
-              primary={[el.user, el.title].join(" | ")}
+              primary={el.title}
               secondary={getSecondaryText(el)}
             />
           </ListItem>
