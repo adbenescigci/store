@@ -20,7 +20,7 @@ const validationSchema = Yup.object().shape({
 
 const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
   const [transactionType, setType] = useState(false);
-  const { list, setList } = useSelectedList();
+  const { list, setList, sumAlis, sumSatis } = useSelectedList();
 
   // Ref List
   const refPayment = useRef();
@@ -49,6 +49,8 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
       aproxProfit: parseInt(refEarn.current.value.split(",").join("")),
       user: "Ahmet",
       subTransactions: list,
+      sumAlis,
+      sumSatis,
     };
     addNewTransaction(transaction);
 
