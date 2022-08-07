@@ -10,10 +10,18 @@ import { useSelectedList } from "../../../hooks/useSelectedList";
 // Validation
 const validationSchema = Yup.object().shape({
   description: Yup.string().required("Aciklama giriniz"),
-  payment: Yup.string()
+  // payment: Yup.object().shape({
+  //   cash: Yup.string()
+  //     .required("Kontrol ediniz")
+  //     .transform((value) => value.split(",").join("")),
+  //   card: Yup.string()
+  //     .required("Kontrol ediniz")
+  //     .transform((value) => value.split(",").join("")),
+  // }),
+  earn: Yup.string()
     .required("Kontrol ediniz")
     .transform((value) => value.split(",").join("")),
-  earn: Yup.string()
+  payment: Yup.string()
     .required("Kontrol ediniz")
     .transform((value) => value.split(",").join("")),
 });
@@ -23,10 +31,12 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
   const { list, setList, sumAlis, sumSatis } = useSelectedList();
 
   // Ref List
-  const refPayment = useRef();
+  const refCash = useRef();
+  const refCard = useRef();
   const refEarn = useRef();
   const refDescription = useRef();
-  const ref = useRef({ refPayment, refEarn, refDescription });
+  const refClaim = useRef();
+  const ref = useRef({ refCash, refCard, refClaim, refEarn, refDescription });
 
   //Form Validation
   const {
@@ -36,17 +46,27 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
     formState,
     formState: { errors },
   } = useForm({
-    defaultValues: { description: "", payment: "", earn: "" },
+    defaultValues: {
+      description: "",
+      payment: "",
+      earn: "",
+    },
     resolver: yupResolver(validationSchema),
   });
 
   //Functions
   const addNew = async () => {
+    const cash = parseInt(refCash.current.value?.split(",").join(""));
+    const card = parseInt(refCard.current.value?.split(",").join(""));
+    const earn = parseInt(refEarn.current.value.split(",").join(""));
+    const claim = parseFloat(refClaim.current.value?.split(",").join(""));
+
     const transaction = {
       title: refDescription.current.value || "deneme",
       description: refDescription.current.value,
-      payment: parseInt(refPayment.current.value.split(",").join("")),
-      aproxProfit: parseInt(refEarn.current.value.split(",").join("")),
+      payment: { cash: isNaN(cash) ? 0 : cash, card: isNaN(card) ? 0 : card },
+      earn,
+      claim: isNaN(claim) ? 0 : claim,
       user: "Ahmet",
       subTransactions: list,
       sumAlis,
@@ -55,7 +75,7 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
     addNewTransaction(transaction);
 
     //Clear
-    refPayment.current.value = "";
+    refCash.current.value = "";
     refEarn.current.value = "";
     refDescription.current.value = "";
     setList([]);
@@ -68,6 +88,9 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
   }, [formState, reset]);
 
   const onCloseModal = (el, reason) => {
+    if (reason === "backdropClick") {
+      return;
+    }
     onClose(el, reason);
     setType(false);
     reset({});

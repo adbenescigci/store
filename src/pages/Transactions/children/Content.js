@@ -73,9 +73,8 @@ const Content = ({ transactions, removeTransaction }) => {
             </ListItem>
           ))
         ) : (
-          <Typography align="center">
-            {" "}
-            Herhangi bir islem kaydi bulunmamaktadir.{" "}
+          <Typography sx={{ color: "#546e7a" }} align="center">
+            {"Herhangi bir islem kaydi bulunmamaktadir."}
           </Typography>
         )}
       </List>

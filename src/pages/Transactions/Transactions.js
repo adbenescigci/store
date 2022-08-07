@@ -35,9 +35,6 @@ const Transactions = () => {
   };
 
   const onCloseModal = (e, reason) => {
-    if (reason === "backdropClick") {
-      return;
-    }
     setOpen(false);
   };
 
@@ -82,7 +79,6 @@ const Transactions = () => {
       <SelectedItemsProvider>
         <AddTransactionModal
           open={open}
-          setOpen={setOpen}
           onClose={onCloseModal}
           addNewTransaction={addNewTransaction}
         />
