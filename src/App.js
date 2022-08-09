@@ -32,8 +32,8 @@ const App = () => {
 
   //FETCH DATA
   useEffect(() => {
-    console.log("fetch");
     fetchTransactions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const appStyles = {
@@ -54,7 +54,7 @@ const App = () => {
       <NavbarDesktop />
       <Box sx={appStyles.row}>
         <Header title={location.pathname} />
-        <NavbarMobile />
+        <NavbarMobile path={location?.pathname} />
         <Outlet />
       </Box>
     </Box>

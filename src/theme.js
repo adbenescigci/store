@@ -71,6 +71,6 @@ export const theme = createTheme({
     ].join(","),
   },
 
-  spacing: [4, 8, 12, 16, 20],
+  spacing: 4,
   //theme.spacing(4)
 });

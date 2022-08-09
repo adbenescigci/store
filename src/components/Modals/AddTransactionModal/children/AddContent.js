@@ -18,7 +18,7 @@ const style = () => ({
   },
 });
 
-const AddContent = React.forwardRef(({ type, register, errors }, ref) => {
+const AddContent = ({ type, register, errors, values, resetField }) => {
   const [navType, setType] = useState("Ziynet");
   const { list, setList } = useSelectedList();
   const transactionType = type ? "Aliş" : "Satiş";
@@ -44,12 +44,13 @@ const AddContent = React.forwardRef(({ type, register, errors }, ref) => {
           <RecordsAboutTransaction
             register={register}
             errors={errors}
-            ref={ref}
+            resetField={resetField}
+            values={values}
           />
         )}
       </Grid>
     </Box>
   );
-});
+};
 
 export default AddContent;

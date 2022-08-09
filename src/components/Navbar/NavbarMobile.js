@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import Divider from "@mui/material/Divider";
-
 import { mainNavbarItems } from "./consts/navbarItems";
-import { useNavigate } from "react-router-dom";
 
 const style = {
   box: {
@@ -27,9 +26,30 @@ const style = {
   },
 };
 
-const NavbarMobile = () => {
+const NavbarMobile = ({ path }) => {
   let navigate = useNavigate();
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState();
+  // const params = useLocation();
+
+  useEffect(() => {
+    // eslint-disable-next-line default-case
+    switch (path) {
+      case "/islemler":
+        setValue(0);
+        break;
+      case "/kasa":
+        setValue(1);
+        break;
+      case "/urunler":
+        setValue(2);
+        break;
+      case "/ozet":
+        setValue(3);
+        break;
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Box sx={style.box}>
