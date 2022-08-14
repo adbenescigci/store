@@ -18,7 +18,7 @@ const style = () => ({
   },
 });
 
-const AddContent = ({ type, register, errors, values, resetField }) => {
+const AddContent = ({ type, register, errors, resetField, control }) => {
   const [navType, setType] = useState("Ziynet");
   const { list, setList } = useSelectedList();
   const transactionType = type ? "Aliş" : "Satiş";
@@ -45,7 +45,7 @@ const AddContent = ({ type, register, errors, values, resetField }) => {
             register={register}
             errors={errors}
             resetField={resetField}
-            values={values}
+            control={control}
           />
         )}
       </Grid>

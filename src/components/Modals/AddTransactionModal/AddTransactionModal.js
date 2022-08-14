@@ -15,10 +15,18 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
     handleSubmit,
     reset,
     resetField,
-    getValues,
     formState,
+    control,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      card: "",
+      cash: "",
+      description: "",
+      earn: "",
+      claim: "",
+    },
+  });
 
   useEffect(() => {
     if (formState.isSubmitSuccessful) {
@@ -26,9 +34,8 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
     }
   }, [formState, reset]);
 
-  //Functions
-  const addNew = async () => {
-    let { card, cash, description, earn, claim } = getValues();
+  const addNew = async (data) => {
+    const { card, cash, description, earn, claim } = data;
 
     const transaction = {
       title: description,
@@ -71,7 +78,7 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
           errors={errors}
           resetField={resetField}
           type={transactionType}
-          values={getValues}
+          control={control}
         />
       }
       onSubmit={handleSubmit(addNew)}

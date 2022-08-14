@@ -7,7 +7,6 @@ const NumberFormatCustom = React.forwardRef((props, ref) => {
     <>
       <NumberFormat
         {...other}
-        format={type === "card" && ""}
         getInputRef={ref}
         onValueChange={(values) => {
           onChange({

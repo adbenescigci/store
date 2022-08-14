@@ -5,10 +5,12 @@ import Avatar from "@mui/material/Avatar";
 import Chip from "@mui/material/Chip";
 import InputAdornment from "@mui/material/InputAdornment";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
+import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
 import { useSelectedList } from "../../../../hooks/useSelectedList";
-import BasicRecordItem from "../../../common/BasicRecordItem/BasicRecordItem";
+import Controller from "../../../common/Controller/Controller";
 import NumberFormatCustom from "../../../common/NumberInput/NumberFormatCustom";
+import NumberFormatCustom2 from "../../../common/NumberInput/NumberFormatCustom2";
 
 const style = () => ({
   textField: {
@@ -33,7 +35,7 @@ const style = () => ({
   },
 });
 
-const RecordsAboutTransaction = ({ register, errors, resetField }) => {
+const RecordsAboutTransaction = ({ register, errors, resetField, control }) => {
   const [checked, setChecked] = useState(false);
   const { sumAlis, sumSatis } = useSelectedList();
 
@@ -53,7 +55,6 @@ const RecordsAboutTransaction = ({ register, errors, resetField }) => {
       <Grid item xs={12}>
         <Divider />
       </Grid>
-
       <Grid item container spacing={1} align="center">
         {infoArray.map((el, index) => (
           <Grid key={index} item xs={4}>
@@ -77,7 +78,7 @@ const RecordsAboutTransaction = ({ register, errors, resetField }) => {
           <Divider />
         </Grid>
 
-        <Grid item container spacing={2} xs={12}>
+        <Grid item container alignItems="start" spacing={2} xs={12}>
           <Grid
             item
             container
@@ -94,95 +95,143 @@ const RecordsAboutTransaction = ({ register, errors, resetField }) => {
             <CreditCardIcon fontSize="large" />
           </Grid>
 
-          <BasicRecordItem
-            name="Odeme Kredi"
-            label="Kredi"
-            xs={4}
-            focused={checked}
-            required={checked}
-            register={register}
-            registerName="card"
-            requiredData={{
-              value: checked,
-              message: "Kontrol ediniz",
-            }}
-            error={errors.card ? true : false}
-            helperText={errors.card?.message}
-            InputProps={{
-              inputComponent: NumberFormatCustom,
-              endAdornment: <InputAdornment position="end">TL</InputAdornment>,
-            }}
-          />
+          <Grid item xs={4}>
+            <Controller
+              {...{
+                control,
+                name: "card",
+                register,
+                rules: {
+                  required: {
+                    value: checked,
+                    message: "Kontrol ediniz",
+                  },
+                },
+                render: (props) => (
+                  <NumberFormatCustom2
+                    {...props}
+                    format={!checked && ""}
+                    focused={checked}
+                    required={checked}
+                    label="Kart"
+                    disabled={!checked}
+                    error={errors.card && checked ? true : false}
+                    helperText={checked ? errors.card?.message : ""}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">TL</InputAdornment>
+                      ),
+                    }}
+                  />
+                ),
+              }}
+            />
+          </Grid>
 
-          <BasicRecordItem
-            name="Odeme Pesin"
-            label="Pesin"
-            xs={4}
-            focused={!checked}
-            required={!checked}
-            register={register}
-            registerName="cash"
-            requiredData={{
-              value: !checked,
-              message: "Kontrol ediniz",
-            }}
-            error={errors.cash ? true : false}
-            helperText={errors.cash?.message}
+          <Grid item xs={4}>
+            <Controller
+              {...{
+                control,
+                name: "cash",
+                register,
+                rules: {
+                  required: {
+                    value: !checked,
+                    message: "Kontrol ediniz",
+                  },
+                },
+                render: (props) => (
+                  <NumberFormatCustom2
+                    {...props}
+                    focused={!checked}
+                    required={!checked}
+                    label="Pesin"
+                    error={errors.cash && !checked ? true : false}
+                    helperText={!checked ? errors.cash?.message : ""}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">TL</InputAdornment>
+                      ),
+                    }}
+                  />
+                ),
+              }}
+            />
+          </Grid>
+        </Grid>
+
+        <Grid item xs={8}>
+          <TextField
+            name="description"
+            fullWidth
+            multiline
+            rows={3}
+            label="Aciklama"
+            focused
+            required
+            variant="filled"
+            {...register("description", {
+              required: {
+                value: true,
+                message: "Kontrol ediniz",
+              },
+            })}
+            error={errors.description ? true : false}
+            helperText={errors.description?.message}
             InputProps={{
-              inputComponent: NumberFormatCustom,
-              endAdornment: <InputAdornment position="end">TL</InputAdornment>,
+              inputProps: {
+                style: { height: "60px" },
+              },
             }}
           />
         </Grid>
-
-        <BasicRecordItem
-          name="description"
-          fullWidth={true}
-          multiline={true}
-          rows={3}
-          xs={8}
-          label="Aciklama"
-          required={true}
-          register={register}
-          registerName="description"
-          requiredData="Kontrol ediniz"
-          variant="filled"
-          error={errors.description ? true : false}
-          helperText={errors.description?.message}
-          InputProps={{
-            inputProps: {
-              style: { height: "60px" },
-            },
-          }}
-        />
         <Grid item container xs={4} spacing={2}>
-          <BasicRecordItem
-            name="Kazanc"
-            label="Kazanc"
-            focused={true}
-            required={true}
-            register={register}
-            registerName="earn"
-            requiredData="Kontrol ediniz"
-            error={errors.earn ? true : false}
-            helperText={errors.earn?.message}
-            InputProps={{
-              inputComponent: NumberFormatCustom,
-              endAdornment: <InputAdornment position="end">TL</InputAdornment>,
-            }}
-          />
-          <BasicRecordItem
-            name="Alacak"
-            label="Kalan"
-            register={register}
-            registerName="claim"
-            requiredData={false}
-            InputProps={{
-              inputComponent: NumberFormatCustom,
-              type: "gr",
-              endAdornment: <InputAdornment position="end">gr</InputAdornment>,
-            }}
-          />
+          <Grid item>
+            <Controller
+              {...{
+                control,
+                name: "earn",
+                register,
+                rules: {
+                  required: {
+                    value: true,
+                    message: "Kontrol ediniz",
+                  },
+                },
+                render: (props) => (
+                  <NumberFormatCustom2
+                    {...props}
+                    focused={true}
+                    required={true}
+                    label="Kazanc"
+                    error={errors.earn ? true : false}
+                    helperText={errors.earn?.message}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">TL</InputAdornment>
+                      ),
+                    }}
+                  />
+                ),
+              }}
+            />
+          </Grid>
+
+          <Grid item>
+            <TextField
+              name="Alacak"
+              label="Kalan"
+              size="small"
+              {...register("claim")}
+              InputProps={{
+                inputComponent: NumberFormatCustom,
+                type: "gr",
+                endAdornment: (
+                  <InputAdornment position="end">gr</InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
         </Grid>
       </Grid>
     </>
