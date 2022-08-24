@@ -1,12 +1,11 @@
 import React from "react";
+import SummaryTable from "./children/SummaryTable";
 import BoxWrapper from "../../components/common/BoxWrapper/BoxWrapper";
-import DataTable from "../../components/common/DataTable/DataTable";
 
 const Summary = () => {
   return (
     <BoxWrapper>
-      Summary page
-      <DataTable sx={{ height: 300, width: "100%" }} />
+      <SummaryTable />
     </BoxWrapper>
   );
 };

@@ -2,7 +2,6 @@ import { memo } from "react";
 import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
 import SelectedItem from "./SelectedItem";
-import { useSelectedList } from "../../../../hooks/useSelectedList";
 
 const style = () => ({
   chip: {
@@ -16,15 +15,13 @@ const style = () => ({
 });
 
 const label = [
-  { name: "islem", gSize: 2 },
-  { name: "ürünler", gSize: 4 },
-  { name: "gr/ad", gSize: 2 },
+  { name: "islem", gSize: 1.6 },
+  { name: "ürünler", gSize: 3.8 },
+  { name: "gr/ad", gSize: 2.2 },
   { name: "milem", gSize: 2 },
-  { name: "has", gSize: 2 },
+  { name: "has", gSize: 2.4 },
 ];
-
-const SelectedList = () => {
-  const { list } = useSelectedList();
+const SelectedList = ({ list, handleDelete, formData }) => {
   return (
     <>
       {list?.length > 0 && (
@@ -42,8 +39,13 @@ const SelectedList = () => {
         </Grid>
       )}
       <Grid item container spacing={1} direction="column-reverse" xs={12}>
-        {list?.map((el, index) => (
-          <SelectedItem key={index} el={el} index={index} />
+        {list?.map((el) => (
+          <SelectedItem
+            formData={formData}
+            handleDelete={handleDelete}
+            key={el.id}
+            el={el}
+          />
         ))}
       </Grid>
     </>

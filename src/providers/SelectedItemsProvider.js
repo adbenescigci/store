@@ -6,7 +6,7 @@ const calculateHas = (item) => {
   const has = item.weight
     ? item.amount * item.weight
     : item.amount * (item.setting / 24 + item.workship / 1000);
-  return Number(has.toFixed(3));
+  return Number(has.toFixed(2));
 };
 
 const SelectedItemsProvider = ({ children }) => {

@@ -16,6 +16,7 @@ const NumberFormatCustom2 = React.forwardRef((props, ref) => {
     disabled,
     ...other
   } = props;
+
   return (
     <>
       <NumberFormat

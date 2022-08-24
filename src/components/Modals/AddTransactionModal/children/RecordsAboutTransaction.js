@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import Avatar from "@mui/material/Avatar";
@@ -7,7 +7,6 @@ import InputAdornment from "@mui/material/InputAdornment";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
-import { useSelectedList } from "../../../../hooks/useSelectedList";
 import Controller from "../../../common/Controller/Controller";
 import NumberFormatCustom from "../../../common/NumberInput/NumberFormatCustom";
 import NumberFormatCustom2 from "../../../common/NumberInput/NumberFormatCustom2";
@@ -35,9 +34,46 @@ const style = () => ({
   },
 });
 
-const RecordsAboutTransaction = ({ register, errors, resetField, control }) => {
+const RecordsAboutTransaction = ({ formData, list }) => {
   const [checked, setChecked] = useState(false);
-  const { sumAlis, sumSatis } = useSelectedList();
+  const [length, setLength] = useState(0);
+  const [sumSatis, setSumSatis] = useState(0);
+  const [sumAlis, setSumAlis] = useState(0);
+  const { register, errors, resetField, control, watch } = formData;
+
+  useEffect(() => {
+    if (list.length > length) {
+      list?.[list.length - 1].transactionType === "Satis"
+        ? setSumSatis(sumSatis + list?.[list.length - 1].has)
+        : setSumAlis(sumAlis + list?.[list.length - 1].has);
+    }
+    setLength(list.length);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [list]);
+
+  useEffect(() => {
+    const subscription = watch((data) => {
+      let newSumSatis = 0;
+      let newSumAlis = 0;
+
+      if (!!data.has?.Satis) {
+        for (const item of data?.has?.Satis) {
+          newSumSatis += Number(item !== undefined ? item : "0");
+        }
+      }
+
+      if (!!data.has?.Alis) {
+        for (const item of data?.has?.Alis) {
+          newSumAlis += Number(item !== undefined ? item : "0");
+        }
+      }
+      setSumSatis(newSumSatis);
+      setSumAlis(newSumAlis);
+    });
+
+    return () => subscription.unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watch]);
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -47,7 +83,10 @@ const RecordsAboutTransaction = ({ register, errors, resetField, control }) => {
   const infoArray = [
     { name: "Alis", value: sumAlis },
     { name: "Satis", value: sumSatis },
-    { name: "Total", value: Number((sumSatis - sumAlis).toFixed(3)) },
+    {
+      name: "Total",
+      value: Number((sumSatis - sumAlis).toFixed(3)),
+    },
   ];
 
   return (
@@ -119,7 +158,7 @@ const RecordsAboutTransaction = ({ register, errors, resetField, control }) => {
                     helperText={checked ? errors.card?.message : ""}
                     InputProps={{
                       endAdornment: (
-                        <InputAdornment position="end">TL</InputAdornment>
+                        <InputAdornment position="end">₺</InputAdornment>
                       ),
                     }}
                   />
@@ -150,7 +189,7 @@ const RecordsAboutTransaction = ({ register, errors, resetField, control }) => {
                     helperText={!checked ? errors.cash?.message : ""}
                     InputProps={{
                       endAdornment: (
-                        <InputAdornment position="end">TL</InputAdornment>
+                        <InputAdornment position="end">₺</InputAdornment>
                       ),
                     }}
                   />
@@ -208,7 +247,7 @@ const RecordsAboutTransaction = ({ register, errors, resetField, control }) => {
                     helperText={errors.earn?.message}
                     InputProps={{
                       endAdornment: (
-                        <InputAdornment position="end">TL</InputAdornment>
+                        <InputAdornment position="end">₺</InputAdornment>
                       ),
                     }}
                   />
@@ -226,9 +265,7 @@ const RecordsAboutTransaction = ({ register, errors, resetField, control }) => {
               InputProps={{
                 inputComponent: NumberFormatCustom,
                 type: "gr",
-                endAdornment: (
-                  <InputAdornment position="end">gr</InputAdornment>
-                ),
+                endAdornment: <InputAdornment position="end">g</InputAdornment>,
               }}
             />
           </Grid>

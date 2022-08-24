@@ -23,7 +23,7 @@ const Content = ({ transactions, removeTransaction }) => {
         (item) =>
           ` ${item.amount} ${item.unit} ${item.history?.charAt(0) ?? ""} ${
             item.label
-          } ${item.type} ${item.transactionType === "Aliş" ? "Aliş" : ""}`
+          } ${item.type} ${item.transactionType === "Alis" ? "Aliş" : ""}`
       )
       .join("\r\n");
   };
@@ -56,7 +56,7 @@ const Content = ({ transactions, removeTransaction }) => {
               </ListItemAvatar>
               <ListItemAvatar sx={{ display: "flex", flexDirection: "column" }}>
                 {getIcons(el).map((el, index) =>
-                  el === "Satiş" ? (
+                  el === "Satis" ? (
                     <ChevronLeftIcon key={index} sx={{ color: "green" }} />
                   ) : (
                     <ChevronRightIcon key={index} sx={{ color: "red" }} />

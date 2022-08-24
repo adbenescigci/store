@@ -3,23 +3,29 @@ import { useForm } from "react-hook-form";
 import BasicModal from "../../common/BasicModal/BasicModal";
 import AddContent from "./children/AddContent";
 import SwitchType from "./children/SwitchType";
-import { useSelectedList } from "../../../hooks/useSelectedList";
 
 const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
   const [transactionType, setType] = useState(false);
-  const { list, setList, sumAlis, sumSatis } = useSelectedList();
+  const [list, setList] = useState([]);
 
-  //Form Validation
+  let sumAlis = 0;
+  let sumSatis = 0;
+
   const {
     register,
+    unregister,
     handleSubmit,
     reset,
     resetField,
     formState,
     control,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
+      workship: [],
+      amount: [],
+      has: [],
       card: "",
       cash: "",
       description: "",
@@ -35,7 +41,17 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
   }, [formState, reset]);
 
   const addNew = async (data) => {
-    const { card, cash, description, earn, claim } = data;
+    const { card, cash, description, earn, claim, amount, workship, has } =
+      data;
+
+    const newList = [...list];
+    newList.forEach((el) => {
+      el.amount = Number(amount[el.id].split(",").join(""));
+      el.workship = Number(workship[el.id].split(",").join(""));
+      el.has = Number(has?.Satis?.[el.id] || has?.Alis?.[el.id]);
+      if (el.transactionType === "Satis") sumSatis += el.has;
+      else sumAlis += el.has;
+    });
 
     const transaction = {
       title: description,
@@ -47,7 +63,7 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
       earn: Number(earn?.split(",").join("")),
       claim: Number(claim?.split(",").join("")),
       user: "Ahmet",
-      subTransactions: list,
+      subTransactions: newList,
       sumAlis,
       sumSatis,
     };
@@ -74,11 +90,17 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
       title={<SwitchType type={transactionType} setType={setType} />}
       content={
         <AddContent
-          register={register}
-          errors={errors}
-          resetField={resetField}
           type={transactionType}
-          control={control}
+          list={list}
+          setList={setList}
+          formData={{
+            register,
+            unregister,
+            errors,
+            resetField,
+            control,
+            watch,
+          }}
         />
       }
       onSubmit={handleSubmit(addNew)}

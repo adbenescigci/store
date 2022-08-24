@@ -15,6 +15,17 @@ export const theme = createTheme({
       },
     },
 
+    // MuiOutlinedInput: {
+    //   styleOverrides: {
+    //     // Name of the slot
+    //     input: {
+    //       "&:disabled": {
+    //         WebkitTextFillColor: "#424242",
+    //       },
+    //     },
+    //   },
+    // },
+
     MuiIcon: {
       styleOverrides: {
         // Name of the slot

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo, useCallback } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import ItemList from "./ItemList";
@@ -6,7 +6,6 @@ import SelectedList from "./SelectedList";
 import AddTransactionNav from "./AddTransactionNav";
 import RecordsAboutTransaction from "./RecordsAboutTransaction";
 import { items } from "../../const/itemsList.js";
-import { useSelectedList } from "../../../../hooks/useSelectedList";
 
 const style = () => ({
   box: {
@@ -18,10 +17,9 @@ const style = () => ({
   },
 });
 
-const AddContent = ({ type, register, errors, resetField, control }) => {
+const AddContent = ({ list, setList, type, formData }) => {
   const [navType, setType] = useState("Ziynet");
-  const { list, setList } = useSelectedList();
-  const transactionType = type ? "Aliş" : "Satiş";
+  const transactionType = type ? "Alis" : "Satis";
 
   const handleSubTransactions = (id) => () => {
     if (!list?.find((el) => el.id === id)) {
@@ -29,6 +27,14 @@ const AddContent = ({ type, register, errors, resetField, control }) => {
       setList([...list, item]);
     }
   };
+
+  const handleDelete = useCallback(
+    (id) => {
+      const newList = list?.filter((el) => el.id !== id);
+      setList(newList);
+    },
+    [list, setList]
+  );
 
   return (
     <Box sx={style().box}>
@@ -39,18 +45,17 @@ const AddContent = ({ type, register, errors, resetField, control }) => {
           type={navType}
           list={list}
         />
-        <SelectedList />
+        <SelectedList
+          list={list}
+          formData={formData}
+          handleDelete={handleDelete}
+        />
         {list.length > 0 && (
-          <RecordsAboutTransaction
-            register={register}
-            errors={errors}
-            resetField={resetField}
-            control={control}
-          />
+          <RecordsAboutTransaction list={list} formData={formData} />
         )}
       </Grid>
     </Box>
   );
 };
 
-export default AddContent;
+export default memo(AddContent);

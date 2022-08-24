@@ -11,3 +11,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+/* .MuiOutlinedInput-root.Mui-disabled {
+  -webkit-text-fill-color: "#424242 ! important";
+} */

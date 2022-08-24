@@ -3,7 +3,6 @@ import BasicCard from "../../components/common/BasicCard/BasicCard";
 import BoxWrapper from "../../components/common/BoxWrapper/BoxWrapper";
 import AddTransactionModal from "../../components/Modals/AddTransactionModal/AddTransactionModal.js";
 import { ShopContext } from "../../providers/TransactionsProvider";
-import SelectedItemsProvider from "../../providers/SelectedItemsProvider";
 import BasicSnackbar from "../../components/common/BasicSnackbar/BasicSnackbar";
 import HeaderWithSearch from "./children/HeaderWithSearch";
 import Content from "./children/Content";
@@ -13,6 +12,8 @@ import {
   updateTransaction,
   refreshTransactions,
 } from "../../api/index";
+
+let a = 0;
 
 const Transactions = () => {
   const { state, dispatch } = useContext(ShopContext);
@@ -61,6 +62,7 @@ const Transactions = () => {
   //Render
   return (
     <BoxWrapper>
+      render {a++}
       <BasicCard
         header={
           <HeaderWithSearch
@@ -76,13 +78,11 @@ const Transactions = () => {
           />
         }
       />
-      <SelectedItemsProvider>
-        <AddTransactionModal
-          open={open}
-          onClose={onCloseModal}
-          addNewTransaction={addNewTransaction}
-        />
-      </SelectedItemsProvider>
+      <AddTransactionModal
+        open={open}
+        onClose={onCloseModal}
+        addNewTransaction={addNewTransaction}
+      />
       <BasicSnackbar
         open={openSnackBar}
         onClose={handleCloseSnackBar}
