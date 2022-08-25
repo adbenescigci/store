@@ -13,8 +13,6 @@ import {
   refreshTransactions,
 } from "../../api/index";
 
-let a = 0;
-
 const Transactions = () => {
   const { state, dispatch } = useContext(ShopContext);
   const [open, setOpen] = useState(false);
@@ -62,7 +60,6 @@ const Transactions = () => {
   //Render
   return (
     <BoxWrapper>
-      render {a++}
       <BasicCard
         header={
           <HeaderWithSearch

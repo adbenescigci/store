@@ -27,6 +27,7 @@ const SummaryTable = () => {
       sx={{ height: "90vh", width: "100%" }}
       rows={items}
       columns={columns}
+      loading={!items.length}
     />
   );
 };

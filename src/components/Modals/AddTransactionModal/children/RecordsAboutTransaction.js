@@ -53,16 +53,16 @@ const RecordsAboutTransaction = ({ formData, list }) => {
 
   useEffect(() => {
     const subscription = watch((data) => {
-      let newSumSatis = 0;
+      console.log(data);
       let newSumAlis = 0;
-
-      if (!!data.has?.Satis) {
+      let newSumSatis = 0;
+      if (!!data?.has?.Satis) {
         for (const item of data?.has?.Satis) {
           newSumSatis += Number(item !== undefined ? item : "0");
         }
       }
 
-      if (!!data.has?.Alis) {
+      if (!!data?.has?.Alis) {
         for (const item of data?.has?.Alis) {
           newSumAlis += Number(item !== undefined ? item : "0");
         }
@@ -80,30 +80,33 @@ const RecordsAboutTransaction = ({ formData, list }) => {
     if (!event.target.checked) resetField("card");
   };
 
-  const infoArray = [
-    { name: "Alis", value: sumAlis },
-    { name: "Satis", value: sumSatis },
-    {
-      name: "Total",
-      value: Number((sumSatis - sumAlis).toFixed(3)),
-    },
-  ];
-
   return (
     <>
       <Grid item xs={12}>
         <Divider />
       </Grid>
       <Grid item container spacing={1} align="center">
-        {infoArray.map((el, index) => (
-          <Grid key={index} item xs={4}>
-            <Chip
-              avatar={<Avatar sx={style().avatar}> {el.name} </Avatar>}
-              sx={style().chip}
-              label={el.value}
-            />
-          </Grid>
-        ))}
+        <Grid item xs={4}>
+          <Chip
+            avatar={<Avatar sx={style().avatar}>Alis</Avatar>}
+            sx={style().chip}
+            label={Number(sumAlis.toFixed(3))}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <Chip
+            avatar={<Avatar sx={style().avatar}> Satis </Avatar>}
+            sx={style().chip}
+            label={Number(sumSatis.toFixed(3))}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <Chip
+            avatar={<Avatar sx={style().avatar}> Net</Avatar>}
+            sx={style().chip}
+            label={Number((sumSatis - sumAlis).toFixed(3))}
+          />
+        </Grid>
       </Grid>
 
       <Grid

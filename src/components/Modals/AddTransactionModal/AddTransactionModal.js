@@ -23,9 +23,9 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      workship: [],
-      amount: [],
-      has: [],
+      workship: {},
+      amount: {},
+      has: {},
       card: "",
       cash: "",
       description: "",

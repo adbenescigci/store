@@ -159,6 +159,9 @@ const SelectedItem = ({ el, handleDelete, formData }) => {
             control,
             name: `has.${el.transactionType}.${el.id}`,
             register,
+            rules: {
+              value: el?.has,
+            },
             render: (props) => (
               <NumberFormatCustom2
                 {...props}
