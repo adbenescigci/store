@@ -53,7 +53,6 @@ const RecordsAboutTransaction = ({ formData, list }) => {
 
   useEffect(() => {
     const subscription = watch((data) => {
-      console.log(data);
       let newSumAlis = 0;
       let newSumSatis = 0;
       if (!!data?.has?.Satis) {

@@ -14,6 +14,8 @@ const App = () => {
   let navigate = useNavigate();
   let location = useLocation();
 
+  //try catch wtih error
+
   const fetchTransactions = async () => {
     const { data } = await getDailyTransactions();
     console.log(data);

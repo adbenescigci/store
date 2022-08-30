@@ -20,6 +20,7 @@ const style = () => ({
 const AddContent = ({ list, setList, type, formData }) => {
   const [navType, setType] = useState("Ziynet");
   const transactionType = type ? "Alis" : "Satis";
+  const { unregister } = formData;
 
   const handleSubTransactions = (id) => () => {
     if (!list?.find((el) => el.id === id)) {
@@ -29,10 +30,12 @@ const AddContent = ({ list, setList, type, formData }) => {
   };
 
   const handleDelete = useCallback(
-    (id) => {
+    (id, type) => () => {
+      unregister([`amount.${id}`, `workship.${id}`, `has.${type}.${id}`]);
       const newList = list?.filter((el) => el.id !== id);
       setList(newList);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [list, setList]
   );
 

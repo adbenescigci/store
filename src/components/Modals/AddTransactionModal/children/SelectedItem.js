@@ -51,7 +51,7 @@ const calculateHas = (amount, workship, el) => {
 
 const SelectedItem = ({ el, handleDelete, formData }) => {
   const [has, setHas] = useState(el.has);
-  const { register, control, unregister, watch, errors } = formData;
+  const { register, control, watch, errors } = formData;
 
   useEffect(() => {
     const subscription = watch((data) => {
@@ -69,15 +69,6 @@ const SelectedItem = ({ el, handleDelete, formData }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch, el]);
 
-  const onHandleDelete = (id) => () => {
-    unregister([
-      `amount.${id}`,
-      `workship.${id}`,
-      `has.${el.transactionType}.${id}`,
-    ]);
-    return handleDelete(id);
-  };
-
   return (
     <Grid container item spacing={1} alignItems="center">
       <Grid item align="center" xs={1.6}>
@@ -90,7 +81,7 @@ const SelectedItem = ({ el, handleDelete, formData }) => {
           label={` ${el.type === "Saat" ? "Saat" : el.type.substring(0, 3)} ${
             el.label
           }  `}
-          onDelete={onHandleDelete(el.id)}
+          onDelete={handleDelete(el.id, el.transactionType)}
           avatar={
             <Avatar sx={style(el).avatar}>{el.history?.charAt(0)}</Avatar>
           }

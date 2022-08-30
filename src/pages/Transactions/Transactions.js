@@ -19,7 +19,6 @@ const Transactions = () => {
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const [alert, setAlert] = useState();
   const [keyword, setKeyword] = useState("");
-
   const filteredTransactions = useMemo(
     () => getFilter(state?.transactions, keyword),
     [keyword, state?.transactions]
