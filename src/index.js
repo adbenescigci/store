@@ -10,6 +10,7 @@ import App from "./App";
 import { mainNavbarItems } from "./components/Navbar/consts/navbarItems";
 import { theme } from "./theme";
 import "./index.css";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(

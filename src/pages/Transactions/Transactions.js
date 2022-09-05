@@ -1,4 +1,4 @@
-import React, { useState, useContext, useMemo } from "react";
+import React, { useState, useEffect, useContext, useMemo } from "react";
 import BasicCard from "../../components/common/BasicCard/BasicCard";
 import BoxWrapper from "../../components/common/BoxWrapper/BoxWrapper";
 import AddTransactionModal from "../../components/Modals/AddTransactionModal/AddTransactionModal.js";
@@ -7,6 +7,8 @@ import BasicSnackbar from "../../components/common/BasicSnackbar/BasicSnackbar";
 import HeaderWithSearch from "./children/HeaderWithSearch";
 import Content from "./children/Content";
 import { getFilter } from "../../utils/handyFunctions";
+
+import { getDailyTransactions } from "../../api/index";
 import {
   doTransaction,
   updateTransaction,
@@ -19,6 +21,20 @@ const Transactions = () => {
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const [alert, setAlert] = useState();
   const [keyword, setKeyword] = useState("");
+
+  const fetchTransactions = async () => {
+    const { data } = await getDailyTransactions();
+    dispatch({
+      type: "FETCH_TRANSACTIONS",
+      data,
+    });
+  };
+
+  //FETCH DATA
+  useEffect(() => {
+    fetchTransactions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const filteredTransactions = useMemo(
     () => getFilter(state?.transactions, keyword),
@@ -38,7 +54,6 @@ const Transactions = () => {
   };
 
   const addNewTransaction = async (newTransaction) => {
-    console.log(newTransaction);
     const result = await doTransaction(newTransaction);
     refresh(result);
   };
