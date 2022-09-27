@@ -2,11 +2,13 @@ import React, { forwardRef } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
-const Alert = forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} variant="standard" ref={ref} {...props} />;
-});
+import Button from "@mui/material/Button";
 
-const BasicSnackbar = ({ onClose, open, severity, message }) => {
+const Alert = forwardRef((props, ref) => (
+  <MuiAlert elevation={6} variant="standard" ref={ref} {...props} />
+));
+
+const BasicSnackbar = ({ onClose, open, severity, message, action }) => {
   return (
     <>
       <Snackbar
@@ -21,7 +23,7 @@ const BasicSnackbar = ({ onClose, open, severity, message }) => {
           severity={severity}
           sx={{ width: ["95%", "100%"] }}
         >
-          {message}
+          {message} {action}
         </Alert>
       </Snackbar>
     </>

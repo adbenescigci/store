@@ -12,9 +12,12 @@ export const summarySlice = createSlice({
     remove: (state, action) => {
       state.list = state.list.filter((el) => el.id !== action.payload);
     },
+    // undo:(state,action)=>{
+    //   state.list
+    // }
   },
 });
 
-export const { fetchData, remove } = summarySlice.actions;
+export const { fetchData, remove, undo } = summarySlice.actions;
 
 export default summarySlice.reducer;

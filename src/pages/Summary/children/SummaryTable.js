@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { intlFormat } from "date-fns";
+import { intlFormat, getTime, parseISO } from "date-fns";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
 import RestoreIcon from "@mui/icons-material/Restore";
@@ -9,10 +9,10 @@ import {
   remove,
 } from "../../../providers/Redux/Slices/summarySlice";
 import DataTable from "../../../components/common/DataTable/DataTable";
-import { deleteTransaction, updateTransaction } from "../../../api/index";
+import { updateTransaction } from "../../../api/index";
 import { styles } from "../styles";
 
-const SummaryTable = ({ onError }) => {
+const SummaryTable = ({ onAlert, handleDelete }) => {
   const list = useSelector((state) => state.summary.list);
   const dispatch = useDispatch();
 
@@ -22,11 +22,49 @@ const SummaryTable = ({ onError }) => {
       .then((json) => {
         dispatch(fetchData(json?.transactions));
       })
-      .catch(() => onError());
+      .catch(() =>
+        onAlert({
+          severity: "error",
+          message: "Veri indirilemedi",
+        })
+      );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const columns = [
+    {
+      field: "isDeleted",
+      headerName: "Kayit",
+      renderCell: (cellValues) => {
+        return (
+          <>
+            {getTime(parseISO(cellValues.row.transactionTime)) <
+              new Date().setHours(0) && (
+              <Button
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleDelete(event, cellValues);
+                }}
+              >
+                <DeleteIcon />
+              </Button>
+            )}
+
+            {cellValues.row.isDeleted && (
+              <Button
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleRestore(event, cellValues);
+                }}
+              >
+                <RestoreIcon />
+              </Button>
+            )}
+          </>
+        );
+      },
+      width: 70,
+    },
     { field: "user", headerName: "Satici", width: 80 },
     { field: "description", headerName: "Aciklama", width: 115 },
     {
@@ -66,46 +104,15 @@ const SummaryTable = ({ onError }) => {
       width: 125,
     },
     { field: "subTransactions", headerName: "Urunler", width: 80 },
-    {
-      field: "isDeleted",
-      headerName: "Kayit",
-      renderCell: (cellValues) => {
-        return (
-          <>
-            <Button
-              onClick={(event) => {
-                event.stopPropagation();
-                handleDelete(event, cellValues);
-              }}
-            >
-              <DeleteIcon />
-            </Button>
-
-            {cellValues.row.isDeleted && (
-              <Button
-                onClick={(event) => {
-                  event.stopPropagation();
-                  handleRestore(event, cellValues);
-                }}
-              >
-                <RestoreIcon />
-              </Button>
-            )}
-          </>
-        );
-      },
-      width: 70,
-    },
   ];
-
-  const handleDelete = async (event, transaction) => {
-    dispatch(remove(transaction.id));
-    await deleteTransaction(transaction.id);
-  };
 
   const handleRestore = async (event, transaction) => {
     dispatch(remove(transaction.id));
     await updateTransaction(transaction.id, { isDeleted: false });
+    onAlert({
+      severity: "info",
+      message: " Basariyla geri donduruldu",
+    });
   };
 
   const onRowClick = (params) => {
@@ -125,5 +132,3 @@ const SummaryTable = ({ onError }) => {
 };
 
 export default SummaryTable;
-
-//?processTime[gt]=${new Date(new Date().setHours(0))}
