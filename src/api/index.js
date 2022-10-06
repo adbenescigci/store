@@ -27,7 +27,17 @@ export const updateTransaction = async (id, data) => {
   }
 };
 
-export const deleteTransaction = (id) => API.delete(`transactions/${id}`);
+export const deleteTransaction = async (id, message) => {
+  try {
+    await API.delete(`transactions/${id}`);
+    return {
+      severity: "success",
+      message: `Basariyla silindi '${message}...'`,
+    };
+  } catch (error) {
+    return { severity: "error", message: error.message };
+  }
+};
 
 //UPDATE TRANSACTION LISTS
 export const refreshTransactions = (referenceTime) =>

@@ -6,13 +6,14 @@ import RestoreIcon from "@mui/icons-material/Restore";
 import { useSelector, useDispatch } from "react-redux";
 import {
   fetchData,
-  remove,
+  updateIsDeleted,
+  archive,
 } from "../../../providers/Redux/Slices/summarySlice";
 import DataTable from "../../../components/common/DataTable/DataTable";
-import { updateTransaction } from "../../../api/index";
+import { updateTransaction, deleteTransaction } from "../../../api/index";
 import { styles } from "../styles";
 
-const SummaryTable = ({ onAlert, handleDelete }) => {
+const SummaryTable = ({ onAlert, setTimeId }) => {
   const list = useSelector((state) => state.summary.list);
   const dispatch = useDispatch();
 
@@ -30,6 +31,47 @@ const SummaryTable = ({ onAlert, handleDelete }) => {
       );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleRestore = async (event, transaction) => {
+    dispatch(
+      updateIsDeleted({
+        list,
+        transaction: transaction.row,
+      })
+    );
+    await updateTransaction(transaction.id, { isDeleted: false });
+    onAlert({
+      severity: "info",
+      message: " Basariyla geri donduruldu",
+    });
+  };
+
+  const handleDelete = async (event, transaction) => {
+    dispatch(
+      archive({
+        list,
+        transaction: transaction.row,
+      })
+    );
+    onAlert({
+      severity: "warning",
+      message: `Kalici olarak silinecektir`,
+    });
+    const id = setTimeout(async () => {
+      const result = await deleteTransaction(
+        transaction.id,
+        transaction.row.description.slice(0, 6)
+      );
+      console.log(transaction.row.description.slice(0, 6));
+      onAlert(result);
+    }, 3 * 1000);
+
+    setTimeId(id);
+  };
+
+  const onRowClick = (params) => {
+    console.log(params.row);
+  };
 
   const columns = [
     {
@@ -106,23 +148,10 @@ const SummaryTable = ({ onAlert, handleDelete }) => {
     { field: "subTransactions", headerName: "Urunler", width: 80 },
   ];
 
-  const handleRestore = async (event, transaction) => {
-    dispatch(remove(transaction.id));
-    await updateTransaction(transaction.id, { isDeleted: false });
-    onAlert({
-      severity: "info",
-      message: " Basariyla geri donduruldu",
-    });
-  };
-
-  const onRowClick = (params) => {
-    console.log(params.row);
-  };
-
   return (
     <DataTable
       sx={styles.summaryTable}
-      rows={list}
+      rows={list.filter((el) => el.archived === undefined)}
       columns={columns}
       loading={!list.length}
       onRowClick={onRowClick}

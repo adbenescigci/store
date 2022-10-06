@@ -1,8 +1,6 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-
-import Button from "@mui/material/Button";
 
 const Alert = forwardRef((props, ref) => (
   <MuiAlert elevation={6} variant="standard" ref={ref} {...props} />
@@ -15,8 +13,8 @@ const BasicSnackbar = ({ onClose, open, severity, message, action }) => {
         sx={{ marginBottom: "30px" }}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         open={open}
-        autoHideDuration={5000}
         onClose={onClose}
+        autoHideDuration={3500}
       >
         <Alert
           onClose={onClose}
