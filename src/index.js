@@ -11,6 +11,8 @@ import { mainNavbarItems } from "./components/Navbar/consts/navbarItems";
 import { theme } from "./theme";
 import "./index.css";
 
+import { SnackbarProvider } from "notistack";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
@@ -18,15 +20,21 @@ root.render(
     <TransactionsProvider>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<App />}>
-              {mainNavbarItems.map((item, index) => (
-                <Route key={item.id} path={item.route} element={item.element} />
-              ))}
-            </Route>
-          </Routes>
-        </BrowserRouter>
+        <SnackbarProvider maxSnack={3} autoHideDuration={5000}>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<App />}>
+                {mainNavbarItems.map((item, index) => (
+                  <Route
+                    key={item.id}
+                    path={item.route}
+                    element={item.element}
+                  />
+                ))}
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </SnackbarProvider>
       </ThemeProvider>
     </TransactionsProvider>
   </Provider>

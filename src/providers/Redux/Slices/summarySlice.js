@@ -4,7 +4,6 @@ export const summarySlice = createSlice({
   name: "summary",
   initialState: {
     list: [],
-    index: "",
   },
   reducers: {
     fetchData: (state, action) => {
@@ -17,10 +16,11 @@ export const summarySlice = createSlice({
       const { list, transaction } = action.payload;
       const index = list.indexOf(transaction);
       state.list[index].archived = true;
-      state.index = index;
     },
-    unArchive: (state) => {
-      state.list[state.index].archived = undefined;
+    unArchive: (state, action) => {
+      const { list, transaction } = action.payload;
+      const index = list.indexOf(transaction);
+      state.list[index].archived = undefined;
     },
     updateIsDeleted: (state, action) => {
       const { list, transaction } = action.payload;

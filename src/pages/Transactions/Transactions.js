@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
+import { useState, useEffect, useContext, useMemo } from "react";
+import { useSnackbar } from "notistack";
 import BasicCard from "../../components/common/BasicCard/BasicCard";
 import BoxWrapper from "../../components/common/BoxWrapper/BoxWrapper";
 import AddTransactionModal from "../../components/Modals/AddTransactionModal/AddTransactionModal.js";
 import { ShopContext } from "../../providers/TransactionsProvider";
-import BasicSnackbar from "../../components/common/BasicSnackbar/BasicSnackbar";
 import HeaderWithSearch from "./children/HeaderWithSearch";
 import Content from "./children/Content";
 import { getFilter } from "../../utils/handyFunctions";
@@ -18,16 +18,17 @@ import {
 const Transactions = () => {
   const { state, dispatch } = useContext(ShopContext);
   const [open, setOpen] = useState(false);
-  const [openSnackBar, setOpenSnackBar] = useState(false);
-  const [alert, setAlert] = useState();
   const [keyword, setKeyword] = useState("");
+  const { enqueueSnackbar } = useSnackbar();
 
   const fetchTransactions = async () => {
-    const { data } = await getDailyTransactions();
-    dispatch({
-      type: "FETCH_TRANSACTIONS",
-      data,
-    });
+    const result = await getDailyTransactions();
+    if (result.severity !== "error") {
+      dispatch({
+        type: "FETCH_TRANSACTIONS",
+        data: result.data,
+      });
+    } else enqueueSnackbar("Veri indirilemedi", { variant: "error" });
   };
 
   //FETCH DATA
@@ -41,35 +42,33 @@ const Transactions = () => {
     [keyword, state?.transactions]
   );
 
-  //Functions
-  const handleCloseSnackBar = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpenSnackBar(false);
-  };
-
   const onCloseModal = (e, reason) => {
     setOpen(false);
   };
 
   const addNewTransaction = async (newTransaction) => {
-    const result = await doTransaction(newTransaction);
-    refresh(result);
+    const data = await doTransaction(newTransaction);
+    refresh(data);
   };
 
   const removeTransaction = async (index) => {
     const id = state.transactions[index]._id;
-    const result = await updateTransaction(id, { isDeleted: true });
-    refresh(result);
+    const data = await updateTransaction(id, { isDeleted: true });
+    refresh(data);
   };
 
-  const refresh = async (result) => {
-    const { data } = await refreshTransactions(state?.lastUpdated);
-    dispatch({ type: "REFRESH", data });
-    setAlert(result);
+  const refresh = async (data) => {
+    const { message, severity } = data;
+    const result = await refreshTransactions(state?.lastUpdated);
     setOpen(false);
-    setOpenSnackBar(true);
+
+    if (result.severity !== "error") {
+      dispatch({
+        type: "REFRESH",
+        data: result.data,
+      });
+      enqueueSnackbar(message, { variant: severity });
+    } else enqueueSnackbar(result.message, { variant: "error" });
   };
 
   //Render
@@ -94,12 +93,6 @@ const Transactions = () => {
         open={open}
         onClose={onCloseModal}
         addNewTransaction={addNewTransaction}
-      />
-      <BasicSnackbar
-        open={openSnackBar}
-        onClose={handleCloseSnackBar}
-        severity={alert?.severity}
-        message={alert?.message}
       />
     </BoxWrapper>
   );

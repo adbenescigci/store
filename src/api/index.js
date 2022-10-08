@@ -17,41 +17,51 @@ export const updateTransaction = async (id, data) => {
   try {
     await API.patch(`transactions/${id}`, data);
     return {
-      severity: "info",
+      severity: "success",
       message: data.isDeleted
         ? "Basariyla silindi"
-        : "Basariyla guncellestirildi",
+        : "Basariyla geri donduruldu",
     };
   } catch (error) {
     return { severity: "error", message: error.message };
   }
 };
 
-export const deleteTransaction = async (id, message) => {
+export const deleteTransaction = async (id) => {
   try {
     await API.delete(`transactions/${id}`);
     return {
       severity: "success",
-      message: `Basariyla silindi '${message}...'`,
+      message: `Basariyla silindi`,
     };
   } catch (error) {
-    return { severity: "error", message: error.message };
+    return { severity: "error", message: "Silinemedi" };
   }
 };
 
 //UPDATE TRANSACTION LISTS
-export const refreshTransactions = (referenceTime) =>
-  API.get(
-    `transactions/refresh?processTime[gt]=${referenceTime}&isDeleted=false`
-  );
+export const refreshTransactions = async (referenceTime) => {
+  try {
+    return await API.get(
+      `transactions/refresh?processTime[gt]=${referenceTime}&isDeleted=false`
+    );
+  } catch (error) {
+    return { severity: "error", message: error.message };
+  }
+};
 
 export const deletedTransactions = (referenceTime) =>
   API.get(`transactions?processTime[gt]=${referenceTime}&isDeleted=true`);
 
 //INIT APP
-export const getDailyTransactions = () =>
-  API.get(
-    `transactions?processTime[gt]=${new Date(
-      new Date().setHours(0)
-    )}&isDeleted=false`
-  );
+export const getDailyTransactions = async () => {
+  try {
+    return await API.get(
+      `transactions?processTime[gt]=${new Date(
+        new Date().setHours(0)
+      )}&isDeleted=false`
+    );
+  } catch (error) {
+    return { severity: "error", message: error.message };
+  }
+};
