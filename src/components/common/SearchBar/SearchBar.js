@@ -9,7 +9,7 @@ const SearchBar = ({ placeholder, onChange }) => {
       sx={{
         display: "flex",
         alignItems: "center",
-        width: { xs: "66%", md: "100%" },
+        width: "100%",
       }}
     >
       <SearchIcon sx={{ marginRight: { xs: "5px", md: "10px" } }} />

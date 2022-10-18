@@ -7,7 +7,6 @@ import { ShopContext } from "../../providers/TransactionsProvider";
 import HeaderWithSearch from "./children/HeaderWithSearch";
 import Content from "./children/Content";
 import { getFilter } from "../../utils/handyFunctions";
-
 import { getDailyTransactions } from "../../api/index";
 import {
   doTransaction,
@@ -31,7 +30,6 @@ const Transactions = () => {
     } else enqueueSnackbar("Veri indirilemedi", { variant: "error" });
   };
 
-  //FETCH DATA
   useEffect(() => {
     fetchTransactions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -71,7 +69,6 @@ const Transactions = () => {
     } else enqueueSnackbar(result.message, { variant: "error" });
   };
 
-  //Render
   return (
     <BoxWrapper>
       <BasicCard

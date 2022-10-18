@@ -50,27 +50,24 @@ const columns = (list, dispatch, enqueueSnackbar, closeSnackbar) => {
   };
   const action = (id, transaction) => (snackbarId) =>
     (
-      <>
-        <Button
-          onClick={() => {
-            clearTimeout(id);
-            dispatch(
-              unArchive({
-                list,
-                transaction: transaction.row,
-              })
-            );
-            closeSnackbar(snackbarId);
-            enqueueSnackbar(
-              `Islem Durduruldu "${transaction.row.description.slice(0, 6)}"`,
-              { variant: "info" }
-            );
-          }}
-        >
-          Durdur
-        </Button>
-        <Button onClick={() => closeSnackbar(snackbarId)}>Kapat</Button>
-      </>
+      <Button
+        onClick={() => {
+          clearTimeout(id);
+          dispatch(
+            unArchive({
+              list,
+              transaction: transaction.row,
+            })
+          );
+          closeSnackbar(snackbarId);
+          enqueueSnackbar(
+            `Islem Durduruldu "${transaction.row.description.slice(0, 6)}"`,
+            { variant: "info" }
+          );
+        }}
+      >
+        Durdur
+      </Button>
     );
 
   return [
@@ -107,8 +104,8 @@ const columns = (list, dispatch, enqueueSnackbar, closeSnackbar) => {
       },
       width: 70,
     },
-    { field: "user", headerName: "Satici", width: 80 },
-    { field: "description", headerName: "Aciklama", width: 115 },
+    { field: "user", headerName: "Satici", minWidth: 80 },
+    { field: "description", headerName: "Aciklama", minWidth: 115, flex: 0.7 },
     {
       field: "cash",
       headerName: "Nakit",
@@ -145,7 +142,7 @@ const columns = (list, dispatch, enqueueSnackbar, closeSnackbar) => {
         ),
       width: 125,
     },
-    { field: "subTransactions", headerName: "Urunler", width: 80 },
+    { field: "subTransactions", headerName: "Urunler", minWidth: 150, flex: 1 },
   ];
 };
 

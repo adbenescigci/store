@@ -33,7 +33,7 @@ const App = () => {
     <Box sx={appStyles.wrapper}>
       <NavbarDesktop />
       <Box sx={appStyles.row}>
-        <Header title={location.pathname} />
+        <Header />
         <NavbarMobile path={location?.pathname} />
         <Outlet />
       </Box>

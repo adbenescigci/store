@@ -19,7 +19,7 @@ const HeaderWithSearch = ({ setOpen, handleRefresh, setKeyword }) => {
   return (
     <Box sx={cardHeaderStyles.wrapper}>
       <SearchBar
-        placeholder="Ayar, urun cesidi, islem cinsi, satici"
+        placeholder="Ayar, urun cesidi, satici,..."
         onChange={(event) => handleChange(event.target.value)}
       />
       <Box sx={{ display: "flex", flexDirection: "row" }}>

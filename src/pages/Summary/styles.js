@@ -1,9 +1,13 @@
 export const styles = {
+  iconButton: {
+    "& .MuiSvgIcon-root": {
+      fontSize: ["30px", "35px"],
+    },
+  },
   summaryTable: {
-    height: ["75vh", "80vh"],
+    height: ["calc(100vh - 170px)", "calc(100vh - 150px)"],
     width: "100%",
-    maxWidth: "720px",
-    // margin: "auto",
+    bgcolor: "white",
 
     "& .MuiDataGrid-row--true": {
       backgroundColor: "#ef5350",

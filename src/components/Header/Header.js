@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import { styles } from "./styles";
 import Grid from "@mui/material/Grid";
 
-const Header = ({ title }) => {
+const Header = () => {
   return (
     <Box sx={styles.box}>
       <Grid sx={styles.grid} alignItems="center" spacing={1} container>
