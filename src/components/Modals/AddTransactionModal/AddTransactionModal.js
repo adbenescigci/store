@@ -8,9 +8,6 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
   const [transactionType, setType] = useState(false);
   const [list, setList] = useState([]);
 
-  let sumAlis = 0;
-  let sumSatis = 0;
-
   const {
     register,
     unregister,
@@ -33,6 +30,9 @@ const AddTransactionModal = ({ open, onClose, addNewTransaction }) => {
       claim: "",
     },
   });
+
+  let sumAlis = 0;
+  let sumSatis = 0;
 
   useEffect(() => {
     if (formState.isSubmitSuccessful) {

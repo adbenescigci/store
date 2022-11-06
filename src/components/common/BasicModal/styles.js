@@ -1,4 +1,4 @@
-export const modalStyles = {
+export const modalStyles = (type) => ({
   wrapper: {
     position: "absolute",
     top: "30%",
@@ -9,10 +9,10 @@ export const modalStyles = {
     color: "#b28900",
     borderRadius: 1,
     boxShadow: 24,
-    p: [1, 4],
+    p: [Number(`${type === "filter" ? 3 : 1}`), 4],
     display: "flex",
     flexDirection: "column",
-    overflow: "auto",
+    overflow: `${type === "filter" ? "visible" : "auto"}`,
     maxHeight: "90%",
     "& > * ": {
       fontFamily: "Roboto",
@@ -42,4 +42,4 @@ export const modalStyles = {
       color: "#b28900",
     },
   },
-};
+});

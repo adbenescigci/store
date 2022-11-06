@@ -5,7 +5,7 @@ export const styles = {
     },
   },
   summaryTable: {
-    height: ["calc(100vh - 170px)", "calc(100vh - 150px)"],
+    height: ["calc(100vh - 175px)", "calc(100vh - 150px)"],
     width: "100%",
     bgcolor: "white",
 

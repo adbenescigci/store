@@ -71,39 +71,6 @@ const columns = (list, dispatch, enqueueSnackbar, closeSnackbar) => {
     );
 
   return [
-    {
-      field: "isDeleted",
-      headerName: "Kayit",
-      renderCell: (cellValues) => {
-        return (
-          <>
-            {getTime(parseISO(cellValues.row.transactionTime)) <
-              new Date().setHours(0) && (
-              <Button
-                onClick={(event) => {
-                  event.stopPropagation();
-                  handleDelete(event, cellValues);
-                }}
-              >
-                <DeleteIcon />
-              </Button>
-            )}
-
-            {cellValues.row.isDeleted && (
-              <Button
-                onClick={(event) => {
-                  event.stopPropagation();
-                  handleRestore(event, cellValues);
-                }}
-              >
-                <RestoreIcon />
-              </Button>
-            )}
-          </>
-        );
-      },
-      width: 70,
-    },
     { field: "user", headerName: "Satici", minWidth: 80 },
     { field: "description", headerName: "Aciklama", minWidth: 115, flex: 0.7 },
     {
@@ -143,6 +110,39 @@ const columns = (list, dispatch, enqueueSnackbar, closeSnackbar) => {
       width: 125,
     },
     { field: "subTransactions", headerName: "Urunler", minWidth: 150, flex: 1 },
+    {
+      field: "isDeleted",
+      headerName: "Kayit",
+      renderCell: (cellValues) => {
+        return (
+          <>
+            {getTime(parseISO(cellValues.row.transactionTime)) <
+              new Date().setHours(0) && (
+              <Button
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleDelete(event, cellValues);
+                }}
+              >
+                <DeleteIcon />
+              </Button>
+            )}
+
+            {cellValues.row.isDeleted && (
+              <Button
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleRestore(event, cellValues);
+                }}
+              >
+                <RestoreIcon />
+              </Button>
+            )}
+          </>
+        );
+      },
+      width: 70,
+    },
   ];
 };
 

@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import CommonButton from "../CommonButton/CommonButton";
+import CloseIcon from "@mui/icons-material/Close";
 import { modalStyles } from "./styles";
+
 const BasicModal = ({
+  type = "",
   open,
   onClose,
   title,
@@ -11,16 +14,6 @@ const BasicModal = ({
   onSubmit,
   isSubmitButtonDisabled,
 }) => {
-  const [isDisabled, setDisable] = React.useState(isSubmitButtonDisabled);
-
-  const onClick = (data) => {
-    onSubmit(data);
-  };
-
-  useEffect(() => {
-    setDisable(isSubmitButtonDisabled);
-  }, [isSubmitButtonDisabled]);
-
   return (
     <Modal
       open={open}
@@ -28,15 +21,29 @@ const BasicModal = ({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={modalStyles.wrapper}>
+      <Box sx={modalStyles(type).wrapper}>
         {title}
         {content}
-        <Box sx={modalStyles.buttons}>
-          <CommonButton disabled={isDisabled} onClick={onClick}>
-            Onayla
+        {type !== "filter" ? (
+          <Box sx={modalStyles().buttons}>
+            <CommonButton disabled={isSubmitButtonDisabled} onClick={onSubmit}>
+              Onayla
+            </CommonButton>
+            <CommonButton onClick={onClose}>Iptal</CommonButton>
+          </Box>
+        ) : (
+          <CommonButton
+            onClick={onClose}
+            sx={{
+              color: "white",
+              position: "absolute",
+              top: "-10%",
+              left: ["92%", "95%"],
+            }}
+          >
+            <CloseIcon />
           </CommonButton>
-          <CommonButton onClick={onClose}>Iptal</CommonButton>
-        </Box>
+        )}
       </Box>
     </Modal>
   );

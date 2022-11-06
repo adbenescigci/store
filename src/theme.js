@@ -55,15 +55,12 @@ export const theme = createTheme({
     },
     secondary: {
       light: "#ff7961",
-      main: "#f44336",
+      main: "#4dabf5",
       dark: "#ba000d",
       contrastText: "#000",
     },
     info: {
-      main: "#b2ff59",
-    },
-    info2: {
-      main: "#e53935",
+      main: "#616161",
     },
   },
 

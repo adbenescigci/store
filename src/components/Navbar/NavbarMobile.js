@@ -11,7 +11,7 @@ const style = {
     width: "100%",
     display: { md: "none", sm: "none" },
     position: "sticky",
-    top: "6%",
+    top: "6.5%",
     zIndex: "1",
   },
   bottomNavigation: {

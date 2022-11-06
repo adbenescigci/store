@@ -7,7 +7,7 @@ import Divider from "@mui/material/Divider";
 
 const style = (el) => ({
   bottomNavigation: {
-    height: "40px",
+    height: "37px",
     borderRadius: 1,
     bgcolor: "#212121",
   },
@@ -44,7 +44,7 @@ const AddTransactionNav = ({ setType }) => {
         </BottomNavigation>
       </Grid>
       <Grid item xs={12}>
-        <Divider />
+        <Divider light />
       </Grid>
     </>
   );
