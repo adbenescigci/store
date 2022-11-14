@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useSnackbar } from "notistack";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
@@ -26,10 +26,10 @@ const SummaryTable = () => {
   const {
     register,
     handleSubmit,
+    control,
     reset,
     formState,
-    setValue,
-    getValues,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -58,9 +58,13 @@ const SummaryTable = () => {
 
   const getItems = async (data) => {
     console.log(data);
+    setOpen(false);
   };
 
   const onCloseModal = (e, reason) => {
+    if (reason === "backdropClick") {
+      return;
+    }
     setOpen(false);
   };
 
@@ -69,7 +73,6 @@ const SummaryTable = () => {
   };
 
   const handleStartDateChange = (value) => {
-    setValue("start", value);
     setStart(value);
     if (value > end) {
       setEnd(null);
@@ -77,49 +80,97 @@ const SummaryTable = () => {
   };
 
   const handleEndDateChange = (value) => {
-    setValue("end", value);
     setEnd(value);
+  };
+
+  const handleOpenFilter = () => {
+    setOpen(true);
   };
 
   return (
     <Grid
-      sx={{ padding: ["0 7px", "10px 20px"] }}
+      sx={{ padding: ["7px", "10px 20px"] }}
       container
       alignItems="center"
       spacing={1}
     >
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <Grid item fullwidth="true" xs={4.5} md={3} justifyContent="center">
-          <DesktopDatePicker
-            {...register("start", {
-              required: "Tarih giriniz",
-            })}
-            label="Başlangıç"
-            inputFormat="MM/dd/yy"
-            maxDate={Date.now()}
-            value={start}
-            onChange={handleStartDateChange}
-            renderInput={(params) => <TextField {...params} />}
-            onError={(reason, value) => console.log(reason, value)}
+          <Controller
+            control={control}
+            name="start"
+            defaultValue={start}
+            rules={{
+              required: {
+                value: true,
+                message: "Bir Tarih Giriniz",
+              },
+              validate: (value) => !!Date.parse(value) || "Geçersiz Tarih",
+            }}
+            render={({ field: { onChange, ...restField } }) => (
+              <DesktopDatePicker
+                label={`'dan ${
+                  errors.start ? `/ ${errors.start.message}` : ""
+                }`}
+                inputFormat="MM/dd/yy"
+                maxDate={Date.now()}
+                onChange={(event) => {
+                  onChange(event);
+                  handleStartDateChange(event);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    focused
+                    {...params}
+                    error={errors.start ? true : false}
+                  />
+                )}
+                {...restField}
+              />
+            )}
           />
         </Grid>
         <Grid item fullwidth="true" xs={4.5} md={3} justifyContent="center">
-          <DesktopDatePicker
-            {...register("end")}
-            label="Bitiş"
-            inputFormat="MM/dd/yy"
-            value={end}
-            minDate={start}
-            maxDate={Date.now()}
-            onChange={handleEndDateChange}
-            renderInput={(params) => <TextField {...params} />}
+          <Controller
+            control={control}
+            name="end"
+            rules={{
+              validate: (value) => {
+                if (!value) return true;
+                return (
+                  (!!Date.parse(value) &&
+                    Date.parse(value) >= Date.parse(start)) ||
+                  "Geçersiz Tarih"
+                );
+              },
+            }}
+            render={({ field: { onChange, ...restField } }) => (
+              <DesktopDatePicker
+                label={`'a ${errors.end ? `/ ${errors.end.message}` : ""}`}
+                inputFormat="MM/dd/yy"
+                minDate={start}
+                maxDate={Date.now()}
+                onChange={(event) => {
+                  onChange(event);
+                  handleEndDateChange(event);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    focused
+                    error={errors.end ? true : false}
+                  />
+                )}
+                {...restField}
+              />
+            )}
           />
         </Grid>
       </LocalizationProvider>
       <Grid item xs={1.5} sx={{ textAlign: "left" }}>
         <IconButton
           sx={styles.iconButton}
-          onClick={() => setOpen(true)}
+          onClick={handleSubmit(handleOpenFilter)}
           color="info"
         >
           <TuneIcon />
@@ -149,7 +200,8 @@ const SummaryTable = () => {
       <FilterModal
         open={open}
         onClose={onCloseModal}
-        formData={{ register, getValues }}
+        onSubmit={handleSubmit(getItems)}
+        formData={{ register, errors, watch }}
       />
     </Grid>
   );

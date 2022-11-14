@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
 import Checkbox from "@mui/material/Checkbox";
@@ -16,12 +17,26 @@ const style = {
 };
 
 const FilterContent = ({ formData, onClose }) => {
-  const { register, getValues } = formData;
-  const values = getValues();
+  const { register, errors, watch } = formData;
+
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(10000);
 
   const handleClick = () => {
-    console.log("test");
+    console.log("test", max, min);
   };
+
+  useEffect(() => {
+    const subscription = watch((data) => {
+      setMin(data.min);
+      setMax(data.max);
+    });
+
+    return () => subscription.unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watch]);
+
+  let render = 1;
   return (
     <Grid
       container
@@ -30,6 +45,9 @@ const FilterContent = ({ formData, onClose }) => {
       justifyContent="space-between"
     >
       <Grid container item xs={12} alignItems="center" spacing={1}>
+        <Grid item xs={12}>
+          render {render++}{" "}
+        </Grid>
         <Grid item xs={12}>
           <Divider light>
             <Chip label="Cins ve Ayar" color="primary" variant="outlined" />
@@ -100,15 +118,19 @@ const FilterContent = ({ formData, onClose }) => {
           <Grid item xs={3.4}>
             <TextField
               name="en az"
-              {...register("min")}
+              {...register("min", {
+                required: "required",
+                validate: (value) => Number(value) < Number(max) || "Kontrol",
+              })}
               label="En az (gr)"
-              defaultValue={values.min}
+              defaultValue={min}
               size="small"
               focused
-              InputProps={{
-                inputComponent: NumberFormatCustom,
-                type: "gr",
-              }}
+              error={Number(max) <= Number(min) ? true : false}
+              // InputProps={{
+              //   inputComponent: NumberFormatCustom,
+              //   type: "gr",
+              // }}
             />
           </Grid>
 
@@ -132,15 +154,19 @@ const FilterContent = ({ formData, onClose }) => {
           <Grid item xs={3.4}>
             <TextField
               name="en fazla"
-              {...register("max")}
+              {...register("max", {
+                required: "required",
+                validate: (value) => Number(value) > Number(min) || "Kontrol",
+              })}
               label="En fazla (gr)"
               size="small"
-              defaultValue={values.max}
+              defaultValue={max}
               focused
-              InputProps={{
-                inputComponent: NumberFormatCustom,
-                type: "gr",
-              }}
+              error={Number(max) <= Number(min) ? true : false}
+              // InputProps={{
+              //   inputComponent: NumberFormatCustom,
+              //   type: "gr",
+              // }}
             />
           </Grid>
         </Grid>
