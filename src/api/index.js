@@ -1,4 +1,5 @@
 import axios from "axios";
+import { startOfToday, endOfDay, startOfDay } from "date-fns";
 
 const API = axios.create({ baseURL: "http://localhost:5000/" });
 
@@ -57,11 +58,26 @@ export const deletedTransactions = (referenceTime) =>
 export const getDailyTransactions = async () => {
   try {
     return await API.get(
-      `transactions?processTime[gt]=${new Date(
-        new Date().setHours(0)
-      )}&isDeleted=false`
+      `transactions?processTime[gt]=${startOfToday()}&isDeleted=false`
     );
   } catch (error) {
     return { severity: "error", message: error.message };
+  }
+};
+
+export const getTransactions = async (start, end) => {
+  const maxTime = endOfDay(end);
+  const minTime = startOfDay(!start ? end : start);
+  try {
+    const { data } = await API.get(
+      `transactions?processTime[lt]=${maxTime}&processTime[gt]=${minTime}`
+    );
+    return {
+      data,
+      variant: "success",
+      message: "Başarıyla Indirildi",
+    };
+  } catch (error) {
+    return { variant: "error", message: error.message };
   }
 };

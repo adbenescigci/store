@@ -28,7 +28,7 @@ const BasicModal = ({
 
         <Box sx={modalStyles().buttons}>
           <CommonButton disabled={isSubmitButtonDisabled} onClick={onSubmit}>
-            {type === "filter" ? <GetAppIcon /> : "Onayla"}
+            Onayla
           </CommonButton>
           {type !== "filter" ? (
             <CommonButton onClick={onClose}>Iptal</CommonButton>
