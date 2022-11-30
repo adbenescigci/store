@@ -27,11 +27,16 @@ const BasicModal = ({
         {content}
 
         <Box sx={modalStyles().buttons}>
-          <CommonButton disabled={isSubmitButtonDisabled} onClick={onSubmit}>
-            Onayla
-          </CommonButton>
           {type !== "filter" ? (
-            <CommonButton onClick={onClose}>Iptal</CommonButton>
+            <>
+              <CommonButton
+                disabled={isSubmitButtonDisabled}
+                onClick={onSubmit}
+              >
+                Onayla
+              </CommonButton>
+              <CommonButton onClick={onClose}>Iptal</CommonButton>
+            </>
           ) : (
             <CommonButton
               onClick={onClose}

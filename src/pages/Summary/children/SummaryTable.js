@@ -9,8 +9,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
-import TuneIcon from "@mui/icons-material/Tune";
 import GetAppIcon from "@mui/icons-material/GetApp";
+import FilterIcon from "./FilterIcon";
 import DataTable from "../../../components/common/DataTable/DataTable";
 import FilterModal from "../../../components/Modals/FilterModal/FilterModal.js";
 import columns from "../consts/columns";
@@ -24,8 +24,8 @@ const SummaryTable = () => {
   const [open, setOpen] = useState(false);
   const [flag, setFlag] = useState(false);
   const list = useSelector((state) => state.summary.list);
-  const dispatch = useDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -33,6 +33,8 @@ const SummaryTable = () => {
     control,
     getValues,
     watch,
+    reset,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -55,15 +57,10 @@ const SummaryTable = () => {
     if (variant !== "error") dispatch(fetchData(data?.transactions));
     enqueueSnackbar(message, { variant });
   };
+
   const handleGetFilteredItems = async (data) => {
     console.log(data);
-
     setOpen(false);
-
-    //const { data, variant, message } = await getTransactions(start, end);
-
-    // if (variant !== "error") dispatch(fetchData(data?.transactions));
-    // enqueueSnackbar(message, { variant });
   };
 
   const onCloseModal = (e, reason) => {
@@ -178,13 +175,13 @@ const SummaryTable = () => {
         </Grid>
       </LocalizationProvider>
       <Grid item xs={1.5} sx={{ textAlign: "left" }}>
-        <IconButton
+        <FilterIcon
+          getValues={getValues}
+          watch={watch}
           sx={styles.iconButton}
           onClick={handleSubmit(handleOpenFilter)}
-          color="info"
-        >
-          <TuneIcon />
-        </IconButton>
+          color="primary"
+        />
       </Grid>
       <Grid item xs={1.5} md={4.5} sx={{ textAlign: "right" }}>
         <IconButton
@@ -211,7 +208,15 @@ const SummaryTable = () => {
         open={open}
         onClose={onCloseModal}
         onSubmit={handleSubmit(handleGetFilteredItems)}
-        formData={{ register, errors, watch, control, getValues }}
+        formData={{
+          register,
+          errors,
+          watch,
+          control,
+          reset,
+          setValue,
+          getValues,
+        }}
       />
     </Grid>
   );

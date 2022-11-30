@@ -1,93 +1,99 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
+import { useSelector, useDispatch } from "react-redux";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import InputAdornment from "@mui/material/InputAdornment";
-import { transT, goldT, paymentT } from "./consts";
 import ScaleIcon from "@mui/icons-material/Scale";
 import NumberFormatCustom2 from "../../../common/NumberInput/NumberFormatCustom2";
 import CommonButton from "../../../common/CommonButton/CommonButton";
 import Controller from "../../../common/Controller/Controller";
+import { transT, goldT, paymentT } from "../../../../utils/filterTypes";
+import {
+  updateGoldTypes,
+  updateTransTypes,
+  updatePaymentTypes,
+  setDefault,
+} from "../../../../providers/Redux/Slices/filterSlice";
 
-import OutlinedInput from "@mui/material/OutlinedInput";
-import ListItemText from "@mui/material/ListItemText";
-import Select from "@mui/material/Select";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
+let render = 1;
 
-const FilterContent = ({ formData, onClose }) => {
-  const [goldTypes, setGoldTypes] = useState(() => goldT);
-  const [transTypes, setTransTypes] = useState(() => transT);
-  const [paymentTypes, setPaymentTypes] = useState(() => paymentT);
-  const { register, errors, control, getValues } = formData;
+const FilterContent = ({ formData }) => {
+  const [resetFlag, setResetFlag] = useState(false);
+  const [valueFlag, setValueFlag] = useState(false);
+  const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
+  const { register, errors, control, getValues, reset, watch } = formData;
+  const { transTypes, goldTypes, paymentTypes } = useSelector(
+    (state) => state.filter
+  );
+
+  useEffect(() => {
+    if (resetFlag) setResetFlag(false);
+    return;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resetFlag]);
+
+  useEffect(() => {
+    const subscription = watch(({ max, min }) => {
+      if (Number(min) !== 0 || Number(max) !== 10000) setValueFlag(true);
+    });
+
+    return () => subscription.unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watch]);
 
   const handleChange = (el) => (event, data) => {
     if (data.length !== 0) {
-      if (el === "gold") setGoldTypes(data);
-      if (el === "transaction") setTransTypes(data);
-      if (el === "payment") setPaymentTypes(data);
+      if (el === "gold") dispatch(updateGoldTypes(data));
+      if (el === "transaction") dispatch(updateTransTypes(data));
+      if (el === "payment") dispatch(updatePaymentTypes(data));
     } else enqueueSnackbar("En az 1 tercih ", { variant: "info" });
     return;
   };
 
   const handleDefault = () => {
-    setGoldTypes(goldT);
-    setTransTypes(transT);
-    setPaymentTypes(paymentT);
+    dispatch(setDefault());
+    setResetFlag(true);
+    reset({ max: 10000, min: 0 });
   };
 
   const array = [
     {
-      name: "Cins ve Ayar",
       value: goldTypes,
       data: goldT,
-      ref: "gold",
       xs: 12,
+      ref: "gold",
     },
     {
-      name: "İşlem Yönü",
       value: transTypes,
       data: transT,
-      ref: "transaction",
       xs: 5.5,
+      ref: "transaction",
     },
     {
-      name: "Ödeme",
       value: paymentTypes,
       data: paymentT,
-      ref: "payment",
       xs: 5.5,
+      ref: "payment",
     },
   ];
+  let render2 = 1;
+
+  if (resetFlag) return <> </>;
 
   return (
     <Grid
       container
-      spacing={2}
-      sx={{ paddingTop: 3 }}
+      spacing={1}
+      sx={{ paddingTop: 5, paddingBottom: 5 }}
       alignItems="center"
       justifyContent="space-between"
     >
-      {(goldTypes.length !== 7 ||
-        paymentTypes.length !== 2 ||
-        transTypes.length !== 2) && (
-        <CommonButton
-          sx={{
-            position: "absolute",
-            bottom: "6.5%",
-            left: "1%",
-            zIndex: "9999 ! important",
-          }}
-          onClick={handleDefault}
-        >
-          <RefreshIcon /> Varsayilan
-        </CommonButton>
-      )}
-
+      {render++} {render2++}
       {array.map((el, index) => (
         <Grid
           key={index}
@@ -112,7 +118,6 @@ const FilterContent = ({ formData, onClose }) => {
           </Grid>
         </Grid>
       ))}
-
       <Grid container xs={12} item spacing={3}>
         <Grid item xs={12}>
           <Divider />
@@ -140,23 +145,25 @@ const FilterContent = ({ formData, onClose }) => {
                     message: "En fazla değerinden az olmalıdır.",
                   },
                 },
-                render: (props) => (
-                  <NumberFormatCustom2
-                    {...props}
-                    label="En az"
-                    defaultValue={0}
-                    decimalScale={2}
-                    fixedDecimalScale={true}
-                    focused
-                    error={errors.min ? true : false}
-                    helperText={errors.min ? errors.min.message : ""}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">g</InputAdornment>
-                      ),
-                    }}
-                  />
-                ),
+                render: (props) => {
+                  return (
+                    <NumberFormatCustom2
+                      label="En az"
+                      defaultValue={getValues("min")}
+                      decimalScale={2}
+                      fixedDecimalScale={true}
+                      focused
+                      error={errors.min ? true : false}
+                      helperText={errors.min ? errors.min.message : ""}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">g</InputAdornment>
+                        ),
+                      }}
+                      {...props}
+                    />
+                  );
+                },
               }}
             />
           </Grid>
@@ -185,7 +192,7 @@ const FilterContent = ({ formData, onClose }) => {
                   <NumberFormatCustom2
                     {...props}
                     label="En fazla"
-                    defaultValue={10000}
+                    defaultValue={getValues("max")}
                     decimalScale={2}
                     focused
                     fixedDecimalScale={true}
@@ -203,49 +210,35 @@ const FilterContent = ({ formData, onClose }) => {
           </Grid>
         </Grid>
       </Grid>
+      {(goldTypes.length !== 7 ||
+        paymentTypes.length !== 2 ||
+        transTypes.length !== 2 ||
+        valueFlag) && (
+        <CommonButton
+          sx={{
+            position: "absolute",
+            top: "1%",
+            left: "1%",
+            zIndex: "9999",
+          }}
+          onClick={handleDefault}
+        >
+          <RefreshIcon /> Varsayilan
+        </CommonButton>
+      )}
+      <CommonButton
+        sx={{
+          position: "absolute",
+          bottom: "3%",
+          left: "42%",
+          zIndex: "9999",
+        }}
+        onClick={() => console.log("click")}
+      >
+        Onayla
+      </CommonButton>
     </Grid>
   );
 };
 
 export default FilterContent;
-
-// <Grid item xs={7} justifyContent="center">
-// <Controller
-//   {...{
-//     control,
-//     name: "test",
-//     register,
-//     rules: {
-//       required: true,
-//     },
-//     render: (props) => (
-//       <FormControl
-//         error={errors.test ? true : false}
-//         sx={{ width: "100%", maxWidth: "100%" }}
-//       >
-//         <InputLabel id="demo-multiple-select">
-//           Manager(s)
-//         </InputLabel>
-//         <Select
-//           {...props}
-//           multiple
-//           fullWidth
-//           defaultOpen={true}
-//           value={transT}
-//           // onChange={handleManagerChange}
-//           input={<OutlinedInput label="Test" />}
-//           renderValue={(selected) => {
-//             console.log(selected);
-//           }}
-//         >
-//           {transT.map((el, index) => (
-//             <ToggleButton key={index} value={el} aria-label={el}>
-//               {el}
-//             </ToggleButton>
-//           ))}
-//         </Select>
-//       </FormControl>
-//     ),
-//   }}
-// />
-// </Grid>

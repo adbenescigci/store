@@ -5,6 +5,7 @@ import NumberFormat from "react-number-format";
 const NumberFormatCustom2 = React.forwardRef((props, ref) => {
   const {
     onChange,
+    onBlur,
     name,
     label,
     format,
@@ -21,13 +22,13 @@ const NumberFormatCustom2 = React.forwardRef((props, ref) => {
     <>
       <NumberFormat
         {...other}
+        getInputRef={ref}
         format={format}
         size="small"
         label={label}
         focused={focused}
         required={required}
         disabled={disabled}
-        getInputRef={ref}
         customInput={TextField}
         variant={variant}
         error={error}
