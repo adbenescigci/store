@@ -7,8 +7,13 @@ const FilterModal = ({ open, onClose, formData, onSubmit }) => {
       type="filter"
       open={open}
       onClose={onClose}
-      onSubmit={onSubmit}
-      content={<FilterContent formData={formData} onClose={onClose} />}
+      content={
+        <FilterContent
+          onSubmit={onSubmit}
+          formData={formData}
+          onClose={onClose}
+        />
+      }
     />
   );
 };

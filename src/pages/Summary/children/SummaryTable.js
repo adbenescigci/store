@@ -33,10 +33,12 @@ const SummaryTable = () => {
     control,
     getValues,
     watch,
-    reset,
+    resetField,
     setValue,
     formState: { errors },
+    clearErrors,
   } = useForm({
+    mode: "onChange",
     defaultValues: {
       max: 10000,
       min: 0,
@@ -213,9 +215,10 @@ const SummaryTable = () => {
           errors,
           watch,
           control,
-          reset,
           setValue,
           getValues,
+          resetField,
+          clearErrors,
         }}
       />
     </Grid>

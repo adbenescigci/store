@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { flushSync } from "react-dom";
 import { useSnackbar } from "notistack";
 import { useSelector, useDispatch } from "react-redux";
 import Grid from "@mui/material/Grid";
@@ -21,25 +22,35 @@ import {
 
 let render = 1;
 
-const FilterContent = ({ formData }) => {
+const FilterContent = ({ formData, onSubmit }) => {
   const [resetFlag, setResetFlag] = useState(false);
-  const [valueFlag, setValueFlag] = useState(false);
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
-  const { register, errors, control, getValues, reset, watch } = formData;
+  const {
+    register,
+    errors,
+    control,
+    getValues,
+    watch,
+    resetField,
+    clearErrors,
+  } = formData;
+  const [valueFlag, setValueFlag] = useState(
+    Number(getValues("min")) !== 0 || Number(getValues("max")) !== 10000
+  );
   const { transTypes, goldTypes, paymentTypes } = useSelector(
     (state) => state.filter
   );
 
   useEffect(() => {
-    if (resetFlag) setResetFlag(false);
-    return;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resetFlag]);
-
-  useEffect(() => {
     const subscription = watch(({ max, min }) => {
+      if (errors?.min?.type === "max" && Number(max) > Number(min))
+        clearErrors("min");
+      if (errors?.max?.type === "min" && Number(max) < Number(min))
+        clearErrors("max");
+
       if (Number(min) !== 0 || Number(max) !== 10000) setValueFlag(true);
+      else setValueFlag(false);
     });
 
     return () => subscription.unsubscribe();
@@ -57,8 +68,14 @@ const FilterContent = ({ formData }) => {
 
   const handleDefault = () => {
     dispatch(setDefault());
-    setResetFlag(true);
-    reset({ max: 10000, min: 0 });
+    resetField("max");
+    resetField("min");
+    flushSync(() => {
+      setResetFlag(true);
+    });
+    flushSync(() => {
+      setResetFlag(false);
+    });
   };
 
   const array = [
@@ -184,7 +201,7 @@ const FilterContent = ({ formData }) => {
                     message: "Kontrol ediniz",
                   },
                   min: {
-                    value: getValues("min"),
+                    value: Number(getValues("min")),
                     message: "En az degerinden fazla olmalıdır",
                   },
                 },
@@ -233,7 +250,7 @@ const FilterContent = ({ formData }) => {
           left: "42%",
           zIndex: "9999",
         }}
-        onClick={() => console.log("click")}
+        onClick={onSubmit}
       >
         Onayla
       </CommonButton>
