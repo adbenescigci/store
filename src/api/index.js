@@ -65,7 +65,9 @@ export const getDailyTransactions = async () => {
   }
 };
 
-export const getTransactions = async (start, end) => {
+export const getTransactions = async (data) => {
+  const { end, start } = data;
+  console.log(data);
   const maxTime = endOfDay(end);
   const minTime = startOfDay(!start ? end : start);
   try {

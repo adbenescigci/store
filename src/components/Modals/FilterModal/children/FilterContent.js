@@ -78,6 +78,8 @@ const FilterContent = ({ formData, onSubmit }) => {
     });
   };
 
+  const handleSubmit = () => onSubmit({ transTypes, goldTypes, paymentTypes });
+
   const array = [
     {
       value: goldTypes,
@@ -250,7 +252,7 @@ const FilterContent = ({ formData, onSubmit }) => {
           left: "42%",
           zIndex: "9999",
         }}
-        onClick={onSubmit}
+        onClick={handleSubmit}
       >
         Onayla
       </CommonButton>

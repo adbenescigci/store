@@ -8,9 +8,8 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
-import GetAppIcon from "@mui/icons-material/GetApp";
 import FilterIcon from "./FilterIcon";
+import DownloadIcon from "./DownloadIcon";
 import DataTable from "../../../components/common/DataTable/DataTable";
 import FilterModal from "../../../components/Modals/FilterModal/FilterModal.js";
 import columns from "../consts/columns";
@@ -49,20 +48,19 @@ const SummaryTable = () => {
 
   useEffect(() => {
     setFlag(true);
-    handleGetItems({ end: startOfToday() });
+    handleGetItems()({ end: startOfToday() });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleGetItems = async ({ start, end }) => {
-    const { data, variant, message } = await getTransactions(start, end);
+  const handleGetItems = (childData) => async (formData) => {
+    const { data, variant, message } = await getTransactions({
+      ...formData,
+      ...childData,
+    });
 
     if (variant !== "error") dispatch(fetchData(data?.transactions));
     enqueueSnackbar(message, { variant });
-  };
-
-  const handleGetFilteredItems = async (data) => {
-    console.log(data);
-    setOpen(false);
+    if (childData) setOpen(false);
   };
 
   const onCloseModal = (e, reason) => {
@@ -186,13 +184,10 @@ const SummaryTable = () => {
         />
       </Grid>
       <Grid item xs={1.5} md={4.5} sx={{ textAlign: "right" }}>
-        <IconButton
+        <DownloadIcon
           sx={styles.iconButton}
-          onClick={handleSubmit(handleGetItems)}
-          color="primary"
-        >
-          <GetAppIcon />
-        </IconButton>
+          onClick={(childData) => handleSubmit(handleGetItems(childData))()}
+        />
       </Grid>
       <Grid item xs={12}>
         <DataTable
@@ -209,7 +204,7 @@ const SummaryTable = () => {
       <FilterModal
         open={open}
         onClose={onCloseModal}
-        onSubmit={handleSubmit(handleGetFilteredItems)}
+        onSubmit={(childData) => handleSubmit(handleGetItems(childData))()}
         formData={{
           register,
           errors,
@@ -226,3 +221,11 @@ const SummaryTable = () => {
 };
 
 export default SummaryTable;
+
+// <IconButton
+//           sx={styles.iconButton}
+//           onClick={handleSubmit(handleGetItems)}
+//           color="primary"
+//         >
+//           <GetAppIcon />
+//         </IconButton>
