@@ -4,7 +4,6 @@ import IconButton from "@mui/material/IconButton";
 import TuneIcon from "@mui/icons-material/Tune";
 import Badge from "@mui/material/Badge";
 
-let render = 0;
 const FilterIcon = ({ sx, watch, onClick, color }) => {
   const [weightFilter, setWeightFilter] = useState(0);
   const { goldTypes, transTypes, paymentTypes } = useSelector(
@@ -28,14 +27,11 @@ const FilterIcon = ({ sx, watch, onClick, color }) => {
     (paymentTypes.length !== 2 ? 1 : 0);
 
   return (
-    <>
-      {render++}
-      <IconButton sx={sx} onClick={onClick} color={color}>
-        <Badge badgeContent={content + weightFilter} color="primary">
-          <TuneIcon />
-        </Badge>
-      </IconButton>
-    </>
+    <IconButton sx={sx} onClick={onClick} color={color}>
+      <Badge badgeContent={content + weightFilter} color="primary">
+        <TuneIcon />
+      </Badge>
+    </IconButton>
   );
 };
 

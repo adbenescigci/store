@@ -221,11 +221,3 @@ const SummaryTable = () => {
 };
 
 export default SummaryTable;
-
-// <IconButton
-//           sx={styles.iconButton}
-//           onClick={handleSubmit(handleGetItems)}
-//           color="primary"
-//         >
-//           <GetAppIcon />
-//         </IconButton>

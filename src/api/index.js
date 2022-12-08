@@ -65,14 +65,23 @@ export const getDailyTransactions = async () => {
   }
 };
 
-export const getTransactions = async (data) => {
-  const { end, start } = data;
-  console.log(data);
+export const getTransactions = async (filterData) => {
+  const { end, start, max, min, goldTypes, transTypes, paymentTypes } =
+    filterData;
+
   const maxTime = endOfDay(end);
   const minTime = startOfDay(!start ? end : start);
+  const filter = JSON.stringify({
+    max,
+    min,
+    goldTypes,
+    transTypes,
+    paymentTypes,
+  });
+
   try {
     const { data } = await API.get(
-      `transactions?processTime[lt]=${maxTime}&processTime[gt]=${minTime}`
+      `transactions?processTime[lt]=${maxTime}&processTime[gt]=${minTime}&filter=${filter}`
     );
     return {
       data,
