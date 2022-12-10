@@ -1,21 +1,22 @@
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useForm, Controller } from "react-hook-form";
-import { startOfToday } from "date-fns";
-import { useSnackbar } from "notistack";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import FilterIcon from "./FilterIcon";
-import DownloadIcon from "./DownloadIcon";
-import DataTable from "../../../components/common/DataTable/DataTable";
-import FilterModal from "../../../components/Modals/FilterModal/FilterModal.js";
-import columns from "../consts/columns";
-import { getTransactions } from "../../../api/index";
-import { fetchData } from "../../../providers/Redux/Slices/summarySlice";
-import { styles } from "../styles";
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useForm, Controller } from 'react-hook-form';
+import { startOfToday } from 'date-fns';
+import { useSnackbar } from 'notistack';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import FilterIcon from './FilterIcon';
+import DownloadIcon from './DownloadIcon';
+import DataTable from '../../../components/common/DataTable/DataTable';
+import FilterModal from '../../../components/Modals/FilterModal/FilterModal.js';
+import columns from '../consts/columns';
+import { getTransactions } from '../../../api/index';
+import { fetchData } from '../../../providers/Redux/Slices/summarySlice';
+import { styles } from '../styles';
+import { setDefault } from '../../../providers/Redux/Slices/filterSlice';
 
 let render = 1;
 
@@ -37,7 +38,7 @@ const SummaryTable = () => {
     formState: { errors },
     clearErrors,
   } = useForm({
-    mode: "onChange",
+    mode: 'onChange',
     defaultValues: {
       max: 10000,
       min: 0,
@@ -49,6 +50,8 @@ const SummaryTable = () => {
   useEffect(() => {
     setFlag(true);
     handleGetItems()({ end: startOfToday() });
+
+    return () => dispatch(setDefault());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -58,13 +61,13 @@ const SummaryTable = () => {
       ...childData,
     });
 
-    if (variant !== "error") dispatch(fetchData(data?.transactions));
+    if (variant !== 'error') dispatch(fetchData(data?.transactions));
     enqueueSnackbar(message, { variant });
     if (childData) setOpen(false);
   };
 
   const onCloseModal = (e, reason) => {
-    if (reason === "backdropClick") {
+    if (reason === 'backdropClick') {
       return;
     }
     setOpen(false);
@@ -80,7 +83,7 @@ const SummaryTable = () => {
 
   return (
     <Grid
-      sx={{ padding: ["7px", "10px 20px"] }}
+      sx={{ padding: ['7px', '10px 20px'] }}
       container
       alignItems="center"
       spacing={1}
@@ -95,13 +98,10 @@ const SummaryTable = () => {
             name="start"
             rules={{
               validate: {
-                valid: (v) => !v || !!Date.parse(v) || "Geçersiz Tarih",
+                valid: (v) => !v || !!Date.parse(v) || 'Geçersiz Tarih',
                 order: (v) => {
                   return (
-                    !v ||
-                    !getValues("end") ||
-                    getValues("end") > v ||
-                    "Geriye Aliniz"
+                    !v || !getValues('end') || getValues('end') > v || 'Geriye Aliniz'
                   );
                 },
               },
@@ -111,15 +111,15 @@ const SummaryTable = () => {
                 label={`${
                   errors.start
                     ? errors.start.message
-                    : `${getValues("start") === null ? "Başlangıç" : `'dan`}`
+                    : `${getValues('start') === null ? 'Başlangıç' : `'dan`}`
                 }`}
                 inputFormat="MM/dd/yy"
-                maxDate={getValues("end")}
+                maxDate={getValues('end')}
                 onChange={onChange}
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    focused={getValues("start") !== null}
+                    focused={getValues('start') !== null}
                     error={errors.start ? true : false}
                   />
                 )}
@@ -135,19 +135,18 @@ const SummaryTable = () => {
             rules={{
               required: {
                 value: true,
-                message: "Bir Tarih Giriniz",
+                message: 'Bir Tarih Giriniz',
               },
               max: {
                 value: Date.now(),
-                message: "Geri Aliniz",
+                message: 'Geri Aliniz',
               },
               min: {
-                value: getValues("start"),
-                message: "Ileri Aliniz",
+                value: getValues('start'),
+                message: 'Ileri Aliniz',
               },
               validate: {
-                valid: (v) =>
-                  Date.now() > v || !!Date.parse(v) || "Geçersiz Tarih",
+                valid: (v) => Date.now() > v || !!Date.parse(v) || 'Geçersiz Tarih',
               },
             }}
             render={({ field: { onChange, ...restField } }) => (
@@ -155,18 +154,14 @@ const SummaryTable = () => {
                 label={`${
                   errors.end
                     ? errors.end.message
-                    : `${getValues("start") === null ? "Günlük Veri" : `'a`}`
+                    : `${getValues('start') === null ? 'Günlük Veri' : `'a`}`
                 }`}
                 inputFormat="MM/dd/yy"
                 maxDate={Date.now()}
-                minDate={getValues("start")}
+                minDate={getValues('start')}
                 onChange={onChange}
                 renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    focused
-                    error={errors.end ? true : false}
-                  />
+                  <TextField {...params} focused error={errors.end ? true : false} />
                 )}
                 {...restField}
               />
@@ -174,7 +169,7 @@ const SummaryTable = () => {
           />
         </Grid>
       </LocalizationProvider>
-      <Grid item xs={1.5} sx={{ textAlign: "left" }}>
+      <Grid item xs={1.5} sx={{ textAlign: 'left' }}>
         <FilterIcon
           getValues={getValues}
           watch={watch}
@@ -183,7 +178,7 @@ const SummaryTable = () => {
           color="primary"
         />
       </Grid>
-      <Grid item xs={1.5} md={4.5} sx={{ textAlign: "right" }}>
+      <Grid item xs={1.5} md={4.5} sx={{ textAlign: 'right' }}>
         <DownloadIcon
           sx={styles.iconButton}
           onClick={(childData) => handleSubmit(handleGetItems(childData))()}
@@ -196,9 +191,7 @@ const SummaryTable = () => {
           rows={list.filter((el) => el.archived === undefined)}
           columns={columns(list, dispatch, enqueueSnackbar, closeSnackbar)}
           onRowClick={onRowClick}
-          getRowClassName={(params) =>
-            `MuiDataGrid-row--${params.row.isDeleted}`
-          }
+          getRowClassName={(params) => `MuiDataGrid-row--${params.row.isDeleted}`}
         />
       </Grid>
       <FilterModal
