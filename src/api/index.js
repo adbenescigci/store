@@ -1,30 +1,30 @@
-import axios from "axios";
-import { startOfToday, endOfDay, startOfDay } from "date-fns";
+import axios from 'axios';
+import { startOfToday, endOfDay, startOfDay } from 'date-fns';
 
-const API = axios.create({ baseURL: "http://localhost:5000/" });
+const API = axios.create({ baseURL: 'http://localhost:5000/' });
 
 export const doTransaction = async (newTransaction) => {
   try {
-    await API.post("transactions", {
+    await API.post('transactions', {
       ...newTransaction,
       transactionTime: Date.now(),
     });
-    return { severity: "success", message: "Basariyla eklendi" };
+    return { severity: 'success', message: 'Basariyla eklendi' };
   } catch (error) {
-    return { severity: "error", message: error.message };
+    return { severity: 'error', message: error.message };
   }
 };
 export const updateTransaction = async (id, data) => {
   try {
     await API.patch(`transactions/${id}`, data);
     return {
-      severity: "success",
+      severity: 'success',
       message: data.isDeleted
-        ? "Basariyla silindi"
-        : "Basariyla geri donduruldu",
+        ? 'Basariyla silindi'
+        : 'Basariyla geri donduruldu',
     };
   } catch (error) {
-    return { severity: "error", message: error.message };
+    return { severity: 'error', message: error.message };
   }
 };
 
@@ -32,11 +32,11 @@ export const deleteTransaction = async (id) => {
   try {
     await API.delete(`transactions/${id}`);
     return {
-      severity: "success",
+      severity: 'success',
       message: `Basariyla silindi`,
     };
   } catch (error) {
-    return { severity: "error", message: "Silinemedi" };
+    return { severity: 'error', message: 'Silinemedi' };
   }
 };
 
@@ -47,7 +47,7 @@ export const refreshTransactions = async (referenceTime) => {
       `transactions/refresh?processTime[gt]=${referenceTime}&isDeleted=false`
     );
   } catch (error) {
-    return { severity: "error", message: error.message };
+    return { severity: 'error', message: error.message };
   }
 };
 
@@ -61,14 +61,13 @@ export const getDailyTransactions = async () => {
       `transactions?processTime[gt]=${startOfToday()}&isDeleted=false`
     );
   } catch (error) {
-    return { severity: "error", message: error.message };
+    return { severity: 'error', message: error.message };
   }
 };
 
 export const getTransactions = async (filterData) => {
   const { end, start, max, min, goldTypes, transTypes, paymentTypes } =
     filterData;
-
   const maxTime = endOfDay(end);
   const minTime = startOfDay(!start ? end : start);
   const filter = JSON.stringify({
@@ -79,16 +78,17 @@ export const getTransactions = async (filterData) => {
     paymentTypes,
   });
 
+  let filterText = `${!!transTypes ? `filter=${filter}` : ''}`;
   try {
     const { data } = await API.get(
-      `transactions?processTime[lt]=${maxTime}&processTime[gt]=${minTime}&filter=${filter}`
+      `transactions?processTime[lt]=${maxTime}&processTime[gt]=${minTime}&${filterText}`
     );
     return {
       data,
-      variant: "success",
-      message: "Başarıyla Indirildi",
+      variant: 'success',
+      message: 'Başarıyla Indirildi',
     };
   } catch (error) {
-    return { variant: "error", message: error.message };
+    return { variant: 'error', message: error.message };
   }
 };
