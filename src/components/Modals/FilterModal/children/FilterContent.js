@@ -6,21 +6,19 @@ import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import ToggleButton from '@mui/material/ToggleButton';
+import TextField from '@mui/material/TextField';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import InputAdornment from '@mui/material/InputAdornment';
 import ScaleIcon from '@mui/icons-material/Scale';
 import NumberFormatCustom2 from '../../../common/NumberInput/NumberFormatCustom2';
 import CommonButton from '../../../common/CommonButton/CommonButton';
 import Controller from '../../../common/Controller/Controller';
-import { transT, goldT2, paymentT } from '../../../../utils/filterTypes';
+import { transT, paymentT } from '../../../../utils/filterTypes';
 import {
-  updateGoldTypes,
   updateTransTypes,
   updatePaymentTypes,
   setDefault,
 } from '../../../../providers/Redux/Slices/filterSlice';
-
-let render = 1;
 
 const FilterContent = ({ formData, onSubmit }) => {
   const [resetFlag, setResetFlag] = useState(false);
@@ -35,21 +33,24 @@ const FilterContent = ({ formData, onSubmit }) => {
     resetField,
     clearErrors,
   } = formData;
+
   const [valueFlag, setValueFlag] = useState(
-    Number(getValues('min')) !== 0 || Number(getValues('max')) !== 10000
-  );
-  const { transTypes, goldTypes, paymentTypes } = useSelector(
-    (state) => state.filter
+    getValues('search') !== '' ||
+      Number(getValues('min')) !== 0 ||
+      Number(getValues('max')) !== 10000
   );
 
+  const { transTypes, paymentTypes } = useSelector((state) => state.filter);
+
   useEffect(() => {
-    const subscription = watch(({ max, min }) => {
+    const subscription = watch(({ max, min, search }) => {
       if (errors?.min?.type === 'max' && Number(max) > Number(min))
         clearErrors('min');
       if (errors?.max?.type === 'min' && Number(max) < Number(min))
         clearErrors('max');
 
-      if (Number(min) !== 0 || Number(max) !== 10000) setValueFlag(true);
+      if (Number(min) !== 0 || Number(max) !== 10000 || search !== '')
+        setValueFlag(true);
       else setValueFlag(false);
     });
 
@@ -59,13 +60,6 @@ const FilterContent = ({ formData, onSubmit }) => {
 
   const handleChange = (el) => (event, data) => {
     if (data.length !== 0) {
-      if (el === 'gold') {
-        goldTypes.length !== 6
-          ? dispatch(updateGoldTypes(data))
-          : dispatch(
-              updateGoldTypes(goldT2.filter((el) => !data.includes(el)))
-            );
-      }
       if (el === 'transaction') dispatch(updateTransTypes(data));
       if (el === 'payment') dispatch(updatePaymentTypes(data));
     } else enqueueSnackbar('En az 1 tercih ', { variant: 'info' });
@@ -76,6 +70,7 @@ const FilterContent = ({ formData, onSubmit }) => {
     dispatch(setDefault());
     resetField('max');
     resetField('min');
+    resetField('search');
     flushSync(() => {
       setResetFlag(true);
     });
@@ -84,30 +79,22 @@ const FilterContent = ({ formData, onSubmit }) => {
     });
   };
 
-  const handleSubmit = () => onSubmit({ transTypes, goldTypes, paymentTypes });
+  const handleSubmit = () => onSubmit({ transTypes, paymentTypes });
 
   const array = [
     {
-      value: goldTypes,
-      data: goldT2,
-      xs: 12,
-      ref: 'gold',
-    },
-    {
       value: transTypes,
       data: transT,
-      xs: 5.5,
+      xs: 6,
       ref: 'transaction',
     },
     {
       value: paymentTypes,
       data: paymentT,
-      xs: 5.5,
+      xs: 6,
       ref: 'payment',
     },
   ];
-  let render2 = 1;
-
   if (resetFlag) return <> </>;
 
   return (
@@ -118,7 +105,6 @@ const FilterContent = ({ formData, onSubmit }) => {
       alignItems="center"
       justifyContent="space-between"
     >
-      {render++} {render2++}
       {array.map((el, index) => (
         <Grid
           key={index}
@@ -143,6 +129,15 @@ const FilterContent = ({ formData, onSubmit }) => {
           </Grid>
         </Grid>
       ))}
+      <Grid item xs={12}>
+        <TextField
+          name="search"
+          fullWidth
+          label="Ornek; 22 ceyrek eski -Ahmet"
+          variant="filled"
+          {...register('search')}
+        />
+      </Grid>
       <Grid container xs={12} item spacing={3}>
         <Grid item xs={12}>
           <Divider />
@@ -235,10 +230,7 @@ const FilterContent = ({ formData, onSubmit }) => {
           </Grid>
         </Grid>
       </Grid>
-      {(goldTypes.length !== 6 ||
-        paymentTypes.length !== 2 ||
-        transTypes.length !== 2 ||
-        valueFlag) && (
+      {(paymentTypes.length !== 2 || transTypes.length !== 2 || valueFlag) && (
         <CommonButton
           sx={{
             position: 'absolute',

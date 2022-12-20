@@ -4,16 +4,17 @@ import IconButton from '@mui/material/IconButton';
 import TuneIcon from '@mui/icons-material/Tune';
 import Badge from '@mui/material/Badge';
 
-const FilterIcon = ({ sx, watch, onClick, color }) => {
+const FilterIcon = ({ sx, watch, onClick, color, getValues }) => {
   const [weightFilter, setWeightFilter] = useState(0);
-  const { goldTypes, transTypes, paymentTypes } = useSelector(
-    (state) => state.filter
-  );
+  const { transTypes, paymentTypes } = useSelector((state) => state.filter);
 
+  console.log();
   useEffect(() => {
-    const subscription = watch(({ max, min }) => {
+    const subscription = watch(({ max, min, search }) => {
       setWeightFilter(
-        (Number(max) !== 10000 ? 1 : 0) + (Number(min) !== 0 ? 1 : 0)
+        (search !== '' ? 1 : 0) +
+          (Number(max) !== 10000 ? 1 : 0) +
+          (Number(min) !== 0 ? 1 : 0)
       );
     });
 
@@ -21,9 +22,7 @@ const FilterIcon = ({ sx, watch, onClick, color }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch]);
   const content =
-    (goldTypes.length !== 6 ? 1 : 0) +
-    (transTypes.length !== 2 ? 1 : 0) +
-    (paymentTypes.length !== 2 ? 1 : 0);
+    (transTypes.length !== 2 ? 1 : 0) + (paymentTypes.length !== 2 ? 1 : 0);
 
   return (
     <IconButton sx={sx} onClick={onClick} color={color}>

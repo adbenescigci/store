@@ -42,6 +42,7 @@ const SummaryTable = () => {
     defaultValues: {
       max: 10000,
       min: 0,
+      search: '',
       start: null,
       end: Date.now(),
     },
@@ -101,7 +102,10 @@ const SummaryTable = () => {
                 valid: (v) => !v || !!Date.parse(v) || 'Geçersiz Tarih',
                 order: (v) => {
                   return (
-                    !v || !getValues('end') || getValues('end') > v || 'Geriye Aliniz'
+                    !v ||
+                    !getValues('end') ||
+                    getValues('end') > v ||
+                    'Geriye Aliniz'
                   );
                 },
               },
@@ -146,7 +150,8 @@ const SummaryTable = () => {
                 message: 'Ileri Aliniz',
               },
               validate: {
-                valid: (v) => Date.now() > v || !!Date.parse(v) || 'Geçersiz Tarih',
+                valid: (v) =>
+                  Date.now() > v || !!Date.parse(v) || 'Geçersiz Tarih',
               },
             }}
             render={({ field: { onChange, ...restField } }) => (
@@ -161,7 +166,11 @@ const SummaryTable = () => {
                 minDate={getValues('start')}
                 onChange={onChange}
                 renderInput={(params) => (
-                  <TextField {...params} focused error={errors.end ? true : false} />
+                  <TextField
+                    {...params}
+                    focused
+                    error={errors.end ? true : false}
+                  />
                 )}
                 {...restField}
               />
@@ -191,7 +200,9 @@ const SummaryTable = () => {
           rows={list.filter((el) => el.archived === undefined)}
           columns={columns(list, dispatch, enqueueSnackbar, closeSnackbar)}
           onRowClick={onRowClick}
-          getRowClassName={(params) => `MuiDataGrid-row--${params.row.isDeleted}`}
+          getRowClassName={(params) =>
+            `MuiDataGrid-row--${params.row.isDeleted}`
+          }
         />
       </Grid>
       <FilterModal

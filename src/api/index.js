@@ -66,14 +66,13 @@ export const getDailyTransactions = async () => {
 };
 
 export const getTransactions = async (filterData) => {
-  const { end, start, max, min, goldTypes, transTypes, paymentTypes } =
-    filterData;
+  const { end, start, max, min, search, transTypes, paymentTypes } = filterData;
   const maxTime = endOfDay(end);
   const minTime = startOfDay(!start ? end : start);
   const filter = JSON.stringify({
     max,
     min,
-    goldTypes,
+    search,
     transTypes,
     paymentTypes,
   });
