@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { transT, goldT, paymentT } from "../../../utils/filterTypes";
+import { createSlice } from '@reduxjs/toolkit';
+import { transT, goldT2, paymentT } from '../../../utils/filterTypes';
 
 export const filterSlice = createSlice({
-  name: "filter",
+  name: 'filter',
   initialState: {
-    goldTypes: goldT,
+    goldTypes: goldT2,
     transTypes: transT,
     paymentTypes: paymentT,
   },
@@ -19,7 +19,7 @@ export const filterSlice = createSlice({
       state.paymentTypes = action.payload;
     },
     setDefault: (state) => {
-      state.goldTypes = goldT;
+      state.goldTypes = goldT2;
       state.transTypes = transT;
       state.paymentTypes = paymentT;
     },

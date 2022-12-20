@@ -12,7 +12,7 @@ import ScaleIcon from '@mui/icons-material/Scale';
 import NumberFormatCustom2 from '../../../common/NumberInput/NumberFormatCustom2';
 import CommonButton from '../../../common/CommonButton/CommonButton';
 import Controller from '../../../common/Controller/Controller';
-import { transT, goldT, paymentT } from '../../../../utils/filterTypes';
+import { transT, goldT2, paymentT } from '../../../../utils/filterTypes';
 import {
   updateGoldTypes,
   updateTransTypes,
@@ -26,17 +26,28 @@ const FilterContent = ({ formData, onSubmit }) => {
   const [resetFlag, setResetFlag] = useState(false);
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
-  const { register, errors, control, getValues, watch, resetField, clearErrors } =
-    formData;
+  const {
+    register,
+    errors,
+    control,
+    getValues,
+    watch,
+    resetField,
+    clearErrors,
+  } = formData;
   const [valueFlag, setValueFlag] = useState(
     Number(getValues('min')) !== 0 || Number(getValues('max')) !== 10000
   );
-  const { transTypes, goldTypes, paymentTypes } = useSelector((state) => state.filter);
+  const { transTypes, goldTypes, paymentTypes } = useSelector(
+    (state) => state.filter
+  );
 
   useEffect(() => {
     const subscription = watch(({ max, min }) => {
-      if (errors?.min?.type === 'max' && Number(max) > Number(min)) clearErrors('min');
-      if (errors?.max?.type === 'min' && Number(max) < Number(min)) clearErrors('max');
+      if (errors?.min?.type === 'max' && Number(max) > Number(min))
+        clearErrors('min');
+      if (errors?.max?.type === 'min' && Number(max) < Number(min))
+        clearErrors('max');
 
       if (Number(min) !== 0 || Number(max) !== 10000) setValueFlag(true);
       else setValueFlag(false);
@@ -48,7 +59,13 @@ const FilterContent = ({ formData, onSubmit }) => {
 
   const handleChange = (el) => (event, data) => {
     if (data.length !== 0) {
-      if (el === 'gold') dispatch(updateGoldTypes(data));
+      if (el === 'gold') {
+        goldTypes.length !== 6
+          ? dispatch(updateGoldTypes(data))
+          : dispatch(
+              updateGoldTypes(goldT2.filter((el) => !data.includes(el)))
+            );
+      }
       if (el === 'transaction') dispatch(updateTransTypes(data));
       if (el === 'payment') dispatch(updatePaymentTypes(data));
     } else enqueueSnackbar('En az 1 tercih ', { variant: 'info' });
@@ -72,7 +89,7 @@ const FilterContent = ({ formData, onSubmit }) => {
   const array = [
     {
       value: goldTypes,
-      data: goldT,
+      data: goldT2,
       xs: 12,
       ref: 'gold',
     },
@@ -103,9 +120,20 @@ const FilterContent = ({ formData, onSubmit }) => {
     >
       {render++} {render2++}
       {array.map((el, index) => (
-        <Grid key={index} container item xs={el.xs} alignItems="center" spacing={1}>
-          <Grid item container xs={12}>
-            <ToggleButtonGroup fullWidth value={el.value} onChange={handleChange(el.ref)}>
+        <Grid
+          key={index}
+          container
+          item
+          xs={el.xs}
+          alignItems="center"
+          spacing={1}
+        >
+          <Grid item container>
+            <ToggleButtonGroup
+              fullWidth
+              value={el.value}
+              onChange={handleChange(el.ref)}
+            >
               {el.data.map((el, index) => (
                 <ToggleButton key={index} value={el} aria-label={el}>
                   {el}
@@ -119,7 +147,13 @@ const FilterContent = ({ formData, onSubmit }) => {
         <Grid item xs={12}>
           <Divider />
         </Grid>
-        <Grid container item xs={12} justifyContent="space-between" alignItems="start">
+        <Grid
+          container
+          item
+          xs={12}
+          justifyContent="space-between"
+          alignItems="start"
+        >
           <Grid item xs={5} justifyContent="center">
             <Controller
               {...{
@@ -147,7 +181,9 @@ const FilterContent = ({ formData, onSubmit }) => {
                       error={errors.min ? true : false}
                       helperText={errors.min ? errors.min.message : ''}
                       InputProps={{
-                        endAdornment: <InputAdornment position="end">g</InputAdornment>,
+                        endAdornment: (
+                          <InputAdornment position="end">g</InputAdornment>
+                        ),
                       }}
                       {...props}
                     />
@@ -188,7 +224,9 @@ const FilterContent = ({ formData, onSubmit }) => {
                     error={errors.max ? true : false}
                     helperText={errors.max ? errors.max.message : ''}
                     InputProps={{
-                      endAdornment: <InputAdornment position="end">g</InputAdornment>,
+                      endAdornment: (
+                        <InputAdornment position="end">g</InputAdornment>
+                      ),
                     }}
                   />
                 ),
@@ -197,7 +235,7 @@ const FilterContent = ({ formData, onSubmit }) => {
           </Grid>
         </Grid>
       </Grid>
-      {(goldTypes.length !== 7 ||
+      {(goldTypes.length !== 6 ||
         paymentTypes.length !== 2 ||
         transTypes.length !== 2 ||
         valueFlag) && (
