@@ -12,7 +12,7 @@ const FilterIcon = ({ sx, watch, onClick, color, getValues }) => {
   useEffect(() => {
     const subscription = watch(({ max, min, search }) => {
       setWeightFilter(
-        (search !== '' ? 1 : 0) +
+        (search.trim() !== '' ? 1 : 0) +
           (Number(max) !== 10000 ? 1 : 0) +
           (Number(min) !== 0 ? 1 : 0)
       );

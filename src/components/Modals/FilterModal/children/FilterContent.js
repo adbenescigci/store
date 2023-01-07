@@ -35,7 +35,7 @@ const FilterContent = ({ formData, onSubmit }) => {
   } = formData;
 
   const [valueFlag, setValueFlag] = useState(
-    getValues('search') !== '' ||
+    getValues('search').trim() !== '' ||
       Number(getValues('min')) !== 0 ||
       Number(getValues('max')) !== 10000
   );
@@ -49,7 +49,7 @@ const FilterContent = ({ formData, onSubmit }) => {
       if (errors?.max?.type === 'min' && Number(max) < Number(min))
         clearErrors('max');
 
-      if (Number(min) !== 0 || Number(max) !== 10000 || search !== '')
+      if (Number(min) !== 0 || Number(max) !== 10000 || search.trim() !== '')
         setValueFlag(true);
       else setValueFlag(false);
     });

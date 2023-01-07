@@ -1,38 +1,45 @@
 export const styles = {
   iconButton: {
-    "& .MuiSvgIcon-root": {
-      fontSize: ["30px", "35px"],
+    '& .MuiSvgIcon-root': {
+      fontSize: ['30px', '35px'],
     },
   },
   summaryTable: {
-    height: ["calc(100vh - 185px)", "calc(100vh - 150px)"],
-    width: "100%",
-    bgcolor: "white",
+    height: ['calc(100vh - 185px)', 'calc(100vh - 150px)'],
+    width: '100%',
+    bgcolor: 'white',
 
-    "& .MuiDataGrid-row--true": {
-      backgroundColor: "#ef5350",
-      color: "white",
+    '& .MuiTypography-root': {
+      color: 'primary.main',
+    },
 
-      "&.MuiDataGrid-row.Mui-selected": {
-        backgroundColor: "#d32f2f",
+    '& .MuiDataGrid-row--true': {
+      backgroundColor: '#ef5350',
+      color: 'white',
+
+      '&.MuiDataGrid-row.Mui-selected': {
+        backgroundColor: '#d32f2f',
       },
-      "& .MuiButton-root": {
-        color: "white",
-        "&: hover": {
-          color: "#cfd8dc",
+      '& .MuiTypography-root': {
+        color: 'white ',
+      },
+      '& .MuiButton-root': {
+        color: 'white',
+        '&: hover': {
+          color: '#cfd8dc',
         },
       },
-      "&:hover": {
-        backgroundColor: "#e53935",
+      '&:hover': {
+        backgroundColor: '#e53935',
       },
     },
 
-    "& .MuiButton-root": {
-      alignItems: "left",
-      minWidth: "10px",
-      color: "#9e9e9e",
-      "&: hover": {
-        color: "#ef5350",
+    '& .MuiButton-root': {
+      alignItems: 'left',
+      minWidth: '10px',
+      color: '#9e9e9e',
+      '&: hover': {
+        color: '#ef5350',
       },
     },
   },
